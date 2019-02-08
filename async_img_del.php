@@ -1,0 +1,24 @@
+<?php
+require_once('inc_script.php');
+require_once('inc_pass_async.php');
+if($boolPass===true){
+    if(!$fp=fopen('../u/'.$strPlayer.'/img_info.txt','w')){
+        echo('img_del_fail');
+        exit;
+    }
+    else{
+        if(!fwrite($fp,'none')){
+            echo('img_del_fail');
+            fclose($fp);
+            exit;
+        }
+        else{
+            @unlink('../u/'.$strPlayer.'/img.jpeg');
+            echo('img_del_ok');
+        }
+    }
+}
+else{
+    echo('img_del_fail');
+}
+?>
