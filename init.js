@@ -1,4 +1,4 @@
-function init(strClub,strHost){
+function init(){
     // DEFINE ROOT ELEMENTS
     var sctRoot=document.getElementById('sctRoot');
     var svgRoot=document.getElementsByTagName('svg')[0];
@@ -77,7 +77,7 @@ function init(strClub,strHost){
     }
     OBJ_chess=OBJ_var.arrArena[OBJ_var.numArena].objChess;
     // G CHESSBOARD
-    var g=OBJ_board.drawBoard(div,'gBoard',4,129,1,49,'#eee8aa','#bdb76d',true);
+    var g=OBJ_board.drawBoard(div,'gBoard',4,104,1,49,'#eee8aa','#bdb76d',true);
     var pos=110; // for pawnjs engine purposes
     var num=21;
     for(var i=0;i<8;i++){
@@ -89,15 +89,39 @@ function init(strClub,strHost){
         pos-=12;
         num+=10;
     }
-    // BOX MATCH
-    var boxMatch=getBoxMatch('boxMatch',div,5,7,true);
+    // G TOP
+    var w=60, h=60, s=6.4, g=getG('gTop',div,4,36,1,true,0,0);
+    getButton('btnVar',g,0,0,w,h,true,'AAAX',picListA(),0.11,function(){},null);
+    getButton('btnSide',g,(w+s),0,w,h,true,'AAAX',picNone(),0.11,function(){},null);
+    getButton('btnMatch',g,(w+s)*2,0,(w*2+s),h,true,'AAAX',picFence(),0.13,function(){},null);
+    getButton('btnTime',g,(w+s)*4,0,(w*2+s),h,true,'AAAX',picClock(),0.13,function(){},null);
+    // G PLAYER
+    var w=90, h=90, z=0.225, p=picUser(), g=getG('gPlayer',div,4,504,1,false,w/2,h/2);
+    getRect(null,g,0,0,w,h,5,'transparent','url(#grdButton)',1);
+    getPath(null,g,(w-p[0]*z)/2,(h-p[1]*z)/2,z,'url(#grdIcon)','none',0,p[2]);
+    // G BOTTOM
+    var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,0,0);
+    var btn=getButton('btnPlayer',g,0,0,(w*3+s*2),h+30,true,'CXAX',picUser(),0.225,function(){},null);
+    var pth=btn.getElementsByTagName('path')[0];
+    getText(null,btn,70,20,18,'Arial','url(#grdIcon)','none',0,'grekkazzilla','start');
+    pth.setAttribute('transform','translate('+(pth.x-55)+','+pth.y+') scale('+pth.z+')');
+    for(var i=0;i<2;i++){
+        getPath(null,btn,90+25*i,30,0.07,'url(#grdGold)','none',0,picStar()[2]);
+    }
+    getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picMenu(),0.11,function(){},null);
+    getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){},null);
+    
+    
+    
+    
+    var boxMatch=getBoxMatch('boxMatch',div,5,7,false);
     boxMatch.onclick=function(){
         showBox('menuMatch');
     }
     boxMatch.style.cursor='pointer';
     putBoxMatch(boxMatch,OBJ_var.arrArena[OBJ_var.numArena].objMatch);
     // BOX PLAY
-    var box=getBox('boxPlay',div,205,7,190,110,true,'url(#grdPale)');
+    var box=getBox('boxPlay',div,205,7,190,110,false,'url(#grdPale)');
     getButton(null,box,40,40,110,60,true,'AAAX',picFence(),0.13,function(){},null);
     // BOX USER A
     
@@ -352,7 +376,7 @@ function init(strClub,strHost){
     menu.rctMax=rct;
     setMenuTime(null);
     // G BOTTOM
-    var w=60, h=60, s=6.4, g=getG('gBottom',div,4,533,1,true,0,0);
+    var w=60, h=60, s=6.4, g=getG('gBottom',div,4,533,1,false,0,0);
     getButton('btnMenu',g,0,0,60,60,true,'AAAX',picMenu(),0.11,function(){showBox('menuMain');},null);
     for(var i=0;i<5;i++){
         getButton('btnArena',g,(w+s)*(i+1),0,w,h,true,'AAAX',picChess(),0.13,function(){

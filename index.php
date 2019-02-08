@@ -81,7 +81,7 @@ if($boolAuth===true){
     }
 </script>
 </head>
-<body onload='init("<?php echo($strClub);?>","localhost");'>
+<body onload='init();'>
     <p style='position:fixed;top:40%;width:100%;text-align:center;'><img src='load.gif' /></p>
     <section id='sctRoot'>
         <svg>
