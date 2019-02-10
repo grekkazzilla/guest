@@ -90,29 +90,36 @@ function init(){
         num+=10;
     }
     // G TOP
-    var w=60, h=60, s=6.4, g=getG('gTop',div,4,36,1,true,0,0);
-    getButton('btnVar',g,0,0,w,h,true,'AAAX',picListA(),0.11,function(){},null);
-    getButton('btnSide',g,(w+s),0,w,h,true,'AAAX',picNone(),0.11,function(){},null);
-    getButton('btnMatch',g,(w+s)*2,0,(w*2+s),h,true,'AAAX',picFence(),0.13,function(){},null);
-    getButton('btnTime',g,(w+s)*4,0,(w*2+s),h,true,'AAAX',picClock(),0.13,function(){},null);
-    // G PLAYER
-    var w=90, h=90, z=0.225, p=picUser(), g=getG('gPlayer',div,4,504,1,false,w/2,h/2);
-    getRect(null,g,0,0,w,h,5,'transparent','url(#grdButton)',1);
-    getPath(null,g,(w-p[0]*z)/2,(h-p[1]*z)/2,z,'url(#grdIcon)','none',0,p[2]);
+    var w=60, h=60, s=6.4, g=getG('gTop',div,4,6,1,true,0,0);
+    getButton('btnVar',g,0,30,w,h,true,'AAAX',picListA(),0.11,function(){},null);
+    var btn=getButton('btnSide',g,(w+s),30,w,h,true,'AAAX',picNone(),0.11,function(){},null);
+    draw_white_pawn(null,btn,(w-50)/2-9,(h-50)/2,0.995,true);
+    draw_black_pawn(null,btn,(w-50)/2+9,(h-50)/2,1,true);
+    btn.getElementsByTagName('path')[1].setAttribute('fill','transparent');
+    btn.getElementsByTagName('path')[1].setAttribute('stroke','url(#grdIcon)');
+    btn.getElementsByTagName('path')[1].setAttribute('stroke-width','2');
+    btn.getElementsByTagName('path')[2].setAttribute('fill','url(#grdIcon)');
+    btn.getElementsByTagName('path')[2].setAttribute('stroke','url(#grdIcon)');
+    var btn=getButton('btnMatch',g,(w+s)*2,0,(w*2+s),h+30,true,'CXAX',picFence(),0.13,function(){},null);
+    var pth=btn.getElementsByTagName('path')[0];
+    pth.setAttribute('transform','translate('+(pth.x)+','+(pth.y+20)+') scale('+pth.z+')');
+    var p=picUser(), z=0.12; getPath(null,btn,(btn.rx-p[0]*z/2),5,z,'url(#grdButton)','none',0,p[2]);
+    var btn=getButton('btnTime',g,(w+s)*4,30,(w*2+s),h,true,'AAAX',picClock(),0.13,function(){},null);
+    var pth=btn.getElementsByTagName('path')[0];
+    pth.setAttribute('transform','translate('+(pth.x-35)+','+pth.y+') scale('+pth.z+')');
+    getText(null,btn,83,25,18,'Arial','url(#grdIcon)','none',0,'15 min','middle');
+    getText(null,btn,83,45,18,'Arial','url(#grdIcon)','none',0,'10 sec','middle');
     // G BOTTOM
     var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,0,0);
-    var btn=getButton('btnPlayer',g,0,0,(w*3+s*2),h+30,true,'CXAX',picUser(),0.225,function(){},null);
-    var pth=btn.getElementsByTagName('path')[0];
-    getText(null,btn,70,20,18,'Arial','url(#grdIcon)','none',0,'grekkazzilla','start');
-    pth.setAttribute('transform','translate('+(pth.x-55)+','+pth.y+') scale('+pth.z+')');
-    for(var i=0;i<2;i++){
-        getPath(null,btn,90+25*i,30,0.07,'url(#grdGold)','none',0,picStar()[2]);
-    }
-    getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picMenu(),0.11,function(){},null);
+    getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){},null);
+    getButton('btnMenu',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){},null);
+    var btn=getButton('btnPlayer',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picUser(),0.0,function(){},null);
+    getPath(null,btn,37,10,0.225,'#bdb76d','none',0,'M 112.15625 0 C 102.92447 0.018 93.68266 0.82463 84.5625 2.40625 C 83.60907 2.57191 82.9428 3.43976 83 4.40625 L 83.875 19.25 C 83.885 19.4186 83.76035 19.5949 83.59375 19.625 C 83.42715 19.6562 83.26993 19.5367 83.21875 19.375 L 78.6875 5.03125 C 78.4095 4.14707 77.5433 3.56003 76.625 3.6875 C 71.25067 4.43218 67.659587 5.01064 62.28125 7.40625 C 61.493417 7.7575 61.049003 8.58645 61.1875 9.4375 L 65.25 34.53125 C 65.31623 34.9367 65.112295 35.33755 64.75 35.53125 C 64.387698 35.72495 63.957333 35.65483 63.65625 35.375 L 43.5 16.65625 C 42.924932 16.12132 42.111786 15.99951 41.40625 16.34375 C 27.14798 23.28873 13.670039 32.4386 1.5625 43.8125 C 0.58297898 44.7328 0.022079998 45.99891 0 47.34375 C -0.021070002 48.68858 0.51732798 49.98608 1.46875 50.9375 L 35.625 85.125 C 37.50175 87.00175 40.539952 87.07076 42.5 85.28125 C 82.024119 49.17542 142.91338 49.17542 182.4375 85.28125 C 184.39955 87.0737 187.43373 87.00468 189.3125 85.125 L 223.46875 50.9375 C 224.41917 49.98708 224.95856 48.68759 224.9375 47.34375 C 224.9163 45.99892 224.35452 44.7328 223.375 43.8125 C 192.20185 14.52624 152.16067 -0.07772 112.15625 0 z M 112.46875 77.6875 C 67.87339 77.6875 38.506157 102.9087 31.71875 158.40625 C 27.576856 192.27405 15.662388 247.6861 10.6875 270.125 C 9.4400151 275.7521 12.625085 281.39505 18.09375 283.21875 L 66.6875 299.40625 C 70.002425 300.51225 73.63182 300.04475 76.53125 298.09375 C 79.43067 296.14275 81.24494 292.95625 81.46875 289.46875 L 85.75 222.90625 C 86.04406 218.32175 83.51689 213.9881 79.375 212 L 47.34375 196.65625 C 43.139632 194.63905 41.387992 189.5792 43.40625 185.375 L 51.03125 169.5 C 51.999733 167.4807 53.699904 165.9302 55.8125 165.1875 C 57.925098 164.4448 60.262992 164.56175 62.28125 165.53125 L 94.59375 181.0625 C 98.4998 182.9373 100.96875 186.8549 100.96875 191.1875 L 100.96875 233.15625 C 100.96875 233.99825 101.22899 234.8145 101.71875 235.5 L 109.1875 245.9375 C 109.94623 247.0003 111.16305 247.625 112.46875 247.625 C 113.77445 247.625 114.99027 247.0003 115.75 245.9375 L 123.21875 235.5 C 123.7085 234.8145 123.96875 233.99825 123.96875 233.15625 L 123.96875 191.1875 C 123.96875 186.8549 126.4377 182.9373 130.34375 181.0625 L 162.65625 165.53125 C 164.6745 164.56275 166.98117 164.4458 169.09375 165.1875 C 171.20635 165.9302 172.93777 167.4807 173.90625 169.5 L 181.53125 185.375 C 183.5485 189.5792 181.76561 194.63905 177.5625 196.65625 L 145.5625 212 C 141.4206 213.9881 138.89445 218.32175 139.1875 222.90625 L 143.4375 289.46875 C 143.6613 292.95625 145.50683 296.14175 148.40625 298.09375 C 151.30468 300.04475 154.93508 300.51225 158.25 299.40625 L 206.84375 283.21875 C 212.32245 281.39105 215.4995 275.7631 214.25 270.125 C 209.27611 247.6851 197.36065 192.27405 193.21875 158.40625 C 186.43134 102.9097 157.0641 77.6875 112.46875 77.6875 z');
+    
+    getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
     getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){},null);
     
-    
-    
+    //getText(null,div,200,588,18,'Arial','url(#grdIcon)','none',0,'ChessMonsterForYou','middle');
     
     var boxMatch=getBoxMatch('boxMatch',div,5,7,false);
     boxMatch.onclick=function(){
