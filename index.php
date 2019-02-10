@@ -1,20 +1,5 @@
 <?php
-require_once('inc_script.php');
-require_once('inc_pass_sync.php');
-$strClub='';            // contact list of favourite users
-$lnkPic='';
-if($boolAuth===true){
-    // PIC DATA
-    $lnkPic=file_get_contents('../u/'.$namePlayer.'/pic.txt');
-    // CLUB DATA
-    $scanDir=scandir('../u/'.$namePlayer.'/club/');
-    $arrClub=array();
-    for($i=2;$i<count($scanDir);$i++){
-        $nameUser=substr($scanDir[$i],0,strlen($scanDir[$i])-4);
-        $arrClub[]=$nameUser;
-    }
-    if(count($arrClub)>0) $strClub=implode(':',$arrClub);
-}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,9 +20,6 @@ if($boolAuth===true){
 <script type='text/javascript' src='svg.js'></script>
 <script type='text/javascript' src='chess.js'></script>
 <script type='text/javascript' src='board.js'></script>
-<script type='text/javascript' src='club.js'></script>
-<script type='text/javascript' src='match.js'></script>
-<script type='text/javascript' src='member.js'></script>
 <script type='text/javascript' src='control.js'></script>
 <script type='text/javascript' src='pic.js'></script>
 <script type='text/javascript' src='unit.js'></script>
@@ -51,33 +33,18 @@ if($boolAuth===true){
     OBJ_var.wArena=400;
     OBJ_var.hArena=600;
     OBJ_var.fltScale=1;
-    OBJ_var.arrArena=new Array();
-    OBJ_var.numArena=0;
     OBJ_var.blnLock=true;
     OBJ_var.boxOn=null;
     OBJ_var.divOn=null;
-    OBJ_var.divPrev=null;
-    OBJ_var.blnAuth=<?php echo $boolAuth ? 'true' : 'false'; // alt: var_export($bool_var,true) ?>;
-    OBJ_var.ctgClub='watch'; // watch OR find
-    OBJ_var.arrClub=new Array();
-    OBJ_var.arrWatch=new Array();
-    OBJ_var.arrFind=new Array();
-    OBJ_var.qtyClubPage=0;
-    OBJ_var.numClubPage=0;
-    OBJ_var.pcn=null;
     OBJ_var.wbs=null;
-    OBJ_var.arrClub[0]=getClub('');
-    OBJ_var.arrClub[0].blnOn=true;
-    OBJ_var.arrClub[0].ctg='player';
-    if(OBJ_var.blnAuth===true){
-        OBJ_var.arrClub[0].strName='<?php echo($namePlayer);?>';
-        OBJ_var.arrClub[0].lnkPic='<?php echo($lnkPic);?>';
-        OBJ_var.strShot='<?php echo($strShot);?>';
-    }
-    else{
-        OBJ_var.arrClub[0].strName=getLocal('name','Stranger');
-        OBJ_var.arrClub[0].lnkPic=getLocal('pic','00007.txt');
-        OBJ_var.strShot='none';
+    OBJ_var.arrU=new Array();
+    getU();
+    function getU(){
+        var u=new Object();
+        u.strName='';
+        u.lnkPic='';
+        u.pcn=null;
+        OBJ_var.arrU.push(u);
     }
 </script>
 </head>

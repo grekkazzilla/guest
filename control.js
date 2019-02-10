@@ -33,7 +33,10 @@ function getGrid(gRoot,intWidth,intHeight,intPace){
 	for(var i=0;i<intHeight+1;i=i+intPace) getLine(null,gRoot,0,i,intWidth,i,"#c0c0c0",1);
 }
 //////////////////////////////////////////////////////
-function getBox(strID,gRoot,xBox,yBox,wBox,hBox,blnShow,strFill){
+function getBox(strID,gRoot,wBox,hBox,blnShow,strFill){
+    var gBoard=o('gBoard');
+    var xBox=gBoard.x+gBoard.rx*gBoard.z-wBox/2;
+    var yBox=gBoard.y+gBoard.ry*gBoard.z-hBox/2;
     var box=getG(strID,gRoot,xBox,yBox,1,blnShow,wBox/2,hBox/2);
     getRect(null,box,0,0,wBox,hBox,0,'#808080','transparent',0).setAttribute('filter','url(#blr2)');
     getRect(null,box,0,0,wBox,hBox,0,strFill,'transparent',0);
@@ -43,10 +46,7 @@ function getMenu(strID,gRoot,wButton,hButton,intPad,intMargin,qtyHor,qtyVer,blnS
     var wBox=wButton*qtyHor+intPad*2+(qtyHor-1)*intMargin;
     var hBox=hButton*qtyVer+60+intPad+(qtyVer-1)*intMargin;
     if(strID=='menuMain') hBox+=25;
-    var gBoard=o('gBoard');
-    var xBox=gBoard.x+gBoard.rx*gBoard.z-wBox/2;
-    var yBox=gBoard.y+gBoard.ry*gBoard.z-hBox/2;
-    var box=getBox(strID,gRoot,xBox,yBox,wBox,hBox,blnShow,'#fff');
+    var box=getBox(strID,gRoot,wBox,hBox,blnShow,'#fff');
     return box;
 }
 function showDiv(div){
@@ -61,7 +61,7 @@ function showDiv(div){
 function showBox(box){
     if(typeof(box)=='string') box=o(box);
     if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
-    var btnClose=document.getElementById('btnBoxClose');
+    var btnClose=document.getElementById('btnClose');
     jumpG(btnClose,box.rx*2-50,10);
     box.appendChild(btnClose);
     showG(box);
