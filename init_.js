@@ -148,30 +148,7 @@ function init(){
         btn.appendChild(getPath(null,btn,0,0,1,'url(#grdButton)','#bdb76d',0.5,'M 5 0 C 2.23 0 0 2.23 0 5 L 0 35 C 0 37.77 2.23 40 5 40 L 35 40 C 37.77 40 40 37.77 40 35 L 40 5 C 40 2.23 37.77 0 35 0 L 5 0 z M 19.90625 5.21875 C 20.356973 5.21375 20.758674 5.49315 20.9375 5.90625 L 24.5 14.15625 C 24.66421 14.53895 25.021181 14.7805 25.4375 14.8125 L 34.40625 15.5 C 34.855902 15.5336 35.231836 15.8226 35.375 16.25 C 35.518162 16.6775 35.4015 17.1398 35.0625 17.4375 L 28.3125 23.375 C 27.999716 23.65 27.86925 24.0948 27.96875 24.5 L 30.09375 33.21875 C 30.2015 33.65595 30.01781 34.13805 29.65625 34.40625 C 29.294815 34.67435 28.824393 34.69815 28.4375 34.46875 L 20.6875 29.875 C 20.328208 29.6617 19.885626 29.6558 19.53125 29.875 L 11.90625 34.59375 C 11.522383 34.83085 11.023861 34.8236 10.65625 34.5625 C 10.28871 34.3005 10.12014 33.84595 10.21875 33.40625 L 12.1875 24.625 C 12.27874 24.2188 12.13046 23.80155 11.8125 23.53125 L 4.96875 17.71875 C 4.6257348 17.42755 4.4900292 16.96085 4.625 16.53125 C 4.7600971 16.10185 5.1452959 15.791 5.59375 15.75 L 14.53125 14.9375 C 14.94637 14.899 15.311409 14.6358 15.46875 14.25 L 18.875 5.90625 C 19.045762 5.48915 19.456535 5.22875 19.90625 5.21875 z'));
         btn.appendChild(getPath(null,btn,(w-p[0]*z)/2,(w-p[1]*z)/2,z,'url(#grdGold)','url(#grdGoldBrd)',5,p[2]));
     }
-    // MENU VAR
-    var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=4;
-    var menu=getMenu('menuVar',div,w,h,m,s,qtyHor,qtyVer,false);
-    getPath(null,menu,15,16,0.1,'url(#grdButton)','none',0,picListA()[2]);
-    var arr=new Array(['Classic',''],['Shuffle',''],['Chess','960'],['Three','Queens'],['Pawn','Attack'],['Racing','Kings'],['Knight','King'],['Checkers','']);
-    for(var i=0;i<arr.length;i++){
-        var btn=getButton(null,menu,x,y,w,h,true,'AAXC',null,0,function(){
-       
-        },arr[i][0]+'~'+arr[i][1]);
-        btn.strVar=arr[i][0]+' '+arr[i][1];
-        btn.do=function(){
-            /*ARR_arena[NUM_arena].intVar=this.var;
-            chooseVar(ARR_arena[NUM_arena],true);
-            hideG(o('boxVar'));
-            o('boxBoard').getElementsByTagName('text')[0].firstChild.nodeValue=ARR_var[this.var];*/
-   /*     }
-        getCircle(null,btn,25,30,10,'url(#grdButtonRvs)','none',0);
-        btn.arrOn.push(['circle',0,'fill','url(#grdButtonRvs)','#eee8aa']);
-        var arrText=btn.getElementsByTagName('text');
-        arrText[0].setAttribute('x',btn.rx+15);arrText[1].setAttribute('x',btn.rx+15);
-        if(arrText[1].firstChild.nodeValue=='') arrText[0].setAttribute('y',37);
-        else{arrText[0].setAttribute('y',25);arrText[1].setAttribute('y',45);}
-        x+=w+s;if((i+1)%qtyHor==0){x-=(w+s)*qtyHor;y+=h+s;}
-    }
+    
     // MENU TIME
     var w=70, h=60, m=9, s=6;
     var menu=getMenu('menuTime',div,w,h,m,s,5,5,false);

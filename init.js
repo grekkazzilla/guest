@@ -48,7 +48,7 @@ function init(){
     }
     // G TOP
     var w=60, h=60, s=6.4, g=getG('gTop',div,4,6,1,true,0,0);
-    getButton('btnVar',g,0,30,w,h,true,'AAAX',picListA(),0.11,function(){},null);
+    getButton('btnVar',g,0,30,w,h,true,'AAAX',picListA(),0.11,function(){showBox('boxVar');},null);
     var btn=getButton('btnSide',g,(w+s),30,w,h,true,'AAAX',picNone(),0.11,function(){},null);
     draw_white_pawn(null,btn,(w-50)/2-9,(h-50)/2,0.995,true);
     draw_black_pawn(null,btn,(w-50)/2+9,(h-50)/2,1,true);
@@ -60,10 +60,9 @@ function init(){
     var btn=getButton('btnMatch',g,(w+s)*2,0,(w*2+s),h+30,true,'CXAX',picFence(),0.13,function(){
         showBox('boxVS');
     },null);
-    var pth=btn.getElementsByTagName('path')[0];
-    pth.setAttribute('transform','translate('+(pth.x)+','+(pth.y+20)+') scale('+pth.z+')');
+    var pth=btn.getElementsByTagName('path')[0]; pth.setAttribute('transform','translate('+(pth.x)+','+(pth.y+20)+') scale('+pth.z+')');
     var p=picUser(), z=0.12; getPath(null,btn,(btn.rx-p[0]*z/2),5,z,'url(#grdButton)','none',0,p[2]);
-    var btn=getButton('btnTime',g,(w+s)*4,30,(w*2+s),h,true,'AAAX',picClock(),0.13,function(){},null);
+    var btn=getButton('btnTime',g,(w+s)*4,30,(w*2+s),h,true,'AAAX',picClock(),0.13,function(){showBox('boxTime');},null);
     var pth=btn.getElementsByTagName('path')[0];
     pth.setAttribute('transform','translate('+(pth.x-35)+','+pth.y+') scale('+pth.z+')');
     getText(null,btn,83,25,18,'Arial','url(#grdIcon)','none',0,'15 min','middle');
@@ -77,6 +76,33 @@ function init(){
     
     getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
     getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){},null);
+    // BOX VAR
+    var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=4;
+    var box=getMenu('boxVar',div,w,h,m,s,qtyHor,qtyVer,false);
+    getPath(null,box,15,16,0.1,'url(#grdButton)','none',0,picListA()[2]);
+    var arr=new Array(['Classic',''],['Shuffle',''],['Chess','960'],['Three','Queens'],['Pawn','Attack'],['Racing','Kings'],['Knight','King'],['Checkers','']);
+    for(var i=0;i<arr.length;i++){
+        var btn=getButton(null,box,x,y,w,h,true,'AAXC',null,0,function(){
+       
+        },arr[i][0]+'~'+arr[i][1]);
+        btn.strVar=arr[i][0]+' '+arr[i][1];
+        btn.do=function(){
+            
+        }
+        getCircle(null,btn,25,30,10,'url(#grdButtonRvs)','none',0);
+        btn.arrOn.push(['circle',0,'fill','url(#grdButtonRvs)','#eee8aa']);
+        var arrText=btn.getElementsByTagName('text');
+        arrText[0].setAttribute('x',btn.rx+15);arrText[1].setAttribute('x',btn.rx+15);
+        if(arrText[1].firstChild.nodeValue=='') arrText[0].setAttribute('y',37);
+        else{arrText[0].setAttribute('y',25);arrText[1].setAttribute('y',45);}
+        x+=w+s;if((i+1)%qtyHor==0){x-=(w+s)*qtyHor;y+=h+s;}
+    }
+    // BOX SIDE
+    var btn=getButton('btnTime',g,(w+s)*4,30,(w*2+s),h,true,'AAAX',picClock(),0.13,function(){},null);
+    var pth=btn.getElementsByTagName('path')[0];
+    pth.setAttribute('transform','translate('+(pth.x-35)+','+pth.y+') scale('+pth.z+')');
+    getText(null,btn,83,25,18,'Arial','url(#grdIcon)','none',0,'15 min','middle');
+    getText(null,btn,83,45,18,'Arial','url(#grdIcon)','none',0,'10 sec','middle');
     // BOX VS
     var box=getBox('boxVS',div,270,260,false,'#fff');
     getText(null,box,20,35,18,'Arial','#bdb76d','none',0,'VS :','start');
@@ -102,6 +128,30 @@ function init(){
     },null);
     var pth=btn.getElementsByTagName('path')[0]; pth.setAttribute('transform','translate('+(pth.x-25)+','+pth.y+') scale('+pth.z+')');
     var z=0.12, p=picEnvelope(); getPath(null,btn,70,btn.ry-p[1]*z/2,z,'url(#grdIcon)','none',0,p[2]);
+    // BOX TIME
+    var w=126.4, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=4, arr=new Array(
+        ['simple_delay',1,5],
+        ['simple_delay',2,3],
+        ['simple_delay',3,3],
+        ['simple_delay',5,2],
+        ['simple_delay',10,0],
+        ['simple_delay',15,0],
+        ['accumulation',15,15],
+        ['compensation',1,30]
+    );
+    var box=getMenu('boxTime',div,w,h,m,s,qtyHor,qtyVer,false);
+    for(var i=0;i<arr.length;i++){
+        if(arr[i][0]=='simple_delay') var p=picClock(), z=0.13, dx=30;
+        else if(arr[i][0]=='accumulation') var p=picHeap(), z=0.12, dx=30;
+        else if(arr[i][0]=='compensation') var p=picUp(), z=0.12, dx=30;
+        var btn=getButton(null,box,x,y,w,h,true,'AAAC',p,z,function(){},'a~b');
+        var pth=btn.getElementsByTagName('path')[0]; pth.setAttribute('transform','translate('+(pth.x-dx)+','+pth.y+') scale('+pth.z+')');
+        if(arr[i][2]==0) var yA=35, strB='';
+        else var yA=25, strB=arr[i][2]+' sec';
+        var txtA=btn.getElementsByTagName('text')[0]; txtA.setAttribute('x','85'); txtA.setAttribute('y',yA); txtA.firstChild.nodeValue=arr[i][1]+' min';
+        var txtB=btn.getElementsByTagName('text')[1]; txtB.setAttribute('x','85'); txtB.setAttribute('y','45'); txtB.firstChild.nodeValue=strB;
+        x+=w+s;if((i+1)%qtyHor==0){x-=(w+s)*qtyHor;y+=h+s;}
+    }
     
     ////////////////////
     // END SHOW ////////
