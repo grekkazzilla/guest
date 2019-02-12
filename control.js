@@ -259,7 +259,17 @@ function pushToggle(tgl,bln){
         tgl.getElementsByTagName('text')[0].setAttribute('fill',strTxt);
     }
 }
+//
 function mirrHor(btn){
     var pth=btn.getElementsByTagName('path')[0];
     pth.setAttribute('transform','translate('+(btn.rx-pth.w*pth.z/2+pth.w*pth.z)+','+(btn.ry-pth.h*pth.z/2)+') scale('+(pth.z*-1)+','+pth.z+')');
+}
+//
+function setRank(intRank){
+    for(var i=0;i<5;i++){
+        var btn=o('btnRank'+(i+1));
+        var pth=btn.getElementsByTagName('path')[2];
+        if(btn.intRank<=intRank) pth.setAttribute('transform','translate('+pth.x+','+pth.y+') scale('+pth.z+')');
+        else pth.setAttribute('transform','scale(0)');
+    }
 }

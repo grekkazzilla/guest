@@ -19,6 +19,8 @@ function init(){
     getBlurFilter('blr2',2,dfs);
     getBlurFilter('blr3',3,dfs);
     getBlurFilter('blr8',8,dfs);
+    getBlurFilter('blr10',10,dfs);
+    getBlurFilter('blr12',12,dfs);
     getBlurFilter('blr14',14,dfs);
     // FULL SCALE UP
     OBJ_var.fltScale=getScale(svgRoot,gWrap,OBJ_var.wArena,OBJ_var.hArena,10);
@@ -187,21 +189,31 @@ function init(){
     getButton(null,box,box.rx-30,110,60,60,true,'AAAC',picImage(),0.13,function(){},null);
     getButton(null,box,box.rx+40,110,60,60,true,'AAAC',picCam(),0.13,function(){},null);
     getText(null,box,15,200,18,'Arial','url(#grdButton)','none',0,'Self Ranking','start');
-    var w=40, h=w, s=10, z=0.11, p=picStar(), arr=new Array(
-        [function(){setSkill(1);}],
-        [function(){setSkill(2);}],
-        [function(){setSkill(3);}],
-        [function(){setSkill(4);}],
-        [function(){setSkill(5);}]
-    );
-    for(var i in arr){
-        var btn=getButton('btnSkill'+(i+1),box,box.rx-(w*5+s*4)/2+(w+s)*i,220,w,h,true,'AAAX',picStar(),z,function(){
-        
+    var w=40, h=40, s=10, z=0.11, p=picStar();
+    for(var i=0;i<5;i++){
+        var btn=getButton('btnRank'+(i+1),box,box.rx-(w*5+s*4)/2+(w+s)*i,220,w,h,true,'XXAX',p,z,function(){
+            setRank(this.intRank);
+            OBJ_var.arrU[0].intRank=this.intRank;
+            setLocal('rank',this.intRank);
         },null);
-        btn.getElementsByTagName('path')[0].setAttribute('filter','url(#blr14)');
-        btn.appendChild(getPath(null,btn,0,0,1,'url(#grdButton)','#bdb76d',0.5,'M 5 0 C 2.23 0 0 2.23 0 5 L 0 35 C 0 37.77 2.23 40 5 40 L 35 40 C 37.77 40 40 37.77 40 35 L 40 5 C 40 2.23 37.77 0 35 0 L 5 0 z M 19.90625 5.21875 C 20.356973 5.21375 20.758674 5.49315 20.9375 5.90625 L 24.5 14.15625 C 24.66421 14.53895 25.021181 14.7805 25.4375 14.8125 L 34.40625 15.5 C 34.855902 15.5336 35.231836 15.8226 35.375 16.25 C 35.518162 16.6775 35.4015 17.1398 35.0625 17.4375 L 28.3125 23.375 C 27.999716 23.65 27.86925 24.0948 27.96875 24.5 L 30.09375 33.21875 C 30.2015 33.65595 30.01781 34.13805 29.65625 34.40625 C 29.294815 34.67435 28.824393 34.69815 28.4375 34.46875 L 20.6875 29.875 C 20.328208 29.6617 19.885626 29.6558 19.53125 29.875 L 11.90625 34.59375 C 11.522383 34.83085 11.023861 34.8236 10.65625 34.5625 C 10.28871 34.3005 10.12014 33.84595 10.21875 33.40625 L 12.1875 24.625 C 12.27874 24.2188 12.13046 23.80155 11.8125 23.53125 L 4.96875 17.71875 C 4.6257348 17.42755 4.4900292 16.96085 4.625 16.53125 C 4.7600971 16.10185 5.1452959 15.791 5.59375 15.75 L 14.53125 14.9375 C 14.94637 14.899 15.311409 14.6358 15.46875 14.25 L 18.875 5.90625 C 19.045762 5.48915 19.456535 5.22875 19.90625 5.21875 z'));
-        btn.appendChild(getPath(null,btn,(w-p[0]*z)/2,(w-p[1]*z)/2,z,'url(#grdGold)','url(#grdGoldBrd)',5,p[2]));
+        var pth=btn.getElementsByTagName('path')[0];
+        pth.setAttribute('fill','transparent');
+        pth.setAttribute('stroke','#000');
+        pth.setAttribute('stroke-width','10');
+        pth.setAttribute('filter','url(#blr12)');
+        getPath(null,btn,0,0,1,'url(#grdButton)','#bdb76d',0.5,'M 5 0 C 2.23 0 0 2.23 0 5 L 0 35 C 0 37.77 2.23 40 5 40 L 35 40 C 37.77 40 40 37.77 40 35 L 40 5 C 40 2.23 37.77 0 35 0 L 5 0 z M 19.90625 5.21875 C 20.356973 5.21375 20.758674 5.49315 20.9375 5.90625 L 24.5 14.15625 C 24.66421 14.53895 25.021181 14.7805 25.4375 14.8125 L 34.40625 15.5 C 34.855902 15.5336 35.231836 15.8226 35.375 16.25 C 35.518162 16.6775 35.4015 17.1398 35.0625 17.4375 L 28.3125 23.375 C 27.999716 23.65 27.86925 24.0948 27.96875 24.5 L 30.09375 33.21875 C 30.2015 33.65595 30.01781 34.13805 29.65625 34.40625 C 29.294815 34.67435 28.824393 34.69815 28.4375 34.46875 L 20.6875 29.875 C 20.328208 29.6617 19.885626 29.6558 19.53125 29.875 L 11.90625 34.59375 C 11.522383 34.83085 11.023861 34.8236 10.65625 34.5625 C 10.28871 34.3005 10.12014 33.84595 10.21875 33.40625 L 12.1875 24.625 C 12.27874 24.2188 12.13046 23.80155 11.8125 23.53125 L 4.96875 17.71875 C 4.6257348 17.42755 4.4900292 16.96085 4.625 16.53125 C 4.7600971 16.10185 5.1452959 15.791 5.59375 15.75 L 14.53125 14.9375 C 14.94637 14.899 15.311409 14.6358 15.46875 14.25 L 18.875 5.90625 C 19.045762 5.48915 19.456535 5.22875 19.90625 5.21875 z');
+        getPath(null,btn,(w-p[0]*z)/2,(w-p[1]*z)/2,z,'url(#grdGold)','url(#grdGoldBrd)',5,p[2]);
+        btn.intRank=i+1;
+        btn.arrOn[0]=['path', 0, 'filter', 'url(#blr12)', 'url(#blr8)'];
+        btn.arrOn[1]=['path', 1, 'fill', 'url(#grdButton)', '#bdb76d'];
+        btn.arrOn[2]=['path', 2, 'fill', 'url(#grdGold)', '#aa8800'];
+        btn.arrOn[3]=['path', 2, 'stroke', 'url(#grdGoldBrd)', '#aa8800'];
     }
+    // SETTING
+    var intRank=getLocal('rank',3)*1;
+    if(intRank<1 || intRank>5) intRank=3; 
+    OBJ_var.arrU[0].intRank=intRank;
+    setRank(intRank);
     ////////////////////
     // END SHOW ////////
     ////////////////////
