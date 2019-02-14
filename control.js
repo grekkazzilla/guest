@@ -52,11 +52,9 @@ function getMenu(strID,gRoot,wButton,hButton,intPad,intMargin,qtyHor,qtyVer,blnS
 function showDiv(div){
     if(typeof(div)=='string') div=o(div);
     hideG(OBJ_var.divOn);
-    OBJ_var.divPrev=OBJ_var.divOn;
     OBJ_var.divOn=div;
     if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
     showG(div);
-    if(div.id!='divForm') div.appendChild(o('gBottom'));
 }
 function showBox(box){
     if(typeof(box)=='string') box=o(box);
@@ -265,7 +263,10 @@ function mirrHor(btn){
     pth.setAttribute('transform','translate('+(btn.rx-pth.w*pth.z/2+pth.w*pth.z)+','+(btn.ry-pth.h*pth.z/2)+') scale('+(pth.z*-1)+','+pth.z+')');
 }
 //
-function setRank(intRank){
+function putPic(){
+    
+}
+function putRank(intRank){
     for(var i=0;i<5;i++){
         var btn=o('btnRank'+(i+1));
         var pth=btn.getElementsByTagName('path')[2];

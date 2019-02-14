@@ -45,6 +45,10 @@
         u.lnkPic='';
         u.pcn=null;
         u.intRank=0;
+        u.lnkPic='';
+        u.strPic='';
+        u.wPic=0;
+        u.hPic=0;
         OBJ_var.arrU.push(u);
     }
 </script>

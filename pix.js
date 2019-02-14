@@ -1,6 +1,6 @@
 function setPix(){
     OBJ_var.blnLock=true;
-    var z=0.3, btn=o('btnClosePix');
+    var z=0.4, btn=o('btnRefreshPix');
     hideG(btn.getElementsByTagName('g')[0]);
     drawLoad(o('gLoad'),'url(#grdPale)',6,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
     var w=o('gPic0').rx*2, h=o('gPic0').ry*2;
@@ -33,7 +33,7 @@ function setPix(){
             }
         }
         OBJ_var.blnLock=false;
-        var btn=o('btnClosePix');
+        var btn=o('btnRefreshPix');
         showG(btn.getElementsByTagName('g')[0]);
         hideG('gLoad');
     });

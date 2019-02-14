@@ -74,9 +74,11 @@ function init(){
     var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,0,0);
     getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
     getButton('btnMenu',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){},null);
-    var btn=getButton('btnPlayer',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picUser(),0.0,function(){showBox('boxPlayer');},null);
+    var btn=getButton('btnPlayer',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picNone(),0.225,function(){showBox('boxPlayer');},null);
     getPath(null,btn,37,10,0.225,'#bdb76d','none',0,'M 105.5 0 C 104.74638 -0.0097246875 104.01468 0.0072925 103.28125 0.03125 C 98.391734 0.19092 93.9294 1.08498 89.8125 2.53125 C 86.69648 3.62252 86.53689 8.17035 89.59375 9.40625 C 103.67501 15.08608 115.78969 26.57025 122.46875 45.1875 C 122.65283 45.69368 122.83566 46.18788 123 46.6875 C 120.0549 41.90828 116.23987 37.558 111.625 33.84375 C 97.379394 22.33289 77.656222 20.47536 60.53125 26.9375 C 50.354875 30.77665 43.478146 36.60218 38.59375 43.28125 C 37.016018 45.43748 38.858917 48.35814 41.46875 47.8125 C 56.943676 44.58474 74.010786 47.68593 90.15625 60.53125 C 97.63733 66.47403 103.15094 73.10075 106.9375 80.0625 C 102.08597 74.55358 95.33445 70.66358 87.53125 69.5 C 75.573354 67.70533 63.698403 73.57658 56.5 83.3125 C 53.614063 87.20425 51.971414 91.10493 51.15625 94.9375 C 50.604046 97.54077 53.677607 99.5119 55.78125 97.875 C 62.999377 92.2609 72.614318 89.31214 84.375 90.96875 C 94.03204 92.32955 101.4383 96.2871 106.75 101.75 C 105.80337 102.55858 46.88968 146.52303 8.28125 281.15625 C 5.927798 283.39125 3.73036 285.71405 1.71875 288.09375 C -2.238729 292.78105 1.098462 300 7.21875 300 L 252.1875 300 C 258.21575 300.033 261.67957 292.9273 257.78125 288.3125 C 239.84111 267.0855 207.69542 250.88795 168.84375 244.28125 C 165.04406 221.52905 158.24 210.9208 158.0625 210.625 C 161.02075 209.2379 164.61168 208.75565 168.6875 209.65625 C 173.65734 210.77385 177.03613 213.4105 179.09375 216.75 C 179.69198 217.7229 181.22875 217.3807 181.40625 216.25 C 181.66263 214.5934 181.56527 212.78625 181 210.78125 C 179.58005 205.79165 175.71815 201.6538 170.65625 200.5625 C 167.34958 199.8591 164.05544 200.4025 161.28125 201.875 C 163.85165 199.6531 167.03918 197.8312 170.9375 196.5625 C 179.35208 193.8672 186.70014 195.20185 192.40625 198.84375 C 193.37262 199.45515 194.55898 198.5419 194.25 197.4375 C 193.29678 194.0125 191.40355 190.67685 187.90625 187.59375 C 182.01603 182.41345 173.8232 180.1598 166.375 182.625 C 163.97552 183.4205 161.77485 184.5965 159.875 186.0625 C 160.013 185.885 160.17445 185.70215 160.3125 185.53125 C 165.8017 179.08225 172.40468 176.2828 178.90625 176.125 C 180.31963 176.092 180.9597 174.25755 179.875 173.34375 C 177.56758 171.42415 174.7192 169.9138 171.03125 169.125 C 162.73502 167.3566 153.99101 169.8604 148.71875 176.5 C 146.82546 178.8732 145.51258 181.5515 144.75 184.3125 C 142.51488 182.5047 139.9007 181.0783 136.96875 180.25 C 128.81713 177.936 120.26862 181.01635 114.5625 187.28125 C 112.09729 189.98315 110.69349 192.8048 109.9375 195.625 C 109.54306 197.0779 111.21314 198.2658 112.46875 197.4375 C 117.81332 193.8613 124.71185 192.33215 132.84375 194.34375 C 133.06727 194.40975 133.27648 194.47855 133.5 194.53125 C 131.10051 194.43925 128.64451 194.744 126.21875 195.5 C 118.73109 197.8338 113.39337 204.44825 111.625 212.09375 C 110.61262 216.49825 110.98114 220.2394 112.125 223.5 C 112.53916 224.6833 114.16978 224.68855 114.65625 223.53125 C 117.22664 217.36495 122.37315 212.1625 130.65625 209.5 C 134.55456 208.2444 138.21477 207.85385 141.59375 208.15625 C 138.47115 208.57035 135.48675 210.0578 133.21875 212.5625 C 129.7346 216.4016 128.99476 222.01525 130.75 226.90625 C 131.4534 228.87835 132.47295 230.39075 133.65625 231.59375 C 134.44511 232.40245 135.86672 231.8115 135.78125 230.6875 C 135.48542 226.7628 136.70821 222.6878 140.09375 218.875 C 142.7036 215.9496 145.67666 214.0457 148.6875 213.625 C 148.6805 213.625 153.46103 225.36665 154.125 242.28125 C 146.17716 241.46605 137.99193 241 129.65625 241 C 109.24433 241 89.846669 243.54785 72.28125 248.15625 C 75.923183 168.78965 124.75334 116.20045 124.8125 115.9375 C 130.82761 119.9147 135.9318 126.00987 139.21875 134.5625 C 143.49835 145.67237 142.74702 155.7531 138.875 164.0625 C 137.76402 166.4422 140.35711 168.95475 142.75 167.84375 C 146.3262 166.18715 149.80013 163.68295 152.96875 159.96875 C 160.81138 150.75875 163.85677 137.86633 159.40625 126.625 C 156.5006 119.28853 151.16773 113.61573 144.71875 110.125 C 152.34447 112.24178 160.04358 116.09503 167.53125 122.03125 C 183.4269 134.65968 190.36061 150.29645 190.90625 165.84375 C 191.01141 168.76255 194.5952 170.0607 196.46875 167.8125 C 201.6424 161.633 205.53727 153.77155 206.9375 143.3125 C 209.36985 125.162 203.11718 106.33672 188.6875 95.0625 C 184.02005 91.40742 178.9186 88.7256 173.59375 86.9375 C 174.12623 86.9902 174.64845 87.04125 175.1875 87.09375 C 194.59362 89.36173 208.45738 98.35481 217.1875 110.5625 C 219.2254 113.409 223.82755 112.19635 224.15625 108.71875 C 224.83337 101.9345 224.03047 94.62875 220.875 86.6875 C 213.57799 68.3069 197.46509 54.57602 177.75 52.90625 C 170.6765 52.30802 163.80101 53.20228 157.4375 55.3125 C 158.06203 48.63343 157.36334 41.74481 155.1875 35 C 149.1198 16.1724 132.11323 3.57171 112.5625 0.59375 C 110.1238 0.2239625 107.76086 0.029174062 105.5 0 z');
+    btn.arrOn.push(['path',1,'fill','#bdb76d','url(#grdPale)']);
     
+    btn.req=function(){}
     getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
     getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){},null);
     // BOX VAR
@@ -186,13 +188,13 @@ function init(){
     getRect(null,box,10,60,240,40,5,'transparent','#eee8aa',1);
     getText(null,box,box.rx,85,18,'Arial','url(#grdIcon)','none',0,'Stranger','middle');
     getButton(null,box,box.rx-100,110,60,60,true,'AAAC',picPenA(),0.12,function(){},null);
-    getButton(null,box,box.rx-30,110,60,60,true,'AAAC',picImage(),0.13,function(){},null);
+    getButton(null,box,box.rx-30,110,60,60,true,'AAAC',picImage(),0.13,function(){showDiv('divPic');setPix();},null);
     getButton(null,box,box.rx+40,110,60,60,true,'AAAC',picCam(),0.13,function(){},null);
     getText(null,box,15,200,18,'Arial','url(#grdButton)','none',0,'Self Ranking','start');
     var w=40, h=40, s=10, z=0.11, p=picStar();
     for(var i=0;i<5;i++){
         var btn=getButton('btnRank'+(i+1),box,box.rx-(w*5+s*4)/2+(w+s)*i,220,w,h,true,'XXAX',p,z,function(){
-            setRank(this.intRank);
+            putRank(this.intRank);
             OBJ_var.arrU[0].intRank=this.intRank;
             setLocal('rank',this.intRank);
         },null);
@@ -209,11 +211,64 @@ function init(){
         btn.arrOn[2]=['path', 2, 'fill', 'url(#grdGold)', '#aa8800'];
         btn.arrOn[3]=['path', 2, 'stroke', 'url(#grdGoldBrd)', '#aa8800'];
     }
+    ////////////////////
+    // DIV PIC /////////
+    ////////////////////
+    var div=getG('divPic',gWrap,0,0,1,false,OBJ_var.wArena/2,OBJ_var.hArena/2);
+    getButton(null,div,div.rx-20,10,40,40,true,'BXBX',picCross(),0.09,function(){showDiv('divArena')},null);
+    getButton('btnRefreshPix',div,div.rx-30,div.ry*2-70,60,60,true,'DXCX',picRefresh(),0.13,function(){setPix();},null);
+    var w=90, h=w, r=0, s=15, nh=3, nv=4, x=(400-w*nh-s*(nh-1))/2, y=(600-h*nv-s*(nv-1)-15)/2;
+    for(var i=0;i<12;i++){
+        var g=getG('gPic'+i,divPic,x,y,1,true,w/2,h/2);
+        getRect(null,g,0,0,w,h,r,'#808080','none',0).setAttribute('filter','url(#blr2)');
+        getRect(null,g,0,0,w,h,r,'#fff','none',0);
+        getPath(null,g,0,0,0,'none','none',0,'');
+        g.style.cursor='pointer';
+        g.onclick=function(){
+            if(OBJ_var.blnLock===false){
+                OBJ_var.blnLock=true;
+                showDiv('divArena');
+                showBox('menuMain');
+                var z=0.6, gPic=o('gPlayerPicA'), pthPic=gPic.getElementsByTagName('path')[0];
+                pthPic.setAttribute('d','');
+                drawLoad('gLoad','url(#grdButton)',6,(gPic.rx*2-100*z)/2,(gPic.ry*2-100*z)/2,z,gPic);
+                sendRequest('async_pic.php','file='+this.strFile+'&shot='+OBJ_var.strShot,function(){
+                    hideG('gLoad');
+                    var rsp=xhr.responseText.split('~');
+                    if(rsp[0]=='change_pic_ok'){
+                        hideG('gLoad');
+                        var arrPic=rsp[2].split(':');
+                        var wPic=arrPic[0]*1;
+                        var hPic=arrPic[1]*1;
+                        var strPicD=arrPic[2];
+                        var zPic=0.225, gPic=o('gPlayerPicA'), pthPic=gPic.getElementsByTagName('path')[0];
+                        pthPic.setAttribute('transform','translate('+(gPic.rx-wPic*zPic/2)+','+(gPic.ry-hPic*zPic/2)+') scale('+zPic+')');
+                        pthPic.setAttribute('d',strPicD);
+                        var zPic=0.3, gPic=o('gPlayerPicB'), pthPic=gPic.getElementsByTagName('path')[0];
+                        pthPic.setAttribute('transform','translate('+(gPic.rx-wPic*zPic/2)+','+(gPic.ry-hPic*zPic/2)+') scale('+zPic+')');
+                        pthPic.setAttribute('d',strPicD);
+                        OBJ_var.blnLock=false;
+                    }
+                    else{
+                        showSay(rsp[1],'divArena');
+                        o('btnCloseSay').do=function(){
+                            hideG('boxSay');
+                            OBJ_var.blnLock=false;
+                        }
+                    }
+                });
+            }
+        }
+        x+=(w+s);if((i+1)%nh==0){x-=(w+s)*nh;y+=(h+s);}
+    }
     // SETTING
-    var intRank=getLocal('rank',3)*1;
-    if(intRank<1 || intRank>5) intRank=3; 
+    var lnkPic=getLocal('pic','00007.txt'); if((typeof lnkPic)!='string') lnkPic='00007.txt';
+    var intRank=getLocal('rank',3)*1; if(intRank<1 || intRank>5 || (typeof intRank)!='number') intRank=3; 
+    OBJ_var.arrU[0].lnkPic=lnkPic;
     OBJ_var.arrU[0].intRank=intRank;
-    setRank(intRank);
+    putPic();
+    putRank(intRank);
+    
     ////////////////////
     // END SHOW ////////
     ////////////////////
