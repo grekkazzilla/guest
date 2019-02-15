@@ -37,19 +37,19 @@
     OBJ_var.boxOn=null;
     OBJ_var.divOn=null;
     OBJ_var.wbs=null;
-    OBJ_var.arrU=new Array();
-    getU();
-    function getU(){
-        var u=new Object();
-        u.strName='';
-        u.lnkPic='';
-        u.pcn=null;
-        u.intRank=0;
-        u.lnkPic='';
-        u.strPic='';
-        u.wPic=0;
-        u.hPic=0;
-        OBJ_var.arrU.push(u);
+    OBJ_var.arrUser=new Array();
+    getUser();
+    function getUser(){
+        var objUser=new Object();
+        objUser.strName='';
+        objUser.lnkPic='';
+        objUser.pcn=null;
+        objUser.intRank=0;
+        objUser.lnkPic='';
+        objUser.strPic='';
+        objUser.wPic=0;
+        objUser.hPic=0;
+        OBJ_var.arrUser.push(objUser);
     }
 </script>
 </head>
