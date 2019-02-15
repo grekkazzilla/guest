@@ -65,29 +65,13 @@ function showBox(box){
     showG(box);
     OBJ_var.boxOn=box;
     OBJ_var.divOn.appendChild(box);
+    if(box.id=='boxPlayer') o('btnPlayer').getElementsByTagName('path')[0].setAttribute('fill','url(#grdIcon)');
 }
 function hideBox(box){
     if(typeof(box)=='string') box=o(box);
     hideG(box);
     OBJ_var.boxOn=null;
-    if(box.id=='menuTime'){
-        setMenuTime(null);
-        var numArena=OBJ_var.numArena;
-        var objMatch=OBJ_var.arrArena[numArena].objMatch;
-        setLocal('timeA'+numArena,objMatch.intTimeA);
-        setLocal('timeB'+numArena,objMatch.intTimeB);
-        setLocal('timeC'+numArena,objMatch.intTimeC);
-        setLocal('addA'+numArena,objMatch.intAddA);
-        setLocal('addB'+numArena,objMatch.intAddB);
-        setLocal('addC'+numArena,objMatch.intAddC);
-        setLocal('clockA'+numArena,objMatch.ctgClockA);
-        setLocal('clockB'+numArena,objMatch.ctgClockB);
-        setLocal('clockC'+numArena,objMatch.ctgClockC);
-        setLocal('moveA'+numArena,objMatch.intMoveA);
-        setLocal('moveB'+numArena,objMatch.intMoveB);
-        setLocal('sumA'+numArena,objMatch.blnSumA);
-        setLocal('sumB'+numArena,objMatch.blnSumB);
-    }
+    if(box.id=='boxPlayer') o('btnPlayer').getElementsByTagName('path')[0].setAttribute('fill','#bdb76d');
 }
 ////////////////////////////////////////////////
 // MAKE BUTTON AND ACTIONS
