@@ -11,7 +11,7 @@
 <meta name='viewport' content='user-scalable=no' />
 <link rel='stylesheet' type='text/css' href='style.css' />
 <style type='text/css'>
-    section,form{display:none;}
+    section,input,canvas{display:none;}
 </style>
 <!--script type='text/javascript' src='../libr/p4wn.js'></script>
 <script type='text/javascript' src='../libr/peer.min.js'></script-->
@@ -37,6 +37,7 @@
     OBJ_var.boxOn=null;
     OBJ_var.divOn=null;
     OBJ_var.wbs=null;
+    OBJ_var.dataImage=getLocal('img','');
     OBJ_var.arrUser=new Array();
     getUser();
     function getUser(){
@@ -49,6 +50,7 @@
         objUser.strPic='';
         objUser.wPic=0;
         objUser.hPic=0;
+        objUser.img=null;
         OBJ_var.arrUser.push(objUser);
     }
 </script>
@@ -63,8 +65,7 @@
             <defs></defs>
         </svg>
     </section>
-    <form enctype='multipart/form-data'>
-        <input id='inpImage' type='file' onchange='if(this.value!="") setImage(this.files);'>
-    </form>
+    <input id='inpImage' type='file' onchange='if(this.value!="") setImage(this.files);'>
+    <canvas width='196' height='196' id='cnvImage'></canvas>
 </body>
 </html>
