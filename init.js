@@ -294,7 +294,12 @@ function init(){
         ctx.drawImage(img,xImage,yImage,wImage,wImage,0,0,196,196);
         var dataURL = cnv.toDataURL('image/png');
         var dataImage=dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        OBJ_var.dataImage=dataImage;
+        o('boxPlayer').getElementsByTagName('image')[0].setAttribute('xlink:href','data:image/png;base64,'+OBJ_var.dataImage);
         setLocal('img',dataImage);
+        showDiv('divArena');
+        showBox('boxPlayer');
+        OBJ_var.blnLock=false;
     },null);
     getButton(null,div,200+5+10+60,10,60,60,true,'DXEX',picNo(),0.16,function(){showDiv('divArena');},null);
     var z=0.13, p=picCam(); getPath(null,div,(OBJ_var.wArena-p[0]*z)/2,82,z,'url(#grdButton)','none',0,p[2]);
