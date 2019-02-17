@@ -2,7 +2,6 @@
 if (window.File && window.FileReader && window.FileList && window.Blob){}
 else alert('The File APIs are not fully supported in this browser.');
 function setImage(files){
-    OBJ_var.blnLock=true;
     var file = files[0];
     var reader = new FileReader();
     reader.onload = function (e) {
@@ -59,7 +58,6 @@ function setImage(files){
                 //
                 rctSelect.blnZoom=false;
                 rctSelect.blnMove=false;
-                OBJ_var.blnLock=false;
             }
         }
     };

@@ -829,15 +829,6 @@ function init(){
         x+=(w+s);if((i+1)%nh==0){x-=(w+s)*nh;y+=(h+s);}
     }
     
-    // BOX CONFIRM
-    var gBoard=o('gBoard');
-    var wBox=250, hBox=150, xBox=gBoard.x+gBoard.rx*gBoard.z-wBox/2, yBox=gBoard.y+gBoard.ry*gBoard.z-hBox/2;
-    var box=getBox('boxConfirm',o('divArena'),xBox,yBox,wBox,hBox,false,'url(#grdPale)');
-    var wIcon=60, zPic=0.15, arrPic=picBin();
-    var icn=getG('icnConfirm',box,1,1,1,true,wIcon/2,wIcon/2);
-    getPath(null,icn,(icn.rx-arrPic[0]*zPic/2),(icn.ry-arrPic[1]*zPic/2),zPic,'url(#grdButton)','none',0,arrPic[2]);
-    getText('txtConfirmA',box,box.rx,40,18,'Arial','url(#grdIcon)','none',0,'Yes or no?','middle').style.fontWeight='bold';
-    getButton('btnConfirmYes',box,box.rx-70,75,60,60,true,'DXEX',picYes(),0.16,function(){},null);
-    getButton('btnConfirmNo',box,box.rx+5,75,60,60,true,'DXEX',picNo(),0.16,function(){},null);*/
+    
     
 }

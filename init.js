@@ -194,8 +194,8 @@ function init(){
     img.setAttribute('height',w);
     getButton('btnName',box,0,110,60,60,true,'AAAX',picPenA(),0.12,function(){},null);
     getButton('btnPic',box,0,110,60,60,true,'AAAX',picImage(),0.13,function(){showDiv('divPic');setPix();},null);
-    getButton('btnImage',box,0,0,60,60,true,'AAAC',picCam(),0.13,function(){OBJ_var.blnLock=true;o('inpImage').click();},null);
-    getButton('btnBin',box,210,175,60,60,false,'AACX',picBin(),0.13,function(){},null);
+    getButton('btnImage',box,0,0,60,60,true,'AAAC',picCam(),0.13,function(){o('inpImage').click();},null);
+    getButton('btnBin',box,210,175,60,60,false,'AACX',picBin(),0.13,function(){ showBox(box);},null);
     getText('labRank',box,0,0,18,'Arial','url(#grdButton)','none',0,'Self Ranking','start');
     var w=40, h=40, s=10, z=0.11, p=picStar();
     var gRank=getG('gRank',box,0,0,1,true,(40*5+s*4)/2,20);
@@ -218,6 +218,20 @@ function init(){
         btn.arrOn[2]=['path', 2, 'fill', 'url(#grdGold)', '#aa8800'];
         btn.arrOn[3]=['path', 2, 'stroke', 'url(#grdGoldBrd)', '#aa8800'];
     }
+    // BOX CONFIRM
+    var box=getBox('boxConfirm',div,250,150,false,'url(#grdPale)');
+    var wIcon=60, zPic=0.15, arrPic=picBin();
+    var icn=getG('icnConfirm',box,1,1,1,true,wIcon/2,wIcon/2);
+    getPath(null,icn,(icn.rx-arrPic[0]*zPic/2),(icn.ry-arrPic[1]*zPic/2),zPic,'url(#grdButton)','none',0,arrPic[2]);
+    getText('txtConfirmA',box,box.rx,40,18,'Arial','url(#grdIcon)','none',0,'Yes or no?','middle').style.fontWeight='bold';
+    getButton('btnConfirmYes',box,box.rx-70,75,60,60,true,'DXEX',picYes(),0.16,function(){
+        OBJ_var.arrUser[0].dataImage='';
+        setLocal('img','');
+        showBox('boxHost');
+    },null);
+    getButton('btnConfirmNo',box,box.rx+5,75,60,60,true,'DXEX',picNo(),0.16,function(){
+        showBox('boxHost');
+    },null);
     ////////////////////
     // DIV PIC /////////
     ////////////////////
@@ -278,8 +292,8 @@ function init(){
         var cnv=document.getElementById('cnvImage');
         var ctx=cnv.getContext('2d');
         var rct=o('rctChangeSelect');
-        var xImage=rct.xThis/rct.fltScale;
-        var yImage=rct.yThis/rct.fltScale;
+        var xImage=(rct.xThis-rct.xImage0)/rct.fltScale;
+        var yImage=(rct.yThis-rct.yImage0)/rct.fltScale;
         var wImage=rct.wThis/rct.fltScale;
         ctx.drawImage(img,xImage,yImage,wImage,wImage,0,0,196,196);
         OBJ_var.arrUser[0].dataImage=cnv.toDataURL('image/png');
@@ -289,8 +303,8 @@ function init(){
         showBox('boxHost');
     },null);
     getButton(null,div,200+5+10+60,10,60,60,true,'DXEX',picNo(),0.16,function(){showDiv('divArena');},null);
-    var z=0.13, p=picCam(); getPath(null,div,(OBJ_var.wArena-p[0]*z)/2,82,z,'url(#grdButton)','none',0,p[2]);
-    var w=396, gImage=getG('gImage',div,4,125,1,true,w/2,w/2);
+    var z=0.16, p=picCam(); getPath(null,div,(OBJ_var.wArena-p[0]*z)/2,540,z,'url(#grdButton)','none',0,p[2]);
+    var w=396, gImage=getG('gImage',div,4,110,1,true,w/2,w/2);
     getRect(null,gImage,0,0,w,w,0,'transparent','url(#grdButton)',1);
     var img=document.getElementsByTagName('image')[0].cloneNode(true);
     gImage.appendChild(img);
@@ -319,7 +333,9 @@ function init(){
         rctSelect.onmouseout=function(){this.blnMove=false;}
         rctSelect.onmousemove=function(){putImageMove(this,event.pageX,event.pageY);}
     }
-    // SETTING
+    ////////////////////
+    // SETTING /////////
+    ////////////////////
     var lnkPic=getLocal('pic','00007.txt'); if((typeof lnkPic)!='string') lnkPic='00007.txt';
     var intRank=getLocal('rank',3)*1; if(intRank<1 || intRank>5 || (typeof intRank)!='number') intRank=3;
     var dataImage=getLocal('img','');

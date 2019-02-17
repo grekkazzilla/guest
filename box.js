@@ -24,48 +24,51 @@ function showDiv(div){
 }
 function showBox(box){
     if(typeof(box)=='string') box=o(box);
-    if(box.id=='boxHost'){
-        o('btnHost').getElementsByTagName('path')[0].setAttribute('fill','url(#grdIcon)');
-        if(OBJ_var.arrUser[0].dataImage==''){
-            box.rx=260/2, box.ry=270/2;
-            var xLab=15, yLabRank=200;
-            var xPen=box.rx-100, xPic=box.rx-30, xCam=box.rx+40, yCam=110;
-            var yRank=220;
-            hideG('btnBin');
-            hideG('gImgHost');
+    if(OBJ_var.boxOn==box) hideBox(OBJ_var.boxOn);
+    else{
+        if(box.id=='boxHost'){
+            o('btnHost').getElementsByTagName('path')[0].setAttribute('fill','url(#grdIcon)');
+            if(OBJ_var.arrUser[0].dataImage==''){
+                box.rx=260/2, box.ry=270/2;
+                var xLab=15, yLabRank=200;
+                var xPen=box.rx-100, xPic=box.rx-30, xCam=box.rx+40, yCam=110;
+                var yRank=220;
+                hideG('btnBin');
+                hideG('gImgHost');
+            }
+            else{
+                box.rx=280/2, box.ry=350/2;
+                var xLab=20, yLabRank=270;
+                var xPen=box.rx+5, xPic=box.rx+70, xCam=box.rx+5, yCam=175;
+                var yRank=290;
+                showG('btnBin');
+                showG('gImgHost');
+            }
+            var gBoard=o('gBoard');
+            box.x=gBoard.x+gBoard.rx*gBoard.z-box.rx;
+            box.y=gBoard.y+gBoard.ry*gBoard.z-box.ry;
+            var arrRect=box.getElementsByTagName('rect');
+            arrRect[0].setAttribute('width',box.rx*2);
+            arrRect[0].setAttribute('height',box.ry*2);
+            arrRect[1].setAttribute('width',box.rx*2);
+            arrRect[1].setAttribute('height',box.ry*2);
+            o('labName').setAttribute('x',xLab);
+            o('rctName').setAttribute('width',box.rx*2-20);
+            o('txtName').setAttribute('x',box.rx);
+            var btn=o('btnName'); jumpG(btn,xPen,btn.y);
+            var btn=o('btnPic'); jumpG(btn,xPic,btn.y);
+            var btn=o('btnImage'); jumpG(btn,xCam,yCam);
+            var lab=o('labRank'); lab.setAttribute('x',xLab); lab.setAttribute('y',yLabRank);
+            var g=o('gRank'); jumpG(g,box.rx-g.rx,yRank);
         }
-        else{
-            box.rx=280/2, box.ry=350/2;
-            var xLab=20, yLabRank=270;
-            var xPen=box.rx+5, xPic=box.rx+70, xCam=box.rx+5, yCam=175;
-            var yRank=290;
-            showG('btnBin');
-            showG('gImgHost');
-        }
-        var gBoard=o('gBoard');
-        box.x=gBoard.x+gBoard.rx*gBoard.z-box.rx;
-        box.y=gBoard.y+gBoard.ry*gBoard.z-box.ry;
-        var arrRect=box.getElementsByTagName('rect');
-        arrRect[0].setAttribute('width',box.rx*2);
-        arrRect[0].setAttribute('height',box.ry*2);
-        arrRect[1].setAttribute('width',box.rx*2);
-        arrRect[1].setAttribute('height',box.ry*2);
-        o('labName').setAttribute('x',xLab);
-        o('rctName').setAttribute('width',box.rx*2-20);
-        o('txtName').setAttribute('x',box.rx);
-        var btn=o('btnName'); jumpG(btn,xPen,btn.y);
-        var btn=o('btnPic'); jumpG(btn,xPic,btn.y);
-        var btn=o('btnImage'); jumpG(btn,xCam,yCam);
-        var lab=o('labRank'); lab.setAttribute('x',xLab); lab.setAttribute('y',yLabRank);
-        var g=o('gRank'); jumpG(g,box.rx-g.rx,yRank);
+        var btnClose=document.getElementById('btnClose');
+        jumpG(btnClose,box.rx*2-50,10);
+        box.appendChild(btnClose);
+        if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
+        OBJ_var.boxOn=box;
+        OBJ_var.divOn.appendChild(box);
+        showG(box);
     }
-    if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
-    var btnClose=document.getElementById('btnClose');
-    jumpG(btnClose,box.rx*2-50,10);
-    box.appendChild(btnClose);
-    OBJ_var.boxOn=box;
-    OBJ_var.divOn.appendChild(box);
-    showG(box);
 }
 function hideBox(box){
     if(typeof(box)=='string') box=o(box);
