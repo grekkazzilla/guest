@@ -28,6 +28,9 @@
 <script type='text/javascript' src='say.js'></script>
 <script type='text/javascript' src='pix.js'></script>
 <script type='text/javascript' src='img.js'></script>
+<script type='text/javascript' src='put.js'></script>
+<script type='text/javascript' src='box.js'></script>
+<script type='text/javascript' src='button.js'></script>
 <script type='text/javascript'>
     var OBJ_var=new Object();
     OBJ_var.wArena=400;
@@ -37,7 +40,6 @@
     OBJ_var.boxOn=null;
     OBJ_var.divOn=null;
     OBJ_var.wbs=null;
-    OBJ_var.dataImage=getLocal('img','');
     OBJ_var.arrUser=new Array();
     getUser();
     function getUser(){
@@ -50,7 +52,7 @@
         objUser.strPic='';
         objUser.wPic=0;
         objUser.hPic=0;
-        objUser.img=null;
+        objUser.dataImage='';
         OBJ_var.arrUser.push(objUser);
     }
 </script>

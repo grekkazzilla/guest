@@ -74,7 +74,7 @@ function init(){
     var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,0,0);
     getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
     getButton('btnMenu',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){},null);
-    var btn=getButton('btnPlayer',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picNone(),0,function(){showBox('boxPlayer');},null);
+    var btn=getButton('btnHost',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picNone(),0,function(){showBox('boxHost');},null);
     btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
     getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
     getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){},null);
@@ -179,27 +179,28 @@ function init(){
         getButton(null,box,x,y,w,h,true,'AAAC',arr[i][0],arr[i][1],arr[i][2],null);
         x+=w+s;if((i+1)%qtyHor==0){x-=(w+s)*qtyHor;y+=h+s;}
     }
-    // BOX PLAYER
-    if(OBJ_var.dataImage=='') var blnImage=false, W=260, H=270;
-    else var blnImage=true, W=280, H=350;
-    var box=getBox('boxPlayer',div,W,H,false,'#fff');
-    if(blnImage===false) var x=15; else var x=20;
-    getText(null,box,x,35,18,'Arial','url(#grdButton)','none',0,'My Name','start');
-    getRect(null,box,10,60,W-20,40,5,'transparent','#eee8aa',1);
-    getText(null,box,box.rx,85,18,'Arial','url(#grdIcon)','none',0,'Stranger','middle');
-    if(blnImage===false) var x=box.rx-100; else var x=box.rx+5;
-    getButton(null,box,x,110,60,60,true,'AAAX',picPenA(),0.12,function(){},null);
-    if(blnImage===false) var x=box.rx-30; else var x=box.rx+70;
-    getButton(null,box,x,110,60,60,true,'AAAX',picImage(),0.13,function(){showDiv('divPic');setPix();},null);
-    if(blnImage===false) var x=box.rx+40, y=110; else var x=box.rx+5, y=175;
-    getButton(null,box,x,y,60,60,true,'AAAC',picCam(),0.13,function(){OBJ_var.blnLock=true;o('inpImage').click();},null);
-    if(blnImage===true) getButton(null,box,x+65,y,60,60,true,'AACX',picBin(),0.13,function(){},null);
-    if(blnImage===false) var x=15, y=200; else var x=20, y=270;
-    getText(null,box,x,y,18,'Arial','url(#grdButton)','none',0,'Self Ranking','start');
+    // BOX HOST
+    var box=getBox('boxHost',div,0,0,false,'#fff');
+    getText('labName',box,0,35,18,'Arial','url(#grdButton)','none',0,'My Name','start');
+    getRect('rctName',box,10,60,0,40,5,'transparent','#eee8aa',1);
+    getText('txtName',box,0,85,18,'Arial','url(#grdIcon)','none',0,'Stranger','middle');
+    var w=125, gImage=getG('gImgHost',box,10,110,1,true,w/2,w/2);
+    getRect(null,gImage,0,0,w,w,0,'transparent','url(#grdButton)',1);
+    var img=document.getElementsByTagName('image')[0].cloneNode(true);
+    gImage.appendChild(img);
+    img.setAttribute('x','0');
+    img.setAttribute('y','0');
+    img.setAttribute('width',w);
+    img.setAttribute('height',w);
+    getButton('btnName',box,0,110,60,60,true,'AAAX',picPenA(),0.12,function(){},null);
+    getButton('btnPic',box,0,110,60,60,true,'AAAX',picImage(),0.13,function(){showDiv('divPic');setPix();},null);
+    getButton('btnImage',box,0,0,60,60,true,'AAAC',picCam(),0.13,function(){OBJ_var.blnLock=true;o('inpImage').click();},null);
+    getButton('btnBin',box,210,175,60,60,false,'AACX',picBin(),0.13,function(){},null);
+    getText('labRank',box,0,0,18,'Arial','url(#grdButton)','none',0,'Self Ranking','start');
     var w=40, h=40, s=10, z=0.11, p=picStar();
-    if(blnImage===false) var y=220; else var y=290;
+    var gRank=getG('gRank',box,0,0,1,true,(40*5+s*4)/2,20);
     for(var i=0;i<5;i++){
-        var btn=getButton('btnRank'+(i+1),box,box.rx-(w*5+s*4)/2+(w+s)*i,y,w,h,true,'XXAX',p,z,function(){
+        var btn=getButton('btnRank'+(i+1),gRank,(w+s)*i,0,w,h,true,'XXAX',p,z,function(){
             putRank(this.intRank);
             OBJ_var.arrUser[0].intRank=this.intRank;
             setLocal('rank',this.intRank);
@@ -217,15 +218,6 @@ function init(){
         btn.arrOn[2]=['path', 2, 'fill', 'url(#grdGold)', '#aa8800'];
         btn.arrOn[3]=['path', 2, 'stroke', 'url(#grdGoldBrd)', '#aa8800'];
     }
-    var w=box.rx-15, gImage=getG('gImage',box,10,110,1,true,w/2,w/2);
-    getRect(null,gImage,0,0,w,w,0,'transparent','url(#grdButton)',1);
-    var img=document.getElementsByTagName('image')[0].cloneNode(true);
-    gImage.appendChild(img);
-    img.setAttribute('x','0');
-    img.setAttribute('y','0');
-    img.setAttribute('width',w);
-    img.setAttribute('height',w);
-    img.setAttribute('xlink:href','data:image/png;base64,'+OBJ_var.dataImage);
     ////////////////////
     // DIV PIC /////////
     ////////////////////
@@ -245,7 +237,7 @@ function init(){
                 showDiv('divArena');
                 OBJ_var.arrUser[0].lnkPic=this.strFile;
                 setLocal('pic',this.strFile);
-                putPic('btnPlayer',OBJ_var.arrUser[0]);
+                putPic('btnHost',OBJ_var.arrUser[0]);
             }
         }
         x+=(w+s);if((i+1)%nh==0){x-=(w+s)*nh;y+=(h+s);}
@@ -281,10 +273,8 @@ function init(){
         btn.onmouseout=function(){o('rctChangeSelect').blnZoom=false;}
     }
     getButton('btnSubImage',div,200+5,10,60,60,true,'DXEX',picYes(),0.16,function(){
-        OBJ_var.blnLock=true;
-        var z=0.4;hideG(this.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdPale)',6,(this.rx*2-100*z)/2,(this.ry*2-100*z)/2,z,this);
-        var inp=document.getElementById('inpImage');
-        var img=o('divImage').getElementsByTagName('image')[0];
+        var img=new Image();
+        img.src=o('divImage').getElementsByTagName('image')[0].getAttribute('xlink:href');
         var cnv=document.getElementById('cnvImage');
         var ctx=cnv.getContext('2d');
         var rct=o('rctChangeSelect');
@@ -292,14 +282,11 @@ function init(){
         var yImage=rct.yThis/rct.fltScale;
         var wImage=rct.wThis/rct.fltScale;
         ctx.drawImage(img,xImage,yImage,wImage,wImage,0,0,196,196);
-        var dataURL = cnv.toDataURL('image/png');
-        var dataImage=dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-        OBJ_var.dataImage=dataImage;
-        o('boxPlayer').getElementsByTagName('image')[0].setAttribute('xlink:href','data:image/png;base64,'+OBJ_var.dataImage);
-        setLocal('img',dataImage);
+        OBJ_var.arrUser[0].dataImage=cnv.toDataURL('image/png');
+        o('gImgHost').getElementsByTagName('image')[0].setAttribute('xlink:href',OBJ_var.arrUser[0].dataImage);
+        setLocal('img',OBJ_var.arrUser[0].dataImage);
         showDiv('divArena');
-        showBox('boxPlayer');
-        OBJ_var.blnLock=false;
+        showBox('boxHost');
     },null);
     getButton(null,div,200+5+10+60,10,60,60,true,'DXEX',picNo(),0.16,function(){showDiv('divArena');},null);
     var z=0.13, p=picCam(); getPath(null,div,(OBJ_var.wArena-p[0]*z)/2,82,z,'url(#grdButton)','none',0,p[2]);
@@ -335,14 +322,18 @@ function init(){
     // SETTING
     var lnkPic=getLocal('pic','00007.txt'); if((typeof lnkPic)!='string') lnkPic='00007.txt';
     var intRank=getLocal('rank',3)*1; if(intRank<1 || intRank>5 || (typeof intRank)!='number') intRank=3;
+    var dataImage=getLocal('img','');
     OBJ_var.arrUser[0].lnkPic=lnkPic;
     OBJ_var.arrUser[0].intRank=intRank;
+    OBJ_var.arrUser[0].dataImage=dataImage;
+    putRank(intRank);
+    putPic('btnHost',OBJ_var.arrUser[0]);
+    o('gImgHost').getElementsByTagName('image')[0].setAttribute('xlink:href',dataImage);
     ////////////////////
     // END SHOW ////////
     ////////////////////
     var imgLoad=document.getElementsByTagName('img')[0];
     imgLoad.parentNode.removeChild(imgLoad);
     sctRoot.style.display='block';
-    putRank(intRank);
-    putPic('btnPlayer',OBJ_var.arrUser[0]);
+    
 }
