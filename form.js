@@ -41,24 +41,46 @@ function setForm(ctg){;
             hideG('icnLogIn');
             hideG('btnNewReg');
         }
-        hideG(o('icnFind'));
-        hideG(o('gHide'));
+        hideG('icnFind');
+        hideG('icnName');
+        hideG('gHide');
     }
     else if(ctg=='changepass'){
         o('inp00').getElementsByTagName('text')[0].firstChild.nodeValue='old:';
         o('inp01').getElementsByTagName('text')[0].firstChild.nodeValue='new:';
-        hideG(o('icnFind'));
-        hideG(o('gHide'));
+        hideG('icnFind');
+        hideG('icnName');
+        hideG('gHide');
     }
     else if(ctg=='search'){
         o('inp00').getElementsByTagName('text')[0].firstChild.nodeValue='find:';
         o('inp01').getElementsByTagName('text')[0].firstChild.nodeValue='';
-        showG(o('icnFind'));
-        showG(o('gHide'));
+        showG('icnFind');
+        showG('gHide');
         hideG('icnLogIn');
         hideG('btnNewReg');
         hideG('icnNewReg');
         hideG('btnLogIn');
+        hideG('icnName');
+    }
+    else if(ctg=='name'){
+        o('inp00').getElementsByTagName('text')[0].firstChild.nodeValue='name:';
+        o('inp01').getElementsByTagName('text')[0].firstChild.nodeValue='';
+        hideG('icnFind');
+        showG('gHide');
+        hideG('icnLogIn');
+        hideG('btnNewReg');
+        hideG('icnNewReg');
+        hideG('btnLogIn');
+        showG('icnName');
+        var strName=OBJ_var.arrUser[0].strName;
+        var spnCursor=o('spnCursor');
+        for(var i=0;i<strName.length;i++){
+            var spn=getSpan();
+            o('inp00').getElementsByTagName('text')[1].appendChild(spn);
+            spn.innerHTML=strName.charAt(i);
+        }
+        spnCursor.parentNode.appendChild(spnCursor);
     }
 }
 function printBtn(str){

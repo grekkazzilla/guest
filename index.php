@@ -67,7 +67,7 @@
             <defs></defs>
         </svg>
     </section>
-    <input id='inpImage' type='file' onchange='if(this.value!="") setImage(this.files);'>
+    <input id='inpImage' type='file' onchange='if(this.value!=""){setImage(this.files);this.value="";}'>
     <canvas width='196' height='196' id='cnvImage'></canvas>
 </body>
 </html>
