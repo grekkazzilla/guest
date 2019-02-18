@@ -73,11 +73,11 @@ function init(){
     // G BOTTOM
     var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,0,0);
     getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
-    getButton('btnMenu',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){},null);
+    getButton('btnMenu',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
     var btn=getButton('btnHost',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picNone(),0,function(){showBox('boxHost');},null);
     btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
     getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
-    getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){},null);
+    getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){showDiv('divWatch');},null);
     // BOX VAR
     var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=4;
     var box=getMenu('boxVar',div,w,h,m,s,qtyHor,qtyVer,false);
@@ -410,7 +410,11 @@ function init(){
             else if(frm.ctg=='name'){
                 var spnCursor=o('spnCursor');
                 str00=str00.replace(/<\/?[^>]+>/gi,'');
-                var strName=str00.substr(0,str00.length-1);
+                var strName='';
+                for(var i=0;i<str00.length;i++){
+                    var strChar=str00.charAt(i);
+                    if(strChar!='|') strName+=strChar;
+                }
                 if(strName.length>=3){
                     OBJ_var.arrUser[0].strName=strName;
                     o('txtName').firstChild.nodeValue=strName;
@@ -561,6 +565,17 @@ function init(){
     var spn=getSVG('tspan','spnCursor',o('inp00').getElementsByTagName('text')[1]);
     spn.innerHTML='|';
     spn.arr=new Array();
+    ////////////////////
+    // DIV WATCH ///////
+    ////////////////////
+    var div=getG('divWatch',gWrap,0,0,1,false,OBJ_var.wArena/2,OBJ_var.hArena/2);
+    getButton(null,div,div.rx-20,10,40,40,true,'BXBX',picCross(),0.09,function(){showDiv('divArena');},null);
+    getButton('btnRefreshWatch',div,div.rx-30,div.ry*2-70,60,60,true,'DXCX',picRefresh(),0.13,function(){},null);
+    ////////////////////
+    // DIV BOOK ////////
+    ////////////////////
+    var div=getG('divBook',gWrap,0,0,1,false,OBJ_var.wArena/2,OBJ_var.hArena/2);
+    getButton(null,div,div.rx-20,10,40,40,true,'BXBX',picCross(),0.09,function(){showDiv('divArena');},null);
     ////////////////////
     // SETTING /////////
     ////////////////////
