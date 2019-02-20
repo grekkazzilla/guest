@@ -15,22 +15,23 @@
 </style>
 <!--script type='text/javascript' src='../libr/p4wn.js'></script>
 <script type='text/javascript' src='../libr/peer.min.js'></script-->
-<script type='text/javascript' src='init.js'></script>
-<script type='text/javascript' src='script.js'></script>
-<script type='text/javascript' src='svg.js'></script>
-<script type='text/javascript' src='chess.js'></script>
-<script type='text/javascript' src='board.js'></script>
-<script type='text/javascript' src='control.js'></script>
-<script type='text/javascript' src='pic.js'></script>
-<script type='text/javascript' src='unit.js'></script>
-<script type='text/javascript' src='form.js'></script>
-<script type='text/javascript' src='load.js'></script>
-<script type='text/javascript' src='say.js'></script>
-<script type='text/javascript' src='pix.js'></script>
-<script type='text/javascript' src='img.js'></script>
-<script type='text/javascript' src='put.js'></script>
-<script type='text/javascript' src='box.js'></script>
-<script type='text/javascript' src='button.js'></script>
+<script type='text/javascript' src='init.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='script.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='svg.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='chess.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='board.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='var.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='control.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='pic.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='unit.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='form.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='load.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='say.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='pix.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='img.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='put.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='box.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='button.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript'>
     var OBJ_var=new Object();
     OBJ_var.wArena=400;
@@ -40,6 +41,11 @@
     OBJ_var.boxOn=null;
     OBJ_var.divOn=null;
     OBJ_var.wbs=null;
+    OBJ_var.objArena=new Object();
+    OBJ_var.objArena.intVar=1;
+    OBJ_var.objArena.blnSide=true;
+    OBJ_var.objArena.strSide='any';
+    OBJ_var.objArena.arrHist=new Array();
     OBJ_var.arrUser=new Array();
     getUser();
     function getUser(){

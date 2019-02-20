@@ -36,8 +36,11 @@ function init(){
     getButton('btnClose',div,-9999,-9999,40,40,false,'BXBX',picCross(),0.09,function(){hideBox(OBJ_var.boxOn)},null);
     // OBJ CHESS
     OBJ_chess.getBoard(8,8,2,'standard');
+    OBJ_var.objArena.objChess=OBJ_chess;
     // G CHESSBOARD
-    var g=OBJ_board.drawBoard(div,'gBoard',4,104,1,49,'#eee8aa','#bdb76d',true);
+    OBJ_board.drawBoard(div,'gBoard',4,104,1,49,'#eee8aa','#bdb76d',true);
+    OBJ_var.objArena.objBoard=OBJ_board;
+    var g=OBJ_var.objArena.objBoard;
     var pos=110; // for pawnjs engine purposes
     var num=21;
     for(var i=0;i<8;i++){
@@ -85,12 +88,12 @@ function init(){
     var arr=new Array(['Classic',''],['Shuffle',''],['Chess','960'],['Three','Queens'],['Pawn','Attack'],['Racing','Kings'],['Knight','King'],['Checkers','']);
     for(var i=0;i<arr.length;i++){
         var btn=getButton(null,box,x,y,w,h,true,'AAXC',null,0,function(){
-       
+            chooseVar(OBJ_var.objArena,true);
         },arr[i][0]+'~'+arr[i][1]);
         btn.strVar=arr[i][0]+' '+arr[i][1];
-        btn.do=function(){
+        //btn.do=function(){
             
-        }
+        //}
         getCircle(null,btn,25,30,10,'url(#grdButtonRvs)','none',0);
         btn.arrOn.push(['circle',0,'fill','url(#grdButtonRvs)','#eee8aa']);
         var arrText=btn.getElementsByTagName('text');
@@ -569,14 +572,16 @@ function init(){
     // DIV WATCH ///////
     ////////////////////
     var div=getG('divWatch',gWrap,0,0,1,false,OBJ_var.wArena/2,OBJ_var.hArena/2);
-    var z=0.13, p=picEye(); getPath(null,div,15,10,z,'url(#grdButton)','none',0,p[2]);
-    //getText(null,div,15,35,18,'Arial','url(#grdButton)','none',0,'online','start');
+    getRect(null,div,10,7,105,45,5,'transparent','url(#grdButton)',1);
+    var z=0.12, p=picEye(); getPath(null,div,14,11,z,'url(#grdButton)','none',0,p[2]);
+    getText(null,div,80,35,18,'Arial','url(#grdIcon)','none',1,'003','middle');
+    getButton(null,div,305,10,40,40,true,'BXBX',picGear(),0.1,function(){},null);
     getButton(null,div,350,10,40,40,true,'BXBX',picCross(),0.09,function(){showDiv('divArena');},null);
     var W=390, H=170, X=5, Y=60, S=10;
     for(var i=0;i<3;i++){
         var box=getG('gWatch'+i,div,X,Y+(H+S)*i,1,true,W/2,H/2);
-        getRect(null,box,0,0,W,H,0,'#808080','transparent',0).setAttribute('filter','url(#blr2)');
-        getRect(null,box,0,0,W,H,0,'#fff','transparent',0);
+        getRect(null,box,0,0,W,H,0,'#808080','none',0).setAttribute('filter','url(#blr2)');
+        getRect(null,box,0,0,W,H,0,'#fff','none',0);
         getButton('btnWatchUser'+i,box,5,5,105,105,true,'CXAX',picUser(),0.225,function(){},null);
         getButton(null,box,W-65,5,60,60,true,'AAAX',picFence(),0.13,function(){},null);
         getText(null,box,130,25,18,'Arial','url(#grdIcon)','none',0,'grekkazzilla','start');
@@ -600,7 +605,7 @@ function init(){
         var dx=75;
         var wIn=100, hIn=50, gIn=getG('gWatchTimeA'+i,g,0+dx,0,1,true,wIn/2,hIn/2);
         getRect(null,gIn,0,0,wIn,hIn,0,'transparent','red',0);
-        var z=0.13, p=picClock(); getPath(null,gIn,5,5,z,'url(#grdButton)','none',0,p[2]);
+        var z=0.11, p=picHeap(); getPath(null,gIn,5,9,z,'url(#grdButton)','none',0,p[2]);
         getText(null,gIn,70,20,18,'Arial','url(#grdIcon)','none',0,'120 m','middle');
         getText(null,gIn,70,40,18,'Arial','url(#grdIcon)','none',0,'10 s','middle');
         var wIn=40, hIn=50, gIn=getG(null,g,100+dx,0,1,true,wIn/2,hIn/2);
@@ -609,7 +614,7 @@ function init(){
         getText(null,gIn,wIn/2,40,18,'Arial','#bdb76d','none',0,'+>','middle');
         var wIn=100, hIn=50, gIn=getG('gWatchTimeB'+i,g,g.rx-wIn/2+dx,0,1,true,wIn/2,hIn/2);
         getRect(null,gIn,0,0,wIn,hIn,0,'transparent','red',0);
-        var z=0.12, p=picHeap(); getPath(null,gIn,5,7,z,'url(#grdButton)','none',0,p[2]);
+        var z=0.11, p=picHeap(); getPath(null,gIn,5,9,z,'url(#grdButton)','none',0,p[2]);
         getText(null,gIn,70,20,18,'Arial','url(#grdIcon)','none',0,'120 m','middle');
         getText(null,gIn,70,40,18,'Arial','url(#grdIcon)','none',0,'10 s','middle');
         var wIn=40, hIn=50, gIn=getG(null,g,240+dx,0,1,false,wIn/2,hIn/2);
@@ -645,8 +650,8 @@ function init(){
         
         getRect(null,box,5,H-65,W-75,60,5,'transparent','#bdb76d',1);
         var z=0.16, p=picDate(); getPath(null,box,15,67,z,'url(#grdButton)','none',0,p[2]);
-        getText(null,box,180,85,18,'Arial','url(#grdIcon)','none',0,'Aug-27-2019 18:32','middle');
-        getText(null,box,180,110,18,'Arial','url(#grdIcon)','none',0,'4 min 14 sec','middle');
+        getText(null,box,190,85,18,'Arial','url(#grdIcon)','none',0,'Aug-27-2019 18:32','middle');
+        getText(null,box,190,110,18,'Arial','url(#grdIcon)','none',0,'Classical : 4 min 14 sec','middle');
     }
     ////////////////////
     // SETTING /////////
