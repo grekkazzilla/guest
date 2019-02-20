@@ -41,11 +41,11 @@
     OBJ_var.boxOn=null;
     OBJ_var.divOn=null;
     OBJ_var.wbs=null;
-    OBJ_var.objArena=new Object();
-    OBJ_var.objArena.intVar=1;
-    OBJ_var.objArena.blnSide=true;
-    OBJ_var.objArena.strSide='any';
-    OBJ_var.objArena.arrHist=new Array();
+    OBJ_var.intVar=1;
+    OBJ_var.blnSide=true;
+    OBJ_var.strSide='any';
+    OBJ_var.strVS='human';
+    OBJ_var.arrHist=new Array();
     OBJ_var.arrUser=new Array();
     getUser();
     function getUser(){

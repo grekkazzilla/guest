@@ -1,7 +1,7 @@
 // CHOOSING CHESS VARIANTS
-function chooseVar(objArena,blnSet){
+function chooseVar(){
     var strFen='';
-    switch(objArena.intVar){
+    switch(OBJ_var.intVar){
         case 0: strFen=shuffleFen();break;
         case 2: strFen=endgameFen();break;
         case 3: strFen='nnnnknnn/pppppppp/8/8/8/8/PPPPPPPP/1Q1QK1Q1 w - - 0 1';break;
@@ -12,13 +12,9 @@ function chooseVar(objArena,blnSet){
         case 8: strFen='prbknrp1/1pnqbp2/2ppp3/3p4/4P3/3PPP2/2PBQNP1/1PRNKBRP w - - 0 1';break;
         default: strFen='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';break; // classic by default
     }
-    objArena.objChess.setBoard(strFen);
-    objArena.arrHist[0]=new Array(strFen,false,false,false); // fen position, posA, posB, move notation
-    if(blnSet===true){
-        objArena.objBoard.putBoard(!objArena.blnSide);
-        setSide(null);
-        setLocal('var'+objArena.intNum,objArena.intVar);
-    }
+    OBJ_chess.setBoard(strFen);
+    OBJ_board.putBoard();
+    OBJ_var.arrHist[0]=new Array(strFen,false,false,false); // fen position, posA, posB, move notation
 }
 function endgameFen(){
     var arrSquW=new Array('R','N','0','0','K','0','N','R');
@@ -30,7 +26,7 @@ function endgameFen(){
     var intForceB=0;
     for(var i=0;i<2;i++){
         do{
-            var rnd=getRnd(0,3);
+            var rnd=getRand(0,3);
             var squ=arr[rnd];
         }
         while(arrSquW[squ]=='0');
@@ -38,7 +34,7 @@ function endgameFen(){
         if(squ==1 || squ==6) intForceW++;
         //
         do{
-            var rnd=getRnd(0,3);
+            var rnd=getRand(0,3);
             var squ=arr[rnd];
         }
         while(arrSquB[squ]=='0');
@@ -49,14 +45,14 @@ function endgameFen(){
     var intForce=intForceW-intForceB;
     if(intForce>0){
         for(var i=0;i<intForce*2;i++){
-            do var rnd=getRnd(1,6);
+            do var rnd=getRand(1,6);
             while(rnd==4 || arrPawnW[rnd]=='0');
             arrPawnW[rnd]='0';
         }
     }
     else if(intForce<0){
         for(var i=0;i<Math.abs(intForce)*2;i++){
-            do var rnd=getRnd(1,6);
+            do var rnd=getRand(1,6);
             while(rnd==4 || arrPawnB[rnd]=='0');
             arrPawnB[rnd]='0';
         }
@@ -82,25 +78,25 @@ function randomFen(){
     var arrPcW=new Array('N','R','Q');
     var arrPcB=new Array('n','r','q');
     var intFree=7;
-    for(var j=0;j<getRnd(0,3);j++){
+    for(var j=0;j<getRand(0,3);j++){
         for(var i=0;i<2;i++){
-            do{var rnd=getRnd(0,7);}
+            do{var rnd=getRand(0,7);}
             while(arrSquW[rnd]!='0' || rnd%2==i);
             arrSquW[rnd]='B';
         }
         for(var i=0;i<2;i++){
-            do{var rnd=getRnd(0,7);}
+            do{var rnd=getRand(0,7);}
             while(arrSquB[rnd]!='0' || rnd%2==i);
             arrSquB[rnd]='b';
         }
         intFree-=2;
     }
     do{
-        var intPiece=getRnd(0,2);
-        do{var rnd=getRnd(0,7);}
+        var intPiece=getRand(0,2);
+        do{var rnd=getRand(0,7);}
         while(arrSquW[rnd]!='0');
         arrSquW[rnd]=arrPcW[intPiece];
-        do{var rnd=getRnd(0,7);}
+        do{var rnd=getRand(0,7);}
         while(arrSquB[rnd]!='0');
         arrSquB[rnd]=arrPcB[intPiece];
         intFree--;
@@ -114,34 +110,34 @@ function shuffleFen(){
 	var arrWhite=new Array('0','0','0','0','0','0','0','0');
 	var arrBlack=new Array('0','0','0','0','0','0','0','0');
 	// kings random position
-	arrWhite[getRnd(0,7)]='K';
-	arrBlack[getRnd(0,7)]='k';
+	arrWhite[getRand(0,7)]='K';
+	arrBlack[getRand(0,7)]='k';
 	// bishops random position
 	for(var i=0;i<2;i++){
-		do{var rnd=getRnd(0,7);}
+		do{var rnd=getRand(0,7);}
 		while(arrWhite[rnd]!='0' || rnd%2==i);
 		arrWhite[rnd]='B';
 	}
 	for(var i=0;i<2;i++){
-		do{var rnd=getRnd(0,7);}
+		do{var rnd=getRand(0,7);}
 		while(arrBlack[rnd]!='0' || rnd%2==i);
 		arrBlack[rnd]='b';
 	}
 	// queens random position
-	do{var rnd=getRnd(0,7);}
+	do{var rnd=getRand(0,7);}
 	while(arrWhite[rnd]!='0');
 	arrWhite[rnd]='Q';
-	do{var rnd=getRnd(0,7);}
+	do{var rnd=getRand(0,7);}
 	while(arrBlack[rnd]!='0');
 	arrBlack[rnd]='q';
 	// rooks random position
 	for(var i=0;i<2;i++){
-		do{var rnd=getRnd(0,7);}
+		do{var rnd=getRand(0,7);}
 		while(arrWhite[rnd]!='0');
 		arrWhite[rnd]='R';
 	}
 	for(var i=0;i<2;i++){
-		do{var rnd=getRnd(0,7);}
+		do{var rnd=getRand(0,7);}
 		while(arrBlack[rnd]!='0');
 		arrBlack[rnd]='r';
 	}

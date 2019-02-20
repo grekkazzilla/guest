@@ -7,6 +7,7 @@ OBJ_board.drawBoard=function(gRoot,strID,x,y,z,wSquare,pntLight,pntDark,boolShow
     var hBoard=wSquare*qtyHor;
     var gBoard=getG(strID,gRoot,x,y,z,boolShown,wBoard/2,hBoard/2);
     OBJ_board.gBoard=gBoard;
+    OBJ_board.blnSide=true;
     var x=0, y=0;
     for(var i=mrgBan;i<qtyHor+mrgBan;i++){
         for(var j=mrgBan;j<qtyVer+mrgBan;j++){
@@ -32,7 +33,7 @@ OBJ_board.drawBoard=function(gRoot,strID,x,y,z,wSquare,pntLight,pntDark,boolShow
     OBJ_board.arrCheck=new Array(); // highlighters for where a king unit gets checked
     return gBoard;
 }
-OBJ_board.putBoard=function(boolUpDown){
+OBJ_board.putBoard=function(){
     OBJ_board.clearBoard();
     var qtyHor=OBJ_chess.qtyHor;
     var qtyVer=OBJ_chess.qtyVer;
@@ -45,18 +46,30 @@ OBJ_board.putBoard=function(boolUpDown){
             var gSquare=o('g'+pos);
             var name=squ.unit.name;
             var side=squ.unit.side;
-            if(squ.unit) var gUnit=OBJ_board.drawUnit(name,side,gSquare,boolUpDown);
+            if(squ.unit) var gUnit=OBJ_board.drawUnit(name,side,gSquare);
         }
     }
 }
-OBJ_board.drawUnit=function(name,side,gSquare,boolUpDown){
+OBJ_board.flip=function(blnSide){
+    OBJ_board.blnSide=blnSide;
+    if(blnSide===true) var r=0;
+    else var r=180;
+    turnG(OBJ_board.gBoard,r);
+    for(var i=0;i<OBJ_board.arrUnit.length;i++){
+        var g=OBJ_board.arrUnit[i];
+        g.r=r;
+        if(g.shown===true) var z=1;
+        else z=0;
+        g.setAttribute('transform','translate('+g.x+','+g.y+') scale('+z+') rotate('+g.r+','+g.rx+','+g.ry+')')
+    }
+}
+OBJ_board.drawUnit=function(name,side,gSquare){
     var gUnit=false;
     for(var i=0;i<OBJ_board.arrUnit.length;i++){
         var g=OBJ_board.arrUnit[i];
         if(g.name==name && g.side==side && g.parentNode==OBJ_board.gBoard){
             gUnit=g;
             gSquare.appendChild(gUnit);
-            showG(gUnit);
             break;
         }
     }
@@ -77,7 +90,9 @@ OBJ_board.drawUnit=function(name,side,gSquare,boolUpDown){
         else gUnit=draw_black_pawn(null,gSquare,0,0,1,true);
         OBJ_board.arrUnit.push(gUnit);
     }
-    if(boolUpDown) turnG(gUnit,180);
+    if(OBJ_board.blnSide===true) gUnit.r=0;
+    else gUnit.r=180;
+    showG(gUnit);
     return gUnit;
 }
 OBJ_board.putPick=function(){
@@ -194,7 +209,7 @@ OBJ_board.takeUnit=function(arrTake){
         OBJ_board.gBoard.appendChild(gUnit);
     }
 }
-OBJ_board.putMove=function(move,namePromote,boolUpDown){
+OBJ_board.putMove=function(move,namePromote){
     var posA=move[1];
     var posB=move[2];
     var arrTake=move[3];
@@ -207,7 +222,7 @@ OBJ_board.putMove=function(move,namePromote,boolUpDown){
     if(arrCheck) OBJ_board.putCheck(arrCheck);
     if(namePromote){
         OBJ_board.takeUnit([posA]);
-        gUnitA=OBJ_board.drawUnit(namePromote,OBJ_chess.arrSqu[posB].unit.side,gSquA,boolUpDown);
+        gUnitA=OBJ_board.drawUnit(namePromote,OBJ_chess.arrSqu[posB].unit.side,gSquA);
     }
     gSquB.appendChild(gUnitA);
     //CASTLING

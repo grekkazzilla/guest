@@ -27,47 +27,42 @@ function putRank(intRank){
         else pth.setAttribute('transform','scale(0)');
     }
 }
-function setSide(blnSide){
-    //var objArena=ARR_arena[NUM_arena];
-    var objArena=OBJ_var.objArena;
+function putSide(){
+    var strSide=OBJ_var.strSide;
     var btn=o('btnSide');
-    var blnSet=true;
-    if(blnSide===null){
-        if(objArena.blnRand===true) blnSide=undefined;
-        else blnSide=objArena.blnSide;
-        blnSet=false;
+    var arrG=btn.getElementsByTagName('g'), gWhite=arrG[1], gBlack=arrG[2];
+    if(strSide=='white'){
+        gWhite.x=btn.rx-25;
+        showG(gWhite);
+        hideG(gBlack);
+        OBJ_board.flip(true);
     }
-    if(blnSide===true || blnSide===false){
-        if(blnSide===true){
-            objArena.blnSide=true;
-            objArena.blnRand=false;
-            var r=0;
-        }
-        else if(blnSide===false){
-            objArena.blnSide=false;
-            objArena.blnRand=false;
-            var r=180;
-        }
-        var pth=o('icnSide');
-        //pth.setAttribute('transform','translate('+pth.x+','+pth.y+') scale('+pth.z+')');
-        //o('btnAny').appendChild(o('icnAny'));
-        turnG(o('gBoard'),r);
+    else if(strSide=='black'){
+        gBlack.x=btn.rx-25;
+        hideG(gWhite);
+        showG(gBlack);
+        OBJ_board.flip(false);
     }
-    else{
-        objArena.blnRand=true;
-        //o('icnSide').setAttribute('transform','scale(0)');
-        //o('btnSide').appendChild(o('icnAny'));
-        var r=o('gBoard').r;
+    else if(strSide=='any'){
+        gWhite.x=btn.rx-25-9;
+        gBlack.x=btn.rx-25+9;
+        showG(gWhite);
+        showG(gBlack);
     }
-    //
-    for(var i=0;i<objArena.objBoard.arrUnit.length;i++){
-        var g=objArena.objBoard.arrUnit[i];
-        if(g.shown===true) turnG(g,r);
+}
+function putVS(){
+    var strVS=OBJ_var.strVS;
+    var btn=o('btnMatch');
+    var pth=btn.getElementsByTagName('path')[1];
+    if(strVS==='human'){
+        var z=0.12, y=5, p=picUser();
     }
-    //
-    if(blnSet===true){
-        setLocal('side'+NUM_arena,objArena.blnSide);
-        setLocal('rnd'+NUM_arena,objArena.blnRand);
-        hideG('boxSide');
+    else if(strVS=='robo'){
+        var z=0.16, y=9, p=picRobo();
     }
+    else if(strVS=='friend'){
+        var z=0.12, y=6, p=picGlad();
+    }
+    pth.setAttribute('transform','translate('+(btn.rx-p[0]*z/2)+','+y+') scale('+z+')');
+    pth.setAttribute('d',p[2]);
 }
