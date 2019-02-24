@@ -32,6 +32,7 @@
 <script type='text/javascript' src='put.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='box.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='button.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='run.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript'>
     var OBJ_var=new Object();
     OBJ_var.wArena=400;

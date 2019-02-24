@@ -58,10 +58,10 @@ function putVS(){
         var z=0.12, y=5, p=picUser();
     }
     else if(strVS=='robo'){
-        var z=0.16, y=9, p=picRobo();
+        var z=0.14, y=10, p=picRobo();
     }
     else if(strVS=='friend'){
-        var z=0.12, y=6, p=picGlad();
+        var z=0.10, y=8, p=picGlad();
     }
     pth.setAttribute('transform','translate('+(btn.rx-p[0]*z/2)+','+y+') scale('+z+')');
     pth.setAttribute('d',p[2]);

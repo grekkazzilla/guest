@@ -50,7 +50,7 @@ function init(){
         num+=10;
     }
     // G TOP
-    var w=60, h=60, s=6.4, g=getG('gTop',div,4,6,1,true,0,0);
+    var w=60, h=60, s=6.4, g=getG('gTop',div,4,6,1,true,w*6+s*4,90);
     getButton('btnVar',g,0,30,w,h,true,'AAAX',picListA(),0.11,function(){showBox('boxVar');},null);
     var btn=getButton('btnSide',g,(w+s),30,w,h,true,'AAAX',picNone(),0.11,function(){showBox('boxSide');},null);
     draw_white_pawn(null,btn,(w-50)/2-9,(h-50)/2,0.985,true);
@@ -61,25 +61,83 @@ function init(){
     btn.getElementsByTagName('path')[2].setAttribute('fill','url(#grdIcon)');
     btn.getElementsByTagName('path')[2].setAttribute('stroke','url(#grdIcon)');
     btn.arrOn.push(['path',1,'stroke','url(#grdIcon)','#000'],['path',2,'fill','url(#grdIcon)','#000'],['path',2,'stroke','url(#grdIcon)','#000']);
-    var btn=getButton('btnMatch',g,(w+s)*2,0,(w*2+s),h+30,true,'CXAX',picFence(),0.13,function(){
-        showBox('boxVS');
-    },null);
+    var btn=getButton('btnMatch',g,(w+s)*2,0,(w*2+s),h+30,true,'CXAX',picFence(),0.13,null,null);
     var pth=btn.getElementsByTagName('path')[0]; pth.setAttribute('transform','translate('+(pth.x)+','+(pth.y+20)+') scale('+pth.z+')');
     getPath(null,btn,0,0,0,'url(#grdButton)','none',0,picNone()[2]);
     btn.arrOn.push(['path',1,'fill','url(#grdButton)','#eee8aa']);
+    btn.intHold=0;
+    btn.blnHeld=false;
+    if(isTouch()){
+        btn.ontouchstart=function(){
+            if(OBJ_var.blnLock===false){
+                OBJ_var.blnLock=true;
+                if(this.blnHeld===false){
+                    this.blnHeld=true;
+                    onBtn(this,1);
+                    this.tmr=setInterval(function(){
+                        var btn=o('btnMatch');
+                        btn.intHold++;
+                        if(btn.intHold>=7 || btn.blnHeld===false){
+                            if(btn.intHold>=7) showBox('boxVS');
+                            else startGame();
+                            onBtn(btn,0);
+                            btn.intHold=0;
+                            btn.blnHeld=false;
+                            OBJ_var.blnLock=false;
+                            clearInterval(btn.tmr);
+                        }
+                    },100);
+                }
+            }
+        }
+        btn.ontouchend=function(){this.blnHeld=false;}
+    }
+    else{
+        btn.onmousedown=function(){
+            if(OBJ_var.blnLock===false){
+                OBJ_var.blnLock=true;
+                if(this.blnHeld===false){
+                    this.blnHeld=true;
+                    onBtn(this,1);
+                    this.tmr=setInterval(function(){
+                        var btn=o('btnMatch');
+                        btn.intHold++;
+                        if(btn.intHold>=7 || btn.blnHeld===false){
+                            if(btn.intHold>=7) showBox('boxVS');
+                            else startGame();
+                            onBtn(btn,0);
+                            btn.intHold=0;
+                            btn.blnHeld=false;
+                            OBJ_var.blnLock=false;
+                            clearInterval(btn.tmr);
+                        }
+                    },100);
+                }
+            }
+        }
+        btn.onmouseup=function(){this.blnHeld=false;}
+        btn.onmouseout=function(){this.blnHeld=false;}
+    }
     var btn=getButton('btnTime',g,(w+s)*4,30,(w*2+s),h,true,'AAAX',picClock(),0.13,function(){showBox('boxTime');},null);
     var pth=btn.getElementsByTagName('path')[0];
     pth.setAttribute('transform','translate('+(pth.x-35)+','+pth.y+') scale('+pth.z+')');
     getText(null,btn,83,25,18,'Arial','url(#grdIcon)','none',0,'15 min','middle');
     getText(null,btn,83,45,18,'Arial','url(#grdIcon)','none',0,'10 sec','middle');
     // G BOTTOM
-    var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,0,0);
+    var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,w*6+s*4,90);
     getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
-    getButton('btnMenu',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
+    getButton('btnBook',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
     var btn=getButton('btnHost',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picNone(),0,function(){showBox('boxHost');},null);
     btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
     getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
     getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){showDiv('divWatch');},null);
+    // G ROBO
+    var W=90, H=90, G=getG('gRobo',div,200-W/2,6,1,false,W/2,H/2);
+    var z=0.225, p=picRobo();
+    getPath(null,G,(W-p[0]*z)/2,(H-p[1]*z)/2,z,'url(#grdButton)','none',0,p[2]);
+    var w=50, h=20, g=getG(null,G,W/2-w/2,H/2-h/2+4,1,false,w/2,h/2);
+    getCircle(null,g,13,10,5,'#ffaaaa','none',0);
+    getCircle(null,g,37,10,5,'#ffaaaa','none',0);
     // BOX VAR
     var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=5;
     var box=getMenu('boxVar',div,w,h,m,s,qtyHor,qtyVer,false);
