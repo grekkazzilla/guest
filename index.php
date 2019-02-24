@@ -13,8 +13,8 @@
 <style type='text/css'>
     section,input,canvas{display:none;}
 </style>
-<!--script type='text/javascript' src='../libr/p4wn.js'></script>
-<script type='text/javascript' src='../libr/peer.min.js'></script-->
+<script type='text/javascript' src='../lib/p4wn.js'></script>
+<script type='text/javascript' src='../lib/peer.min.js'></script>
 <script type='text/javascript' src='init.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='script.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='svg.js?v=<?php echo rand(0,1000);?>'></script>
@@ -48,6 +48,7 @@
     OBJ_var.strVS='human';
     OBJ_var.arrHist=new Array();
     OBJ_var.arrUser=new Array();
+    OBJ_var.objDrive=null;
     getUser();
     function getUser(){
         var objUser=new Object();

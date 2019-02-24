@@ -169,7 +169,7 @@ OBJ_board.putCheck=function(arrCheck){
     for(var i=0;i<arrCheck.length;i++){
         var pos=arrCheck[i];
         var gSquare=o('g'+pos);
-        var gUnit=oo(gSquare,'g');
+        var gUnit=gSquare.getElementsByTagName('g')[0];
         var rct=false;
         for(var j=0;j<OBJ_board.arrCheck.length;j++){
             var w=OBJ_board.arrCheck[j];
@@ -189,7 +189,7 @@ OBJ_board.drawCheck=function(gSquare){
     var rct=getRect(null,gSquare,5,5,40,40,5,'url(#Red)','none',0);
     rct.setAttribute('filter','url(#blr6)');
     OBJ_board.arrCheck.push(rct);
-    var gUnit=oo(gSquare,'g');
+    var gUnit=gSquare.getElementsByTagName('g')[0];
     gSquare.appendChild(gUnit);
 }
 OBJ_board.hideCheck=function(){
@@ -204,7 +204,7 @@ OBJ_board.takeUnit=function(arrTake){
     for(var i=0;i<arrTake.length;i++){
         var pos=arrTake[i];
         var gSquare=o('g'+pos);
-        var gUnit=oo(gSquare,'g');
+        var gUnit=gSquare.getElementsByTagName('g')[0];
         hideG(gUnit);
         OBJ_board.gBoard.appendChild(gUnit);
     }
@@ -217,7 +217,7 @@ OBJ_board.putMove=function(move,namePromote){
     var arrCastle=move[5];
     var gSquA=o('g'+posA);
     var gSquB=o('g'+posB);
-    var gUnitA=oo(gSquA,'g');
+    var gUnitA=gSquA.getElementsByTagName('g')[0];
     if(arrTake) OBJ_board.takeUnit(arrTake);
     if(arrCheck) OBJ_board.putCheck(arrCheck);
     if(namePromote){
@@ -231,7 +231,7 @@ OBJ_board.putMove=function(move,namePromote){
         var posB=arrCastle[1][1];
         var gSquA=o('g'+posA);
         var gSquB=o('g'+posB);
-        var gUnit=oo(gSquA,'g');
+        var gUnit=gSquA.getElementsByTagName('g')[0];
         gSquB.appendChild(gUnit);
     }
 }

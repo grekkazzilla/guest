@@ -8,56 +8,17 @@ function startGame(){
         var btn=o('btnTimeHost');
         btn.x=170; btn.y=530; showG(btn);
         showG('btnRoboBack'); showG('btnRoboStop');
-    }
-    //var arena=ARR_arena[NUM_arena];
-    //arena.objDrive=p4_fen2state(arena.arrHist[0][0]);
-    //changeTurn();
-}
-/*function play(gSquare){
-    var pos=gSquare.pos;
-    var arena=ARR_arena[NUM_arena];
-    var last=arena.arrHist.length-1;
-    board.hideTake();
-    if(!chess.setPosA(pos)){
-        var move=chess.setPosB(pos);
-        if(move){
-            board.hideCheck();
-            if(!move[0]) board.putMove(move,false,!ARR_arena[NUM_arena].blnSide);
-            else{
-                if(chess.turn) openBox('boxPromoteWhite');
-                else openBox('boxPromoteBlack');
-            }
-            // finish move
-            arena.arrHist[last][2]=pos;
-            for(var key in chess.arrSqu){
-            if(chess.arrSqu[key].boolPlay===true){
-                var gSqu=o('g'+chess.arrSqu[key].pos);
-                    if(gSqu.pos==arena.arrHist[last][1]) var posA=gSqu.num;
-                    if(gSqu.pos==arena.arrHist[last][2]) var posB=gSqu.num;
-                }
-            }
-            arena.objDrive.move(posA,posB,12);
-            arena.arrHist.push(new Array('',false,false,false));
-            changeTurn();
-            //
-        }
-        board.hidePick();
-    }
-    else{
-        board.putTake();
-        board.putPick();
-        arena.arrHist[last][1]=pos;
+        OBJ_var.objDrive=p4_fen2state(OBJ_var.arrHist[0][0]);
+        changeTurn();
     }
 }
-
 function changeTurn(){
-    var arena=ARR_arena[NUM_arena];
-    if(arena.blnSide!==chess.turn){
+    if(OBJ_var.blnSide!==OBJ_chess.turn){
         setTimeout(function(){
-            var find=arena.objDrive.findmove(arena.skl);
-            for(var key in chess.arrSqu){
-                if(chess.arrSqu[key].boolPlay===true){
-                    var gSqu=o('g'+chess.arrSqu[key].pos);
+            var find=OBJ_var.objDrive.findmove(OBJ_var.rank);
+            for(var key in OBJ_chess.arrSqu){
+                if(OBJ_chess.arrSqu[key].boolPlay===true){
+                    var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
                     if(gSqu.num==find[0]) var gSquA=gSqu;
                     if(gSqu.num==find[1]) var gSquB=gSqu;
                 }
@@ -66,7 +27,42 @@ function changeTurn(){
             play(gSquB);
         },50);
     }
-}*/
+}
+function play(gSquare){
+    var pos=gSquare.pos;
+    var last=OBJ_var.arrHist.length-1;
+    OBJ_board.hideTake();
+    if(!OBJ_chess.setPosA(pos)){
+        var move=OBJ_chess.setPosB(pos);
+        if(move){
+            OBJ_board.hideCheck();
+            if(!move[0]) OBJ_board.putMove(move,false,!OBJ_var.blnSide);
+            else{
+                if(OBJ_chess.turn) openBox('boxPromoteWhite');
+                else openBox('boxPromoteBlack');
+            }
+            // finish move
+            OBJ_var.arrHist[last][2]=pos;
+            for(var key in OBJ_chess.arrSqu){
+            if(OBJ_chess.arrSqu[key].boolPlay===true){
+                var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
+                    if(gSqu.pos==OBJ_var.arrHist[last][1]) var posA=gSqu.num;
+                    if(gSqu.pos==OBJ_var.arrHist[last][2]) var posB=gSqu.num;
+                }
+            }
+            OBJ_var.objDrive.move(posA,posB,12);
+            OBJ_var.arrHist.push(new Array('',false,false,false));
+            changeTurn();
+            //
+        }
+        OBJ_board.hidePick();
+    }
+    else{
+        OBJ_board.putTake();
+        OBJ_board.putPick();
+        OBJ_var.arrHist[last][1]=pos;
+    }
+}
 /*
 returning flags from move function
 // castling
