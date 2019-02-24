@@ -9,8 +9,10 @@ function getBox(strID,gRoot,wBox,hBox,blnShow,strFill){
     return box;
 }
 function getMenu(strID,gRoot,wButton,hButton,intPad,intMargin,qtyHor,qtyVer,blnShow){
+    if(strID=='boxPromoteWhite' || strID=='boxPromoteBlack') var intAddHeight=10;
+    else intAddHeight=60;
     var wBox=wButton*qtyHor+intPad*2+(qtyHor-1)*intMargin;
-    var hBox=hButton*qtyVer+60+intPad+(qtyVer-1)*intMargin;
+    var hBox=hButton*qtyVer+intAddHeight+intPad+(qtyVer-1)*intMargin;
     if(strID=='menuMain') hBox+=25;
     var box=getBox(strID,gRoot,wBox,hBox,blnShow,'#fff');
     return box;
@@ -61,9 +63,11 @@ function showBox(box){
             var lab=o('labRank'); lab.setAttribute('x',xLab); lab.setAttribute('y',yLabRank);
             var g=o('gRank'); jumpG(g,box.rx-g.rx,yRank);
         }
-        var btnClose=document.getElementById('btnClose');
-        jumpG(btnClose,box.rx*2-50,10);
-        box.appendChild(btnClose);
+        if(box.id!='boxPromoteWhite' && box.id!='boxPromoteBlack'){
+            var btnClose=document.getElementById('btnClose');
+            jumpG(btnClose,box.rx*2-50,10);
+            box.appendChild(btnClose);
+        }
         if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
         OBJ_var.boxOn=box;
         OBJ_var.divOn.appendChild(box);

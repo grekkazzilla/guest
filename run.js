@@ -2,9 +2,24 @@ function startGame(){
     if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
     hideG('gTop');
     hideG('gBottom');
+    //
+    if(OBJ_var.strSide=='white'){
+        OBJ_var.blnSide=true;
+    }
+    else if(OBJ_var.strSide=='black'){
+        OBJ_var.blnSide=false;
+    }
+    else if(OBJ_var.strSide=='any'){
+        var rnd=getRand(0,1);
+        if(rnd==0) OBJ_var.blnSide=true;
+        else if(rnd==1) OBJ_var.blnSide=false;
+    }
+    //
+    if(OBJ_var.blnSide!==OBJ_board.blnSide) OBJ_board.flip(!OBJ_board.blnSide);
+    //
     if(OBJ_var.strVS=='robo'){
         showG('gRobo');
-        setTimeout(function(){showG(o('gRobo').getElementsByTagName('g')[0]);},1000);
+        setTimeout(function(){showG(o('gRobo').getElementsByTagName('g')[0]);},10000);
         var btn=o('btnTimeHost');
         btn.x=170; btn.y=530; showG(btn);
         showG('btnRoboBack'); showG('btnRoboStop');
@@ -15,7 +30,7 @@ function startGame(){
 function changeTurn(){
     if(OBJ_var.blnSide!==OBJ_chess.turn){
         setTimeout(function(){
-            var find=OBJ_var.objDrive.findmove(OBJ_var.rank);
+            var find=OBJ_var.objDrive.findmove(OBJ_var.arrUser[0].intRank);
             for(var key in OBJ_chess.arrSqu){
                 if(OBJ_chess.arrSqu[key].boolPlay===true){
                     var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
@@ -38,8 +53,8 @@ function play(gSquare){
             OBJ_board.hideCheck();
             if(!move[0]) OBJ_board.putMove(move,false,!OBJ_var.blnSide);
             else{
-                if(OBJ_chess.turn) openBox('boxPromoteWhite');
-                else openBox('boxPromoteBlack');
+                if(OBJ_chess.turn) showBox('boxPromoteWhite');
+                else showBox('boxPromoteBlack');
             }
             // finish move
             OBJ_var.arrHist[last][2]=pos;

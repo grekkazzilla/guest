@@ -341,6 +341,43 @@ function init(){
         showBox('boxHost');
     },null);
     ////////////////////
+    // BOX PROMOTE WHITE
+    ////////////////////
+    var w=50, h=w, s=10, ctgStyle='AXAX', arr=new Array('bishop','knight','rook','queen');
+    var box=getMenu('boxPromoteWhite',div,w,h,s,s,4,1,false);
+    for(var i=0;i<arr.length;i++){
+        var btn=getButton(null,box,s+(w+s)*i,s,w,h,true,ctgStyle,picNone(),0,function(){
+            var move=OBJ_chess.promotePawn(this.name,true);
+            OBJ_board.putMove(move,this.name,!OBJ_board.blnSide);
+            hideBox('boxPromoteWhite');
+            changeTurn();
+        },null);
+        btn.name=arr[i];
+        if(i==0) draw_white_bishop(null,btn,0,0,1,true);
+        else if(i==1) draw_white_knight(null,btn,0,0,1,true);
+        else if(i==2) draw_white_rook(null,btn,0,0,1,true);
+        else if(i==3) draw_white_queen(null,btn,0,0,1,true);
+        getRect(null,btn,0,0,w,h,5,'url(#Opac)','none',0);
+    }
+    ////////////////////
+    // BOX PROMOTE BLACK
+    ////////////////////
+    var box=getMenu('boxPromoteBlack',div,w,h,s,s,4,1,false);
+    for(var i=0;i<arr.length;i++){
+        var btn=getButton(null,box,s+(w+s)*i,s,w,h,true,ctgStyle,picNone(),0,function(){
+            var move=OBJ_chess.promotePawn(this.name,true);
+            OBJ_board.putMove(move,this.name,!OBJ_board.blnSide);
+            hideBox('boxPromoteBlack');
+            changeTurn();
+        },null);
+        btn.name=arr[i];
+        if(i==0) draw_black_bishop(null,btn,0,0,1,true);
+        else if(i==1) draw_black_knight(null,btn,0,0,1,true);
+        else if(i==2) draw_black_rook(null,btn,0,0,1,true);
+        else if(i==3) draw_black_queen(null,btn,0,0,1,true);
+        getRect(null,btn,0,0,w,h,5,'url(#Opac)','none',0);
+    }
+    ////////////////////
     // DIV PIC /////////
     ////////////////////
     var div=getG('divPic',gWrap,0,0,1,false,OBJ_var.wArena/2,OBJ_var.hArena/2);

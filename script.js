@@ -37,6 +37,7 @@ function copyObject(obj) {
     }
     return copy;
 }
+function inArray(elm,arr){for(var i=0;i<arr.length;i++){if(arr[i]==elm) return true;}return false;}
 function isTouch(){return ('ontouchstart' in window);}
 function getFrameDocument(frame){return frame && (frame.contentDocument || frame.contentWindow || null);}
 ///////////////////// AJAX ////////////////////

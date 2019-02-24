@@ -11,6 +11,7 @@ function chooseVar(){
         case 7: strFen='nnnnknnn/pppppppp/2p2p2/1pppppp1/8/8/PPPPPPPP/RNBQKBNR w KQ - 0 1';break;
         case 8: strFen='prbknrp1/1pnqbp2/2ppp3/3p4/4P3/3PPP2/2PBQNP1/1PRNKBRP w - - 0 1';break;
         default: strFen='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';break; // classic by default
+        //default: strFen='k7/8/7P/8/8/8/8/K7 w - - 0 1';break; // classic by default
     }
     OBJ_chess.setBoard(strFen);
     OBJ_board.putBoard();
