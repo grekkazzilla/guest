@@ -64,6 +64,10 @@ function getButton(strID,oRoot,intX,intY,intW,intH,blnShown,ctgStyle,fncPic,zPic
         else if(ctgStyle.substr(2,1)=='F'){
             var pth=getPath(null,gIn,intIcnX,intIcnY,zPic,'transparent','#fff',15,strIcnD);
         }
+        else if(ctgStyle.substr(2,1)=='G'){
+            var pth=getPath(null,gIn,intIcnX,intIcnY,zPic,'transparent','url(#grdButton)',25,strIcnD);
+            btn.arrOn.push(['path',0,'stroke','url(#grdButton)','#eee8aa']);
+        }
         pth.w=fncPic[0];
         pth.h=fncPic[1];
     }

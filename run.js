@@ -5,6 +5,9 @@ function startGame(){
     if(OBJ_var.strVS=='robo'){
         showG('gRobo');
         setTimeout(function(){showG(o('gRobo').getElementsByTagName('g')[0]);},1000);
+        var btn=o('btnTimeHost');
+        btn.x=170; btn.y=530; showG(btn);
+        showG('btnRoboBack'); showG('btnRoboStop');
     }
     //var arena=ARR_arena[NUM_arena];
     //arena.objDrive=p4_fen2state(arena.arrHist[0][0]);

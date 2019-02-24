@@ -138,6 +138,25 @@ function init(){
     var w=50, h=20, g=getG(null,G,W/2-w/2,H/2-h/2+4,1,false,w/2,h/2);
     getCircle(null,g,13,10,5,'#ffaaaa','none',0);
     getCircle(null,g,37,10,5,'#ffaaaa','none',0);
+    // BTN TIME
+    var btn=getButton('btnTimeHost',div,-9999,-9999,60,60,false,'CXDX',picNone(),0,function(){},null);
+    getLine(null,btn,30,6,30,13,'#eee8aa',3).setAttribute('stroke-linecap','butt');
+    getLine(null,btn,27,6,33,6,'#eee8aa',5);
+    getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(30,30,20,0,359)+describeArc(30,30,5,0,359));
+    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',8,describeArc(30,30,12.5,190,359)+'M 30 43');
+    pth.setAttribute('stroke-linecap','butt');
+    btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
+    //
+    var btn=getButton('btnTimeUser',div,-9999,-9999,60,60,false,'CXDX',picNone(),0,function(){},null);
+    getLine(null,btn,30,6,30,13,'#eee8aa',3).setAttribute('stroke-linecap','butt');
+    getLine(null,btn,27,8,33,8,'#eee8aa',5);
+    getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(30,30,20,0,359)+describeArc(30,30,5,0,359));
+    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',8,describeArc(30,30,12.5,0,359)+'M 30 43');
+    pth.setAttribute('stroke-linecap','butt');
+    btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
+    // BTN ROBO
+    mirrHor(getButton('btnRoboBack',div,103.6,530,60,60,false,'AACX',picArrowC(),0.1,function(){},null));
+    getButton('btnRoboStop',div,236.4,530,60,60,false,'AACX',picCross(),0.09,function(){},null);
     // BOX VAR
     var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=5;
     var box=getMenu('boxVar',div,w,h,m,s,qtyHor,qtyVer,false);
