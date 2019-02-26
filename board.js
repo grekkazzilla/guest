@@ -186,8 +186,8 @@ OBJ_board.putCheck=function(arrCheck){
     }
 }
 OBJ_board.drawCheck=function(gSquare){
-    var rct=getRect(null,gSquare,5,5,40,40,5,'url(#Red)','none',0);
-    rct.setAttribute('filter','url(#blr6)');
+    var rct=getRect(null,gSquare,5,5,40,40,5,'#ff8080','none',0);
+    rct.setAttribute('filter','url(#blr12)');
     OBJ_board.arrCheck.push(rct);
     var gUnit=gSquare.getElementsByTagName('g')[0];
     gSquare.appendChild(gUnit);

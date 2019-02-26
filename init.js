@@ -16,8 +16,10 @@ function init(){
     getLinGrd('grdSilver','#ececec','#999999',1,1,false,'down',dfs);
     getLinGrd('grdSilverRvs','#999999','#ececec',1,1,false,'down',dfs);
     getLinGrd('grdBrain','#fff','#bdb76d',1,1,false,'down',dfs);
+    getLinGrd('grdRed','#ff8080','#aa0000',1,1,false,'down',dfs);
     getBlurFilter('blr2',2,dfs);
     getBlurFilter('blr3',3,dfs);
+    getBlurFilter('blr6',3,dfs);
     getBlurFilter('blr8',8,dfs);
     getBlurFilter('blr10',10,dfs);
     getBlurFilter('blr12',12,dfs);
@@ -131,32 +133,6 @@ function init(){
     btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
     getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
     getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){showDiv('divWatch');},null);
-    // G ROBO
-    var W=90, H=90, G=getG('gRobo',div,200-W/2,6,1,false,W/2,H/2);
-    var z=0.225, p=picRobo();
-    getPath(null,G,(W-p[0]*z)/2,(H-p[1]*z)/2,z,'url(#grdButton)','none',0,p[2]);
-    var w=50, h=20, g=getG(null,G,W/2-w/2,H/2-h/2+4,1,false,w/2,h/2);
-    getCircle(null,g,13,10,5,'#ffaaaa','none',0);
-    getCircle(null,g,37,10,5,'#ffaaaa','none',0);
-    // BTN TIME
-    var btn=getButton('btnTimeHost',div,-9999,-9999,60,60,false,'CXDX',picNone(),0,function(){},null);
-    getLine(null,btn,30,6,30,13,'#eee8aa',3).setAttribute('stroke-linecap','butt');
-    getLine(null,btn,27,6,33,6,'#eee8aa',5);
-    getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(30,30,20,0,359)+describeArc(30,30,5,0,359));
-    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',8,describeArc(30,30,12.5,190,359)+'M 30 43');
-    pth.setAttribute('stroke-linecap','butt');
-    btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
-    //
-    var btn=getButton('btnTimeUser',div,-9999,-9999,60,60,false,'CXDX',picNone(),0,function(){},null);
-    getLine(null,btn,30,6,30,13,'#eee8aa',3).setAttribute('stroke-linecap','butt');
-    getLine(null,btn,27,8,33,8,'#eee8aa',5);
-    getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(30,30,20,0,359)+describeArc(30,30,5,0,359));
-    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',8,describeArc(30,30,12.5,0,359)+'M 30 43');
-    pth.setAttribute('stroke-linecap','butt');
-    btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
-    // BTN ROBO
-    mirrHor(getButton('btnRoboBack',div,103.6,530,60,60,false,'AACX',picArrowC(),0.1,function(){},null));
-    getButton('btnRoboStop',div,236.4,530,60,60,false,'AACX',picCross(),0.09,function(){},null);
     // BOX VAR
     var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=5;
     var box=getMenu('boxVar',div,w,h,m,s,qtyHor,qtyVer,false);
@@ -179,6 +155,32 @@ function init(){
         else{arrText[0].setAttribute('y',25);arrText[1].setAttribute('y',45);}
         x+=w+s;if((i+1)%qtyHor==0){x-=(w+s)*qtyHor;y+=h+s;}
     }
+    // G PLAY
+    var g=getG('gPlay',div,4,6,1,false,400,90);
+    var btn=getButton('btnUser',g,234,0,126.4,90,true,'CXDX',picRobo(),0.225,function(){},null);
+    var w=50, h=20, gEye=getG('gRedEye',btn,btn.rx-w/2-1,btn.ry-h/2+4+2,1,true,w/2,h/2);
+    getCircle(null,gEye,13,10,5,'#ffaaaa','none',0);
+    getCircle(null,gEye,37,10,5,'#ffaaaa','none',0);
+    var btn=getButton('btnTimeHost',g,60,15,60,60,true,'CXDX',picNone(),0,function(){},null);
+    getLine(null,btn,30,6,30,13,'#eee8aa',3).setAttribute('stroke-linecap','butt');
+    getLine(null,btn,27,6,33,6,'#eee8aa',5);
+    getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(30,30,20,0,359)+describeArc(30,30,5,0,359));
+    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',8,describeArc(30,30,12.5,190,359)+'M 30 43');
+    pth.setAttribute('stroke-linecap','butt');
+    btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
+    var btn=getButton('btnTimeUser',g,126,15,60,60,true,'CXDX',picNone(),0,function(){},null);
+    getLine(null,btn,30,6,30,13,'#eee8aa',3).setAttribute('stroke-linecap','butt');
+    getLine(null,btn,27,8,33,8,'#eee8aa',5);
+    getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(30,30,20,0,359)+describeArc(30,30,5,0,359));
+    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',8,describeArc(30,30,12.5,0,359)+'M 30 43');
+    pth.setAttribute('stroke-linecap','butt');
+    btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
+    // G ACTION
+    var w=60, h=60, s=6.4, g=getG('gAction',div,200-(w*4+s*3)/2,519,1,false,w*4+s*3,60);
+    getButton('btnAction',g,0,0,w,h,true,'CXDX',picMenu(),0.12,function(){},null);
+    mirrHor(getButton('btnBack',g,w+s,0,w,h,true,'CXDX',picArrow(),0.1,function(){},null));
+    getButton('btnForward',g,(w+s)*2,0,w,h,true,'CXDX',picArrow(),0.1,function(){},null);
+    getButton('btnChat',g,(w+s)*3,0,w,h,true,'CXDX',picChatA(),0.14,function(){},null);
     // BOX SIDE
     var w=60, h=60, m=10, s=10, x=m, y=60, qtyHor=3, qtyVer=1;
     var box=getMenu('boxSide',div,w,h,m,s,qtyHor,qtyVer,false);

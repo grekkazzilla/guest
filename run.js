@@ -2,6 +2,8 @@ function startGame(){
     if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
     hideG('gTop');
     hideG('gBottom');
+    showG('gPlay');
+    showG('gAction');
     //
     if(OBJ_var.strSide=='white'){
         OBJ_var.blnSide=true;
@@ -18,11 +20,6 @@ function startGame(){
     if(OBJ_var.blnSide!==OBJ_board.blnSide) OBJ_board.flip(!OBJ_board.blnSide);
     //
     if(OBJ_var.strVS=='robo'){
-        showG('gRobo');
-        setTimeout(function(){showG(o('gRobo').getElementsByTagName('g')[0]);},10000);
-        var btn=o('btnTimeHost');
-        btn.x=170; btn.y=530; showG(btn);
-        showG('btnRoboBack'); showG('btnRoboStop');
         OBJ_var.objDrive=p4_fen2state(OBJ_var.arrHist[0][0]);
         changeTurn();
     }
