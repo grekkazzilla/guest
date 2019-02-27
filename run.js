@@ -3,8 +3,9 @@ function startGame(){
     hideG('gTop');
     showG('gTime');
     showG('gRobo');
-    hideG('btnMenu');hideG('btnBook');hideG('btnSetUp');hideG('btnOnLine');
-    showG('btnGo');showG('btnMoveBack');showG('btnHistBack');showG('btnHistFrwd');
+    hideG('gBottom');
+    showG('gGo');
+    o('gGo').appendChild(o('btnHost'));
     //
     if(OBJ_var.strSide=='white'){
         OBJ_var.blnSide=true;
