@@ -128,11 +128,18 @@ function init(){
     // G BOTTOM
     var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,w*6+s*4,90);
     getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
+    getButton('btnGo',g,0,0,w,h,false,'AAEX',picMenu(),0.11,function(){},null);
     getButton('btnBook',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
+    var btn=getButton('btnMoveBack',g,(w+s),0,w,h,false,'AAEX',picChatA(),0.13,function(){},null);
+    mirrHor(btn);
+    btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
     var btn=getButton('btnHost',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picNone(),0,function(){showBox('boxHost');},null);
     btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
     getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
+    mirrHor(getButton('btnHistBack',g,(w+s)*4,0,w,h,false,'AAEX',picArrow(),0.1,function(){},null));
     getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){showDiv('divWatch');},null);
+    var btn=getButton('btnHistFrwd',g,(w+s)*5,0,w,h,false,'AAEX',picArrow(),0.1,function(){},null);
+    btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
     // BOX VAR
     var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=5;
     var box=getMenu('boxVar',div,w,h,m,s,qtyHor,qtyVer,false);
@@ -155,32 +162,31 @@ function init(){
         else{arrText[0].setAttribute('y',25);arrText[1].setAttribute('y',45);}
         x+=w+s;if((i+1)%qtyHor==0){x-=(w+s)*qtyHor;y+=h+s;}
     }
-    // G PLAY
-    var g=getG('gPlay',div,4,6,1,false,400,90);
-    var btn=getButton('btnUser',g,234,0,126.4,90,true,'CXDX',picRobo(),0.225,function(){},null);
-    var w=50, h=20, gEye=getG('gRedEye',btn,btn.rx-w/2-1,btn.ry-h/2+4+2,1,true,w/2,h/2);
-    getCircle(null,gEye,13,10,5,'#ffaaaa','none',0);
-    getCircle(null,gEye,37,10,5,'#ffaaaa','none',0);
-    var btn=getButton('btnTimeHost',g,60,15,60,60,true,'CXDX',picNone(),0,function(){},null);
-    getLine(null,btn,30,6,30,13,'#eee8aa',3).setAttribute('stroke-linecap','butt');
-    getLine(null,btn,27,6,33,6,'#eee8aa',5);
-    getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(30,30,20,0,359)+describeArc(30,30,5,0,359));
-    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',8,describeArc(30,30,12.5,190,359)+'M 30 43');
+    // G ROBO
+    var W=90, H=90, G=getG('gRobo',div,200-W/2,4,1,false,W/2,H/2);
+    var z=0.225, p=picRobo(); getPath(null,G,W/2-p[0]*z/2,H/2-p[1]*z/2,z,'url(#grdButton)','none',0,p[2]);
+    var w=50, h=20, gEye=getG('gRedEye',G,W/2-w/2,H/2-h/2,1,true,w/2,h/2);
+    getCircle(null,gEye,13,15,5,'#ffaaaa','none',0);
+    getCircle(null,gEye,37,15,5,'#ffaaaa','none',0);
+    getText(null,G,W/2,90,18,'Arial','url(#grdButton)','none',0,'','middle');
+    // G TIME
+    var W=400, H=90, G=getG('gTime',div,0,8,1,false,W/2,H/2);
+    var w=70, h=70, btn=getButton('btnTimeHost',G,30,12,w,h,true,'CXDX',picNone(),0,function(){},null);
+    getLine(null,btn,35,11,35,18,'#eee8aa',3).setAttribute('stroke-linecap','butt');
+    getLine(null,btn,32,11,38,11,'#eee8aa',5);
+    getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(35,35,20,0,359)+describeArc(35,35,5,0,359));
+    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',8,describeArc(35,35,12.5,0,359)+'M 35 43');
     pth.setAttribute('stroke-linecap','butt');
     btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
-    var btn=getButton('btnTimeUser',g,126,15,60,60,true,'CXDX',picNone(),0,function(){},null);
-    getLine(null,btn,30,6,30,13,'#eee8aa',3).setAttribute('stroke-linecap','butt');
-    getLine(null,btn,27,8,33,8,'#eee8aa',5);
-    getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(30,30,20,0,359)+describeArc(30,30,5,0,359));
-    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',8,describeArc(30,30,12.5,0,359)+'M 30 43');
+    getText(null,btn,w/2,89,18,'Arial','url(#grdButton)','none',0,'','middle');
+    var btn=getButton('btnTimeUser',G,300,12,w,h,true,'CXDX',picNone(),0,function(){},null);
+    getLine(null,btn,35,11,35,18,'#eee8aa',3).setAttribute('stroke-linecap','butt');
+    getLine(null,btn,32,13,38,13,'#eee8aa',5);
+    getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(35,35,20,0,359)+describeArc(35,35,5,0,359));
+    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',8,describeArc(35,35,12.5,0,359)+'M 35 43');
     pth.setAttribute('stroke-linecap','butt');
     btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
-    // G ACTION
-    var w=60, h=60, s=6.4, g=getG('gAction',div,200-(w*4+s*3)/2,519,1,false,w*4+s*3,60);
-    getButton('btnAction',g,0,0,w,h,true,'CXDX',picMenu(),0.12,function(){},null);
-    mirrHor(getButton('btnBack',g,w+s,0,w,h,true,'CXDX',picArrow(),0.1,function(){},null));
-    getButton('btnForward',g,(w+s)*2,0,w,h,true,'CXDX',picArrow(),0.1,function(){},null);
-    getButton('btnChat',g,(w+s)*3,0,w,h,true,'CXDX',picChatA(),0.14,function(){},null);
+    getText(null,btn,w/2,89,18,'Arial','url(#grdButton)','none',0,'','middle');
     // BOX SIDE
     var w=60, h=60, m=10, s=10, x=m, y=60, qtyHor=3, qtyVer=1;
     var box=getMenu('boxSide',div,w,h,m,s,qtyHor,qtyVer,false);

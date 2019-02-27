@@ -1,9 +1,10 @@
 function startGame(){
     if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
     hideG('gTop');
-    hideG('gBottom');
-    showG('gPlay');
-    showG('gAction');
+    showG('gTime');
+    showG('gRobo');
+    hideG('btnMenu');hideG('btnBook');hideG('btnSetUp');hideG('btnOnLine');
+    showG('btnGo');showG('btnMoveBack');showG('btnHistBack');showG('btnHistFrwd');
     //
     if(OBJ_var.strSide=='white'){
         OBJ_var.blnSide=true;
