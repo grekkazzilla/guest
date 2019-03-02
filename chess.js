@@ -212,6 +212,9 @@ OBJ_chess.setPosB=function(pos){
                     // CLEAR CASTLING IF MOVED
                     if(unitA.arrCastle.length>0) unitA.arrCastle=new Array();
                     if(unitA.objCastle) unitA.objCastle=false;
+                    // HALFMOVE CLOCK
+                    if(unitA.name=='pawn' || arrTake.length>0) OBJ_chess.numHalfClock=0;
+                    else OBJ_chess.numHalfClock++;
                     //
                     return [false,posA,posB,arrTake,arrCheck,arrCastle];
                 }
@@ -247,6 +250,7 @@ OBJ_chess.setMove=function(posA,posB){
     squB.unit=unitA;
     unitA.pos=posB;
    //
+   if(OBJ_chess.turn===false) OBJ_chess.numFullMove++;
    OBJ_chess.turn=!OBJ_chess.turn;
    if(arrTake.length>0) return arrTake;
    return false;
@@ -425,6 +429,7 @@ OBJ_chess.setCastle=function(arrCastle){
    unit.pos=posB;
 }
 OBJ_chess.enPassant=function(unit,posA,posB){
+   OBJ_chess.posEnPassant=false;
    if(unit.name=='pawn'){
       // check if jumped
       if(Math.abs(posA-posB)>=OBJ_chess.dstVer*2){
@@ -432,6 +437,7 @@ OBJ_chess.enPassant=function(unit,posA,posB){
          var c=Math.abs(posA-posB)/OBJ_chess.dstVer-1;
          var d=1;
          if(!unit.side) d=-1;
+         OBJ_chess.posEnPassant=(posB+OBJ_chess.dstVer*d);
          for(var i=0;i<c;i++){
             var pos=posB+OBJ_chess.dstVer*i*d;
             for(var j=-1;j<=1;j+=2){
@@ -554,14 +560,20 @@ OBJ_chess.getFen=function(){
             
         }
     }
+    // TURN
+    if(OBJ_chess.turn===true) strFen+=' w';
+    else strFen+=' b';
     // CASTLING
     var strCastle='';
     if(inArray('K',arrCastle)) strCastle+='K';
     if(inArray('Q',arrCastle)) strCastle+='Q';
     if(inArray('k',arrCastle)) strCastle+='k';
     if(inArray('q',arrCastle)) strCastle+='q';
-    if(strCastle=='') strCastle='-';
-    
+    if(strCastle=='') strFen+=' -';
+    strFen+=' '+strCastle;
+    // EN PASSANT
+    if(OBJ_chess.posEnPassant===false) strFen+=' -';
+    else strFen+=' '+OBJ_chess.arrSqu[OBJ_chess.posEnPassant].strNota;
     //
-    return strFen+' '+strCastle;
+    return strFen+' '+OBJ_chess.numHalfClock+' '+OBJ_chess.numFullMove;
 }

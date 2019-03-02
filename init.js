@@ -176,7 +176,7 @@ function init(){
     getLine(null,btn,35,6,35,12,'#eee8aa',3).setAttribute('stroke-linecap','butt');
     getLine(null,btn,32,6,38,6,'#eee8aa',5);
     getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(35,35,25,0,359)+describeArc(35,35,5,0,359));
-    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',12,describeArc(35,35,15,0,359)+'M 35 50');
+    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',12,describeArc(35,35,15,90,359)+'M 35 50');
     pth.setAttribute('stroke-linecap','butt');
     btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
     var btn=getButton('btnTimeUser',G,300,10,w,h,true,'CXDX',picNone(),0,function(){},null);
@@ -184,7 +184,7 @@ function init(){
     getLine(null,btn,32,8.5,38,8.5,'#eee8aa',5);
     getLine(null,btn,32,8.5,38,8.5,'#eee8aa',5);
     getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(35,35,25,0,359)+describeArc(35,35,5,0,359));
-    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',12,describeArc(35,35,15,0,359)+'M 35 50');
+    var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',12,describeArc(35,35,15,90,359)+'M 35 50');
     pth.setAttribute('stroke-linecap','butt');
     btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
     // G GO
