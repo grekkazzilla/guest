@@ -508,3 +508,6 @@ OBJ_chess.clearBoard=function(){
         }
     }
 }
+OBJ_chess.getFen=function(){
+    
+}

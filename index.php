@@ -49,6 +49,8 @@
     OBJ_var.arrHist=new Array();
     OBJ_var.arrUser=new Array();
     OBJ_var.objDrive=null;
+    OBJ_var.strMode='standby';
+    OBJ_var.numShowMove=0;
     getUser();
     function getUser(){
         var objUser=new Object();
