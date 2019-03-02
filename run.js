@@ -23,58 +23,66 @@ function startGame(){
     //
     if(OBJ_var.strVS=='robo'){
         OBJ_var.objDrive=p4_fen2state(OBJ_var.arrHist[0][0]);
+        OBJ_var.arrHist.push(new Array('',false,false,false));
         changeTurn();
     }
+    OBJ_var.strMode='play';
 }
 function changeTurn(){
-    if(OBJ_var.blnSide!==OBJ_chess.turn){
-        setTimeout(function(){
-            var find=OBJ_var.objDrive.findmove(OBJ_var.arrUser[0].intRank);
-            for(var key in OBJ_chess.arrSqu){
-                if(OBJ_chess.arrSqu[key].boolPlay===true){
-                    var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
-                    if(gSqu.num==find[0]) var gSquA=gSqu;
-                    if(gSqu.num==find[1]) var gSquB=gSqu;
+    if(OBJ_var.strVS=='robo'){
+        if(OBJ_var.blnSide!==OBJ_chess.turn){
+            setTimeout(function(){
+                var find=OBJ_var.objDrive.findmove(OBJ_var.arrUser[0].intRank);
+                for(var key in OBJ_chess.arrSqu){
+                    if(OBJ_chess.arrSqu[key].boolPlay===true){
+                        var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
+                        if(gSqu.num==find[0]) var gSquA=gSqu;
+                        if(gSqu.num==find[1]) var gSquB=gSqu;
+                    }
                 }
-            }
-            play(gSquA);
-            play(gSquB);
-        },50);
+                play(gSquA);
+                play(gSquB);
+            },50);
+        }
     }
+    else OBJ_var.blnSide!=OBJ_var.blnSide;
 }
 function play(gSquare){
-    var pos=gSquare.pos;
-    var last=OBJ_var.arrHist.length-1;
-    OBJ_board.hideTake();
-    if(!OBJ_chess.setPosA(pos)){
-        var move=OBJ_chess.setPosB(pos);
-        if(move){
-            OBJ_board.hideCheck();
-            if(!move[0]) OBJ_board.putMove(move,false,!OBJ_var.blnSide);
-            else{
-                if(OBJ_chess.turn) showBox('boxPromoteWhite');
-                else showBox('boxPromoteBlack');
-            }
-            // finish move
-            OBJ_var.arrHist[last][2]=pos;
-            for(var key in OBJ_chess.arrSqu){
-            if(OBJ_chess.arrSqu[key].boolPlay===true){
-                var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
-                    if(gSqu.pos==OBJ_var.arrHist[last][1]) var posA=gSqu.num;
-                    if(gSqu.pos==OBJ_var.arrHist[last][2]) var posB=gSqu.num;
+    if(OBJ_var.strMode=='play' && OBJ_var.numShowMove==0){
+        var pos=gSquare.pos;
+        var last=OBJ_var.arrHist.length-1;
+        OBJ_board.hideTake();
+        if(!OBJ_chess.setPosA(pos)){
+            var move=OBJ_chess.setPosB(pos);
+            if(move){
+                OBJ_board.hideCheck();
+                if(!move[0]) OBJ_board.putMove(move,false,!OBJ_var.blnSide);
+                else{
+                    if(OBJ_chess.turn) showBox('boxPromoteWhite');
+                    else showBox('boxPromoteBlack');
                 }
+                // finish move
+                OBJ_var.arrHist[last][0]=OBJ_chess.getFen();console.log(OBJ_chess.getFen());
+                OBJ_var.arrHist[last][2]=pos;
+                for(var key in OBJ_chess.arrSqu){
+                if(OBJ_chess.arrSqu[key].boolPlay===true){
+                    var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
+                        if(gSqu.pos==OBJ_var.arrHist[last][1]) var posA=gSqu.num;
+                        if(gSqu.pos==OBJ_var.arrHist[last][2]) var posB=gSqu.num;
+                    }
+                }
+                if(OBJ_var.strVS=='robo') OBJ_var.objDrive.move(posA,posB,12);
+                OBJ_var.arrHist.push(new Array('',false,false,false));
+                changeTurn();
+                //
             }
-            OBJ_var.objDrive.move(posA,posB,12);
-            OBJ_var.arrHist.push(new Array('',false,false,false));
-            changeTurn();
-            //
+            OBJ_board.hidePick();
         }
-        OBJ_board.hidePick();
-    }
-    else{
-        OBJ_board.putTake();
-        OBJ_board.putPick();
-        OBJ_var.arrHist[last][1]=pos;
+        else{
+            OBJ_board.putTake();
+            OBJ_board.putPick();
+            OBJ_var.arrHist[last][1]=pos;
+        }
     }
 }
 /*

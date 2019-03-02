@@ -16,6 +16,9 @@ OBJ_chess.getBoard=function(qtyHor, qtyVer, mrgBan, nameVar){
    OBJ_chess.lock=false; // if true, locking the program from ending a move and from selecting a new pos
    OBJ_chess.arrCheck=new Array(); // squares with currently checked kings
    OBJ_chess.arrTake=new Array(); // squares where the picked unit can go
+   OBJ_chess.posEnPassant=false; // if a pawn has moved two squares, for fen notation
+   OBJ_chess.numHalfClock=0; // for fen notation
+   OBJ_chess.numFullMove=1; // for fen notation
    var numHor=OBJ_chess.dstHor+1; // horizontal line number
    var numVer=0; // vertical line number
    var arrABC=new Array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
@@ -509,5 +512,56 @@ OBJ_chess.clearBoard=function(){
     }
 }
 OBJ_chess.getFen=function(){
+    var strFen='';
+    var cntTotal=0;
+    var cntEmpty=0;
+    var arrCastle=new Array();
+    for(var i in OBJ_chess.arrSqu){
+        var squ=OBJ_chess.arrSqu[i];
+        if(squ.boolPlay===true){
+            var unit=squ.unit;
+            if(unit===false) cntEmpty++;
+            else{
+                if(cntEmpty>0){
+                    strFen+=cntEmpty;
+                    cntEmpty=0;
+                }
+                strFen+=unit.strFen;
+                // CASTLING
+                if(OBJ_chess.nameVar=='standard'){
+                    for(var j in unit.arrCastle){
+                        var posKing=unit.arrCastle[j][2][0];
+                        var posCastle=unit.arrCastle[j][3][0];
+                        var squCastle=OBJ_chess.arrSqu[posCastle];
+                        var unitCastle=squCastle.unit;
+                        if(unitCastle!==false && unitCastle.objCastle!==false){
+                            if(posKing==114 && posCastle==110) arrCastle.push('Q');
+                            else if(posKing==114 && posCastle==117) arrCastle.push('K');
+                            else if(posKing==30 && posCastle==26) arrCastle.push('q');
+                            else if(posKing==30 && posCastle==33) arrCastle.push('k');
+                        }
+                    }
+                }
+            }
+            cntTotal++;
+            if(cntTotal%OBJ_chess.qtyHor==0){
+                if(cntEmpty>0){
+                    strFen+=cntEmpty;
+                    cntEmpty=0;
+                }
+                if(cntTotal/OBJ_chess.qtyVer<OBJ_chess.qtyHor) strFen+='/';
+            }
+            
+        }
+    }
+    // CASTLING
+    var strCastle='';
+    if(inArray('K',arrCastle)) strCastle+='K';
+    if(inArray('Q',arrCastle)) strCastle+='Q';
+    if(inArray('k',arrCastle)) strCastle+='k';
+    if(inArray('q',arrCastle)) strCastle+='q';
+    if(strCastle=='') strCastle='-';
     
+    //
+    return strFen+' '+strCastle;
 }
