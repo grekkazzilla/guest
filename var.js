@@ -15,7 +15,7 @@ function chooseVar(){
     }
     OBJ_chess.setBoard(strFen);
     OBJ_board.putBoard();
-    OBJ_var.arrHist[0]=new Array(strFen,false,false,false); // fen position, posA, posB, move notation
+    OBJ_var.arrHist[0]=new Array(strFen,false,false,false,false); // fen position, posA, posB, move notation, arrCheck
 }
 function endgameFen(){
     var arrSquW=new Array('R','N','0','0','K','0','N','R');

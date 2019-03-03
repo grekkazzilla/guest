@@ -23,9 +23,9 @@ function startGame(){
     //
     if(OBJ_var.strVS=='robo'){
         OBJ_var.objDrive=p4_fen2state(OBJ_var.arrHist[0][0]);
-        OBJ_var.arrHist.push(new Array('',false,false,false));
         changeTurn();
     }
+    OBJ_var.arrHist.push(new Array('',false,false,false,false));
     OBJ_var.strMode='play';
 }
 function changeTurn(){
@@ -50,29 +50,34 @@ function changeTurn(){
 function play(gSquare){
     if(OBJ_var.strMode=='play' && OBJ_var.numShowMove==0){
         var pos=gSquare.pos;
-        var last=OBJ_var.arrHist.length-1;
+        var numLast=OBJ_var.arrHist.length-1;
         OBJ_board.hideTake();
         if(!OBJ_chess.setPosA(pos)){
-            var move=OBJ_chess.setPosB(pos);
-            if(move){
+            var arrMove=OBJ_chess.setPosB(pos);
+            if(arrMove){
                 OBJ_board.hideCheck();
-                if(!move[0]) OBJ_board.putMove(move,false,!OBJ_var.blnSide);
+                if(!arrMove[0]) OBJ_board.putMove(arrMove,false,!OBJ_var.blnSide);
                 else{
                     if(OBJ_chess.turn) showBox('boxPromoteWhite');
                     else showBox('boxPromoteBlack');
                 }
                 // finish move
-                OBJ_var.arrHist[last][0]=OBJ_chess.getFen();console.log(OBJ_chess.getFen());
-                OBJ_var.arrHist[last][2]=pos;
-                for(var key in OBJ_chess.arrSqu){
-                if(OBJ_chess.arrSqu[key].boolPlay===true){
-                    var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
-                        if(gSqu.pos==OBJ_var.arrHist[last][1]) var posA=gSqu.num;
-                        if(gSqu.pos==OBJ_var.arrHist[last][2]) var posB=gSqu.num;
+                OBJ_var.arrHist[numLast][0]=OBJ_chess.getFen();
+                OBJ_var.arrHist[numLast][2]=pos;
+                OBJ_var.arrHist[numLast][4]=arrMove[4];
+                // p4wn.js engine
+                if(OBJ_var.strVS=='robo'){
+                    for(var key in OBJ_chess.arrSqu){
+                        if(OBJ_chess.arrSqu[key].boolPlay===true){
+                            var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
+                            if(gSqu.pos==OBJ_var.arrHist[numLast][1]) var posA=gSqu.num;
+                            else if(gSqu.pos==OBJ_var.arrHist[numLast][2]) var posB=gSqu.num;
+                        }
                     }
+                    OBJ_var.objDrive.move(posA,posB,12);
                 }
-                if(OBJ_var.strVS=='robo') OBJ_var.objDrive.move(posA,posB,12);
-                OBJ_var.arrHist.push(new Array('',false,false,false));
+                //
+                OBJ_var.arrHist.push(new Array('',false,false,false,false));
                 changeTurn();
                 //
             }
@@ -81,7 +86,7 @@ function play(gSquare){
         else{
             OBJ_board.putTake();
             OBJ_board.putPick();
-            OBJ_var.arrHist[last][1]=pos;
+            OBJ_var.arrHist[numLast][1]=pos;
         }
     }
 }

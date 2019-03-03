@@ -63,6 +63,18 @@ function showBox(box){
             var lab=o('labRank'); lab.setAttribute('x',xLab); lab.setAttribute('y',yLabRank);
             var g=o('gRank'); jumpG(g,box.rx-g.rx,yRank);
         }
+        else if(box.id=='boxGo'){
+            var btn=o('btnMoveBack');
+            var pth=btn.getElementsByTagName('path')[0];
+            if(OBJ_var.arrHist.length-4<0){
+                btn.blnLock=true;
+                pth.setAttribute('fill','transparent');
+            }
+            else{
+                btn.blnLock=false;
+                pth.setAttribute('fill','#eee8aa');
+            }
+        }
         if(box.id!='boxPromoteWhite' && box.id!='boxPromoteBlack'){
             var btnClose=document.getElementById('btnClose');
             jumpG(btnClose,box.rx*2-50,10);

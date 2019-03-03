@@ -118,6 +118,33 @@ OBJ_chess.setBoard=function(strFen){
             OBJ_chess.arrSqu[33].unit.objCastle=OBJ_chess.arrSqu[30].unit;
         }
     }
+    // EN PASSANT
+    if(arr[3]!='-'){
+        for(var i in OBJ_chess.arrSqu){
+            var squ=OBJ_chess.arrSqu[i];
+            if(squ.strNota==arr[3]){
+                var posEnPassant=squ.pos;
+                break;
+            }
+        }
+        var d=1;
+        if(OBJ_chess.turn===false) d=-1;
+        var posPawn=posEnPassant+OBJ_chess.dstVer*d;
+        var unitPawn=OBJ_chess.arrSqu[posPawn].unit;
+        for(var i=-1;i<=1;i+=2){
+            var squ=OBJ_chess.arrSqu[posPawn+i];
+            if(squ.unit!==false){
+                var unitOpp=squ.unit;
+                if(unitOpp.name=='pawn' && unitOpp.side!==unitPawn.side){
+                    unitOpp.arrTake.push([posEnPassant,[posPawn]]);
+                }
+            }
+        }
+    }
+    // HALFMOVE CLOCK
+    OBJ_chess.numHalfClock=arr[4]*1;
+    // FULLMOVE
+    OBJ_chess.numFullMove=arr[5]*1;
 }
 OBJ_chess.kingCastled=function(unit,pos){
    if(unit.king===true){
@@ -570,7 +597,7 @@ OBJ_chess.getFen=function(){
     if(inArray('k',arrCastle)) strCastle+='k';
     if(inArray('q',arrCastle)) strCastle+='q';
     if(strCastle=='') strFen+=' -';
-    strFen+=' '+strCastle;
+    else strFen+=' '+strCastle;
     // EN PASSANT
     if(OBJ_chess.posEnPassant===false) strFen+=' -';
     else strFen+=' '+OBJ_chess.arrSqu[OBJ_chess.posEnPassant].strNota;

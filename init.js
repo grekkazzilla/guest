@@ -130,7 +130,7 @@ function init(){
     getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
     getButton('btnGo',g,0,0,w,h,false,'AAEX',picMenu(),0.11,function(){},null);
     getButton('btnBook',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
-    var btn=getButton('btnMoveBack',g,(w+s),0,w,h,false,'AAEX',picChatA(),0.13,function(){},null);
+    var btn=getButton('btnChat',g,(w+s),0,w,h,false,'AAEX',picChatA(),0.13,function(){},null);
     mirrHor(btn);
     btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
     var btn=getButton('btnHost',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picNone(),0,function(){showBox('boxHost');},null);
@@ -192,7 +192,7 @@ function init(){
     getButton(null,g,0,0,w,h,true,'AAEX',picMenu(),0.11,function(){showBox('boxGo')},null);
     var btn=getButton('btnChat',g,(w+s),0,w,h,true,'AAEX',picChatA(),0.13,function(){},null);
     mirrHor(btn);
-    btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
+    //btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
     mirrHor(getButton('btnHistBack',g,(w+s)*4,0,w,h,true,'AAEX',picArrow(),0.1,function(){},null));
     var btn=getButton('btnHistFrwd',g,(w+s)*5,0,w,h,true,'AAEX',picArrow(),0.1,function(){},null);
     btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
@@ -201,14 +201,22 @@ function init(){
     getButton(null,box,10,60,w,h,true,'BXCX',picFlag(),0.14,function(){
         
     },null);
-    mirrHor(getButton(null,box,10+70,60,w,h,true,'CXEX',picArrowC(),0.11,function(){
-        
+    mirrHor(getButton('btnMoveBack',box,10+70,60,w,h,true,'CXEX',picArrowC(),0.11,function(){
+        if(OBJ_var.arrHist.length-4>=0){
+            var strFen=OBJ_var.arrHist[OBJ_var.arrHist.length-4][0];
+            var arrCheck=OBJ_var.arrHist[OBJ_var.arrHist.length-4][4];
+            OBJ_chess.setBoard(strFen);
+            OBJ_board.putBoard();
+            if(arrCheck!==false) OBJ_board.putCheck(arrCheck);
+            OBJ_var.objDrive=p4_fen2state(strFen);
+            OBJ_var.arrHist.splice(OBJ_var.arrHist.length-3);
+            OBJ_var.arrHist.push(new Array('',false,false,false,false));
+            hideBox('boxGo');
+        }
     },null));
     getButton(null,box,10,60+70,w*2+10,h,true,'AAAX',picAgree(),0.17,function(){
         
     },null);
-    
-    
     // BOX SIDE
     var w=60, h=60, m=10, s=10, x=m, y=60, qtyHor=3, qtyVer=1;
     var box=getMenu('boxSide',div,w,h,m,s,qtyHor,qtyVer,false);
