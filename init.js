@@ -195,21 +195,25 @@ function init(){
         setHistoryShow(+1);
         setHistoryButtons();
     },null);
+    getText('txtHist',g,327,86,18,'Arial','url(#grdButton)','none',0,'','middle');
     // BOX GO
     var w=60, h=60, box=getMenu('boxGo',div,w,h,10,10,2,2,false);
     getButton(null,box,10,60,w,h,true,'BXCX',picFlag(),0.14,function(){
       hideBox('boxGo');
     },null).blnUnlock=true;
     var btn=getButton('btnMoveBack',box,10+70,60,w,h,true,'CXEX',picArrowC(),0.11,function(){
-        if(OBJ_var.arrHist.length-4>=0){
-            var strFen=OBJ_var.arrHist[OBJ_var.arrHist.length-4][0];
-            var arrCheck=OBJ_var.arrHist[OBJ_var.arrHist.length-4][4];
+        var d=0; // if not my turn, the opponent has not moved yet
+        if(OBJ_var.blnSide==OBJ_chess.turn) d=-1; // if my turn to move now
+        if(OBJ_var.arrHist.length-3+d>=0){
+            var strFen=OBJ_var.arrHist[OBJ_var.arrHist.length-3+d][0];
+            var arrCheck=OBJ_var.arrHist[OBJ_var.arrHist.length-3+d][4];
             OBJ_chess.setBoard(strFen);
             OBJ_board.putBoard();
             if(arrCheck!==false) OBJ_board.putCheck(arrCheck);
             OBJ_var.objDrive=p4_fen2state(strFen);
-            OBJ_var.arrHist.splice(OBJ_var.arrHist.length-3);
+            OBJ_var.arrHist.splice(OBJ_var.arrHist.length-2+d);
             OBJ_var.arrHist.push(new Array('',false,false,false,false));
+            setHistoryButtons();
         }
         hideBox('boxGo');
     },null);
