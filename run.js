@@ -6,6 +6,7 @@ function startGame(){
     hideG('gBottom');
     showG('gGo');
     o('gGo').appendChild(o('btnHost'));
+    setHistoryButtons();
     //
     if(OBJ_var.strSide=='white'){
         OBJ_var.blnSide=true;
@@ -48,45 +49,52 @@ function changeTurn(){
     else OBJ_var.blnSide!=OBJ_var.blnSide;
 }
 function play(gSquare){
-    if(OBJ_var.strMode=='play' && OBJ_var.numShowMove==0){
-        var pos=gSquare.pos;
-        var numLast=OBJ_var.arrHist.length-1;
-        OBJ_board.hideTake();
-        if(!OBJ_chess.setPosA(pos)){
-            var arrMove=OBJ_chess.setPosB(pos);
-            if(arrMove){
-                OBJ_board.hideCheck();
-                if(!arrMove[0]) OBJ_board.putMove(arrMove,false,!OBJ_var.blnSide);
-                else{
-                    if(OBJ_chess.turn) showBox('boxPromoteWhite');
-                    else showBox('boxPromoteBlack');
-                }
-                // finish move
-                OBJ_var.arrHist[numLast][0]=OBJ_chess.getFen();
-                OBJ_var.arrHist[numLast][2]=pos;
-                OBJ_var.arrHist[numLast][4]=arrMove[4];
-                // p4wn.js engine
-                if(OBJ_var.strVS=='robo'){
-                    for(var key in OBJ_chess.arrSqu){
-                        if(OBJ_chess.arrSqu[key].boolPlay===true){
-                            var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
-                            if(gSqu.pos==OBJ_var.arrHist[numLast][1]) var posA=gSqu.num;
-                            else if(gSqu.pos==OBJ_var.arrHist[numLast][2]) var posB=gSqu.num;
-                        }
+    if(OBJ_var.strMode=='play' && OBJ_var.blnLock===false){
+        if(OBJ_var.numShowMove==0){
+          var pos=gSquare.pos;
+          var numLast=OBJ_var.arrHist.length-1;
+          OBJ_board.hideTake();
+          if(!OBJ_chess.setPosA(pos)){
+              var arrMove=OBJ_chess.setPosB(pos);
+              if(arrMove){
+                  OBJ_board.hideCheck();
+                  if(!arrMove[0]) OBJ_board.putMove(arrMove,false,!OBJ_var.blnSide);
+                  else{
+                      if(OBJ_chess.turn) showBox('boxPromoteWhite');
+                      else showBox('boxPromoteBlack');
                     }
-                    OBJ_var.objDrive.move(posA,posB,12);
-                }
-                //
-                OBJ_var.arrHist.push(new Array('',false,false,false,false));
-                changeTurn();
-                //
+                    // finish move
+                    OBJ_var.arrHist[numLast][0]=OBJ_chess.getFen();
+                    OBJ_var.arrHist[numLast][2]=pos;
+                    OBJ_var.arrHist[numLast][4]=arrMove[4];
+                    setHistoryButtons();
+                    // p4wn.js engine
+                    if(OBJ_var.strVS=='robo'){
+                      for(var key in OBJ_chess.arrSqu){
+                          if(OBJ_chess.arrSqu[key].boolPlay===true){
+                              var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
+                              if(gSqu.pos==OBJ_var.arrHist[numLast][1]) var posA=gSqu.num;
+                              else if(gSqu.pos==OBJ_var.arrHist[numLast][2]) var posB=gSqu.num;
+                          }
+                      }
+                      OBJ_var.objDrive.move(posA,posB,12);
+                    }
+                    //
+                    OBJ_var.arrHist.push(new Array('',false,false,false,false));
+                    changeTurn();
+                    //
+                  }
+                  OBJ_board.hidePick();
+              }
+              else{
+                OBJ_board.putTake();
+                OBJ_board.putPick();
+                OBJ_var.arrHist[numLast][1]=pos;
             }
-            OBJ_board.hidePick();
         }
         else{
-            OBJ_board.putTake();
-            OBJ_board.putPick();
-            OBJ_var.arrHist[numLast][1]=pos;
+          setLatestHistory();
+          setHistoryButtons();
         }
     }
 }

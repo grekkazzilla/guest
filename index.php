@@ -20,6 +20,7 @@
 <script type='text/javascript' src='svg.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='chess.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='board.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='grekk.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='var.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='control.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='pic.js?v=<?php echo rand(0,1000);?>'></script>

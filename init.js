@@ -128,18 +128,12 @@ function init(){
     // G BOTTOM
     var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,w*6+s*4,90);
     getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
-    getButton('btnGo',g,0,0,w,h,false,'AAEX',picMenu(),0.11,function(){},null);
     getButton('btnBook',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
-    var btn=getButton('btnChat',g,(w+s),0,w,h,false,'AAEX',picChatA(),0.13,function(){},null);
-    mirrHor(btn);
     btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
     var btn=getButton('btnHost',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picNone(),0,function(){showBox('boxHost');},null);
     btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
     getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
-    mirrHor(getButton('btnHistBack',g,(w+s)*4,0,w,h,false,'AAEX',picArrow(),0.1,function(){},null));
     getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){showDiv('divWatch');},null);
-    var btn=getButton('btnHistFrwd',g,(w+s)*5,0,w,h,false,'AAEX',picArrow(),0.1,function(){},null);
-    btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
     // BOX VAR
     var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=5;
     var box=getMenu('boxVar',div,w,h,m,s,qtyHor,qtyVer,false);
@@ -192,16 +186,21 @@ function init(){
     getButton(null,g,0,0,w,h,true,'AAEX',picMenu(),0.11,function(){showBox('boxGo')},null);
     var btn=getButton('btnChat',g,(w+s),0,w,h,true,'AAEX',picChatA(),0.13,function(){},null);
     mirrHor(btn);
-    //btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
-    mirrHor(getButton('btnHistBack',g,(w+s)*4,0,w,h,true,'AAEX',picArrow(),0.1,function(){},null));
-    var btn=getButton('btnHistFrwd',g,(w+s)*5,0,w,h,true,'AAEX',picArrow(),0.1,function(){},null);
+    mirrHor(getButton('btnHistBack',g,(w+s)*4,0,w,h,true,'AAEX',picArrow(),0.1,function(){
+        setHistoryShow(-1);
+        setHistoryButtons();
+    },null));
     btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
+    var btn=getButton('btnHistFrwd',g,(w+s)*5,0,w,h,true,'AAEX',picArrow(),0.1,function(){
+        setHistoryShow(+1);
+        setHistoryButtons();
+    },null);
     // BOX GO
     var w=60, h=60, box=getMenu('boxGo',div,w,h,10,10,2,2,false);
     getButton(null,box,10,60,w,h,true,'BXCX',picFlag(),0.14,function(){
-        
-    },null);
-    mirrHor(getButton('btnMoveBack',box,10+70,60,w,h,true,'CXEX',picArrowC(),0.11,function(){
+      hideBox('boxGo');
+    },null).blnUnlock=true;
+    var btn=getButton('btnMoveBack',box,10+70,60,w,h,true,'CXEX',picArrowC(),0.11,function(){
         if(OBJ_var.arrHist.length-4>=0){
             var strFen=OBJ_var.arrHist[OBJ_var.arrHist.length-4][0];
             var arrCheck=OBJ_var.arrHist[OBJ_var.arrHist.length-4][4];
@@ -211,12 +210,14 @@ function init(){
             OBJ_var.objDrive=p4_fen2state(strFen);
             OBJ_var.arrHist.splice(OBJ_var.arrHist.length-3);
             OBJ_var.arrHist.push(new Array('',false,false,false,false));
-            hideBox('boxGo');
         }
-    },null));
-    getButton(null,box,10,60+70,w*2+10,h,true,'AAAX',picAgree(),0.17,function(){
-        
+        hideBox('boxGo');
     },null);
+    btn.blnUnlock=true;
+    mirrHor(btn);
+    getButton(null,box,10,60+70,w*2+10,h,true,'AAAX',picAgree(),0.17,function(){
+      hideBox('boxGo');
+    },null).blnUnlock=true;
     // BOX SIDE
     var w=60, h=60, m=10, s=10, x=m, y=60, qtyHor=3, qtyVer=1;
     var box=getMenu('boxSide',div,w,h,m,s,qtyHor,qtyVer,false);
@@ -273,7 +274,7 @@ function init(){
         OBJ_var.strVS='human';
         setLocal('vs','human');
         putVS();
-    },null); 
+    },null);
     getPath(null,btn,xIcon,yIcon,zIcon,'url(#grdBrain)','none',0,'M 149.71875,30.84375 C 139.88213,13.621626 99.966923,23.567615 104.75,42.59375 81.013503,35.786955 63.09487,59.874892 71.78125,74.5625 47.70203,84.174724 47.88273,103.19077 53.9375,117.4375 59.99836,131.69857 74.80883,144.06908 97.21875,134.375 120.06502,155.77418 142,136.0625 142,136.0625 c 0,0 23.03388,5.93899 26.40625,16.3125 4.45302,13.69731 1.4375,53.15625 1.4375,53.15625 12.1259,6.3128 26.07209,5.58737 36.03125,0.0937 0,0 -3.60519,-22.12751 5.53125,-22.40625 19.89695,-0.60702 50.01297,-21.83416 35.125,-40.5 20.34995,-0.86524 23.78991,-34.688 2.125,-43.90625 21.48307,-9.311746 -2.27502,-46.028717 -18.375,-37.65625 C 240.4482,42.907054 197.30804,22.136436 188.75,40.71875 188.51801,19.835603 159.09786,14.579847 149.71875,30.84375 z');
     pth=getPath(null,btn,xIcon,yIcon,zIcon,'#bdb76d','none',0,'M 128.875 28.34375 L 121.875 38.125 C 124.04186 39.672761 127.65321 45.172054 128.90625 51.53125 C 130.00989 57.132226 129.58595 63.130059 126.96875 68.15625 C 120.5826 71.22332 115.66776 76.022071 112.03125 80.875 C 111.805 81.17693 111.59572 81.478271 111.375 81.78125 C 108.24042 68.105692 98.786805 55.874919 87.34375 48.75 L 81 58.9375 C 94.216846 67.166853 104.03086 85.198972 99.03125 100.3125 C 89.230803 109.7786 83.631096 108.72246 79.0625 106.59375 C 74.3967 104.41975 71.34375 99.875 71.34375 99.875 L 61.1875 106.28125 C 61.1875 106.28125 65.555473 113.53408 74 117.46875 C 82.444527 121.40342 95.533839 120.76333 108.125 108.25 C 113.83019 102.58007 116.74126 94.579852 121.625 88.0625 C 126.50874 81.545148 131.8427 76.894435 141.53125 76.84375 C 151.47056 76.79175 156.47554 81.199307 159.875 85.9375 C 161.9217 88.790212 163.07296 91.607838 163.6875 93.40625 C 161.59453 95.134613 159.71847 97.175402 158.1875 99.5 C 153.67407 97.156779 148.9316 96.072932 144.28125 96.09375 C 138.3126 96.12047 132.52713 97.920598 127.6875 101.09375 C 118.00825 107.44005 111.50213 118.98439 112.21875 132.0625 L 124.1875 131.40625 C 123.71005 122.69279 128.10797 115.15209 134.25 111.125 C 140.192 107.22906 147.2189 106.42934 154.3125 111.09375 C 153.88113 117.9838 156.20761 125.71523 161.5 134.0625 L 171.625 127.625 C 166.58827 119.68095 165.76827 114.11688 166.5 110.28125 C 167.23173 106.44562 169.58027 103.58176 173.4375 101.15625 C 177.29473 98.730741 182.55056 97.092367 187.53125 96.46875 C 192.51194 95.845133 197.2979 96.314133 199.53125 97.09375 C 210.58709 100.95312 215.20982 106.28111 217 111.625 C 218.79018 116.96889 217.69672 123.1884 214.5625 128.84375 C 211.57562 134.23323 207.40385 136.94865 202.28125 140.09375 C 197.15865 143.23885 190.79142 146.78544 187.15625 154.15625 C 182.48693 163.62393 181.72877 176.44594 181.53125 187.4375 C 181.33373 198.42906 182.09375 207.46875 182.09375 207.46875 L 194.03125 206.46875 C 194.03125 206.46875 193.34579 197.97687 193.53125 187.65625 C 193.71671 177.33563 195.18327 165.05334 197.9375 159.46875 C 199.76387 155.76554 203.26323 153.54689 208.53125 150.3125 C 210.03513 149.38917 211.65463 148.37598 213.3125 147.21875 C 217.42996 147.93523 220.1266 149.11099 221.625 150.625 C 223.58919 152.60965 224.99222 156.09996 224.1875 164.28125 L 236.125 165.46875 C 237.11137 155.44064 235.35642 147.44184 230.15625 142.1875 C 228.12493 140.13502 225.79706 138.65506 223.25 137.5625 C 223.8867 136.64785 224.48938 135.69039 225.0625 134.65625 C 228.17428 129.04141 230.10337 122.53412 229.84375 115.90625 C 232.79796 115.59993 235.22145 116.11214 237.25 117.15625 C 240.57718 118.86877 243.36546 122.32683 244.96875 128 L 256.53125 124.75 C 254.25385 116.69149 249.57232 109.98024 242.75 106.46875 C 239.33884 104.71301 235.50645 103.86962 231.46875 103.875 C 229.96451 103.87686 228.42512 104.00576 226.875 104.25 C 224.9315 100.37352 222.00001 96.758947 218.09375 93.625 C 220.20058 88.440056 223.92513 85.378366 228 83.65625 C 232.77885 81.636616 238.01609 82.202824 239.625 83.15625 L 245.75 72.84375 C 242.5245 70.932345 238.85749 70.057778 235.03125 70.0625 C 231.20501 70.0672 227.22314 70.954247 223.34375 72.59375 C 217.1733 75.201502 211.27225 80.189916 207.75 87.46875 C 206.38145 86.867305 204.96472 86.303462 203.46875 85.78125 C 200.94875 84.901572 198.18061 84.402033 195.25 84.21875 C 194.70319 84.184552 194.15098 84.169149 193.59375 84.15625 C 196.32781 68.580022 205.88097 58.966879 218.90625 56.125 L 216.34375 44.375 C 197.74673 48.43253 183.93123 64.069129 181.3125 85.375 C 178.94882 85.88412 176.56293 86.560034 174.25 87.4375 C 173.25316 84.96868 171.79236 81.958377 169.625 78.9375 C 168.17114 76.911105 166.32419 74.887381 164.125 73 C 176.24997 62.39507 179.03979 45.360529 174.03125 31.21875 L 162.71875 35.25 C 166.8167 46.820683 164.30461 59.652531 152.65625 66.53125 C 149.32859 65.45824 145.60051 64.822135 141.46875 64.84375 C 141.21394 64.845083 140.9706 64.868456 140.71875 64.875 C 141.79601 59.544092 141.63056 54.132117 140.65625 49.1875 C 138.92415 40.39707 135.06655 32.766285 128.875 28.34375 z');
     pth.setAttribute('stroke-linecap','butt');
@@ -707,7 +708,7 @@ function init(){
         if(i==38 || i==26 || i==32) w*=2;
         else strText=strChar;
         var btn=getButton(null,gKeyBoard,x,y,w,h,true,'EBFA',pic,z,function(){
-            
+
         },strText);
         btn.str=strChar;
         //
@@ -827,7 +828,7 @@ function init(){
         getRect(null,box,W/2+2.5,5,W/2-7.5,50,5,'url(#grdPale)','url(#grdButton)',1);
         getText(null,box,290,25,18,'Arial','url(#grdIcon)','none',0,'mahmud789','middle');
         getText(null,box,290,47,18,'Arial','url(#grdIcon)','none',0,'0','middle').style.fontWeight='normal';
-        
+
         getRect(null,box,5,H-65,W-75,60,5,'transparent','#bdb76d',1);
         var z=0.16, p=picDate(); getPath(null,box,15,67,z,'url(#grdButton)','none',0,p[2]);
         getText(null,box,190,85,18,'Arial','url(#grdIcon)','none',0,'Aug-27-2019 18:32','middle');
@@ -863,5 +864,5 @@ function init(){
     var imgLoad=document.getElementsByTagName('img')[0];
     imgLoad.parentNode.removeChild(imgLoad);
     sctRoot.style.display='block';
-    
+
 }

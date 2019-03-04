@@ -64,16 +64,10 @@ function showBox(box){
             var g=o('gRank'); jumpG(g,box.rx-g.rx,yRank);
         }
         else if(box.id=='boxGo'){
-            var btn=o('btnMoveBack');
-            var pth=btn.getElementsByTagName('path')[0];
-            if(OBJ_var.arrHist.length-4<0){
-                btn.blnLock=true;
-                pth.setAttribute('fill','transparent');
-            }
-            else{
-                btn.blnLock=false;
-                pth.setAttribute('fill','#eee8aa');
-            }
+            OBJ_var.blnLock=true;
+            o('btnClose').blnUnlock=true;
+            setLatestHistory();
+            setHistoryButtons();
         }
         if(box.id!='boxPromoteWhite' && box.id!='boxPromoteBlack'){
             var btnClose=document.getElementById('btnClose');
@@ -91,4 +85,8 @@ function hideBox(box){
     hideG(box);
     OBJ_var.boxOn=null;
     if(box.id=='boxHost') o('btnHost').getElementsByTagName('path')[0].setAttribute('fill','#bdb76d');
+    else if(box.id=='boxGo'){
+      OBJ_var.blnLock=false;
+      o('btnClose').blnUnlock=false;
+    }
 }
