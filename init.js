@@ -129,7 +129,6 @@ function init(){
     var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,w*6+s*4,90);
     getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
     getButton('btnBook',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
-    btn.getElementsByTagName('path')[0].setAttribute('fill','transparent');
     var btn=getButton('btnHost',g,(w+s)*2,0,(w*2+s),h+30,true,'CXDX',picNone(),0,function(){showBox('boxHost');},null);
     btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
     getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
@@ -199,7 +198,14 @@ function init(){
     // BOX GO
     var w=60, h=60, box=getMenu('boxGo',div,w,h,10,10,2,2,false);
     getButton(null,box,10,60,w,h,true,'BXCX',picFlag(),0.14,function(){
+      showG('gTop');
+      hideG('gTime');
+      hideG('gRobo');
+      showG('gBottom');
+      hideG('gGo');
+      o('gBottom').appendChild(o('btnHost'));
       hideBox('boxGo');
+      chooseVar();
     },null).blnUnlock=true;
     var btn=getButton('btnMoveBack',box,10+70,60,w,h,true,'CXEX',picArrowC(),0.11,function(){
         var d=0; // if not my turn, the opponent has not moved yet
@@ -868,5 +874,42 @@ function init(){
     var imgLoad=document.getElementsByTagName('img')[0];
     imgLoad.parentNode.removeChild(imgLoad);
     sctRoot.style.display='block';
+    ////////////////////
+    // MULTILINK ///////
+    ////////////////////
+   var strHost='localhost';
+   //var strHost='88.87.93.236';
+   var pcn = new Peer({host: strHost,port: 8001,path: '/peerjs'});
+      pcn.on('open', function(pid){alert(900);
+         OBJ_var.wbs = new WebSocket('ws://'+strHost+':8000', 'echo-protocol');
+         OBJ_var.arrUser[0].strPeer=pid;
+         console.log('my pid: '+pid);
+         OBJ_var.wbs.addEventListener('message',function(e){
+            var msg = e.data;
+            var rsp=msg.split('~');
+            if(rsp[0]=='hello'){
+               OBJ_var.wbs.send('hello~'+OBJ_var.arrUser[0].strPeer);
+            }
+            else if(rsp[0]=='in'){
+               console.log('in: '+rsp[1]);
+            }
+            else if(rsp[0]=='out'){
+              console.log('out: '+rsp[1]);
+            }
+         });
+      /*
+      var pcn = PCN.connect(strPeer);
+      pcn.on('open', function(){
+        this.send('get');
+        this.on('data',function(rsp){
 
+        });
+      });
+      PCN.on('connection',function(pcn){
+        pcn.on('data',function(rsp){
+
+        });
+      });
+      */
+   });
 }

@@ -15,6 +15,7 @@ function chooseVar(){
     }
     OBJ_chess.setBoard(strFen);
     OBJ_board.putBoard();
+    OBJ_var.arrHist=new Array();
     OBJ_var.arrHist[0]=new Array(strFen,false,false,false,false); // fen position, posA, posB, move notation, arrCheck
 }
 function endgameFen(){
@@ -70,7 +71,7 @@ function removeZeroFromFen(str){
     str=str.replace(new RegExp('0000','g'),'4');
     str=str.replace(new RegExp('000','g'),'3');
     str=str.replace(new RegExp('00','g'),'2');
-    str=str.replace(new RegExp('0','g'),'1');    
+    str=str.replace(new RegExp('0','g'),'1');
     return str;
 }
 function randomFen(){

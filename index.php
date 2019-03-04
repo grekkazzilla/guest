@@ -58,6 +58,7 @@
         objUser.strName='';
         objUser.lnkPic='';
         objUser.pcn=null;
+        objUser.strPeer='';
         objUser.intRank=0;
         objUser.lnkPic='';
         objUser.strPic='';
