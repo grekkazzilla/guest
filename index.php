@@ -43,6 +43,7 @@
     OBJ_var.boxOn=null;
     OBJ_var.divOn=null;
     OBJ_var.wbs=null;
+    OBJ_var.peer=null;
     OBJ_var.intVar=1;
     OBJ_var.blnSide=true;
     OBJ_var.strSide='any';
@@ -57,8 +58,8 @@
         var objUser=new Object();
         objUser.strName='';
         objUser.lnkPic='';
-        objUser.pcn=null;
-        objUser.strPeer='';
+        objUser.conn=null;
+        objUser.pid='';
         objUser.intRank=0;
         objUser.lnkPic='';
         objUser.strPic='';
@@ -66,6 +67,7 @@
         objUser.hPic=0;
         objUser.dataImage='';
         OBJ_var.arrUser.push(objUser);
+        return objUser;
     }
 </script>
 </head>

@@ -877,39 +877,55 @@ function init(){
     ////////////////////
     // MULTILINK ///////
     ////////////////////
-   var strHost='localhost';
-   //var strHost='88.87.93.236';
-   var pcn = new Peer({host: strHost,port: 8001,path: '/peerjs'});
-      pcn.on('open', function(pid){alert(900);
-         OBJ_var.wbs = new WebSocket('ws://'+strHost+':8000', 'echo-protocol');
-         OBJ_var.arrUser[0].strPeer=pid;
-         console.log('my pid: '+pid);
-         OBJ_var.wbs.addEventListener('message',function(e){
-            var msg = e.data;
-            var rsp=msg.split('~');
-            if(rsp[0]=='hello'){
-               OBJ_var.wbs.send('hello~'+OBJ_var.arrUser[0].strPeer);
+    var strHost='localhost';
+    //var strHost='88.87.93.236';
+    OBJ_var.peer=new Peer({host:strHost,port:8001,path:'/peerjs'});
+    OBJ_var.peer.on('open', function(pid){
+      OBJ_var.wbs = new WebSocket('ws://'+strHost+':8000','echo-protocol');
+      OBJ_var.arrUser[0].pid=pid;
+      console.log('my pid: '+OBJ_var.arrUser[0].pid);
+      OBJ_var.wbs.addEventListener('message',function(e){
+        var msg = e.data;
+        var rsp=msg.split('~');
+        if(rsp[0]=='hello'){
+          OBJ_var.wbs.send('hello~'+OBJ_var.arrUser[0].pid);
+        }
+        else if(rsp[0]=='in'){
+          var objUser=getUser();
+          objUser.pid=rsp[1];
+          var peer=new Peer();
+          var conn = peer.connect(objUser.pid);
+        }
+        else if(rsp[0]=='out'){
+          for(var i in OBJ_var.arrUser){
+            if(OBJ_var.arrUser[i].pid==rsp[1]){
+              OBJ_var.arrUser.splice(i,1);
+              break;
             }
-            else if(rsp[0]=='in'){
-               console.log('in: '+rsp[1]);
-            }
-            else if(rsp[0]=='out'){
-              console.log('out: '+rsp[1]);
-            }
-         });
-      /*
-      var pcn = PCN.connect(strPeer);
-      pcn.on('open', function(){
-        this.send('get');
-        this.on('data',function(rsp){
-
-        });
+          }
+        }
       });
-      PCN.on('connection',function(pcn){
-        pcn.on('data',function(rsp){
-
-        });
-      });
-      */
    });
+   OBJ_var.peer.on('connection',function(conn){
+     conn.on('data',function(data){
+       console.log(data);
+       this.send('I am here: '+OBJ_var.arrUser[0].strName);
+     });
+
+   });
+}
+function link(){
+  for(var i=1;i<OBJ_var.arrUser.length;i++){
+    var u=OBJ_var.arrUser[i];
+    var conn=OBJ_var.peer.connect(OBJ_var.arrUser[i].pid);
+    conn.u =u;
+    conn.on('open', function(){
+      var u=conn.u;
+      u.conn=this;
+      this.on('data',function(data){
+        console.log(data);
+      });
+      this.send('Hello!');
+    });
+  }
 }
