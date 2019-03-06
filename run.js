@@ -1,33 +1,48 @@
 function startGame(){
-    if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
-    hideG('gTop');
-    showG('gTime');
-    showG('gRobo');
-    hideG('gBottom');
-    showG('gGo');
-    o('gGo').appendChild(o('btnHost'));
-    setHistoryButtons();
-    //
-    if(OBJ_var.strSide=='white'){
-        OBJ_var.blnSide=true;
-    }
-    else if(OBJ_var.strSide=='black'){
+  if(OBJ_var.strMode=='standby'){
+    if(OBJ_var.strVS=='robo'){
+      if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
+      hideG('gTop');
+      showG('gTime');
+      showG('gRobo');
+      hideG('gBottom');
+      showG('gGo');
+      o('gGo').appendChild(o('btnHost'));
+      setHistoryButtons();
+      //
+      if(OBJ_var.strSide=='white'){
+          OBJ_var.blnSide=true;
+      }
+      else if(OBJ_var.strSide=='black'){
         OBJ_var.blnSide=false;
-    }
-    else if(OBJ_var.strSide=='any'){
+      }
+      else if(OBJ_var.strSide=='any'){
         var rnd=getRand(0,1);
         if(rnd==0) OBJ_var.blnSide=true;
         else if(rnd==1) OBJ_var.blnSide=false;
-    }
-    //
-    if(OBJ_var.blnSide!==OBJ_board.blnSide) OBJ_board.flip(!OBJ_board.blnSide);
-    //
-    if(OBJ_var.strVS=='robo'){
+      }
+      //
+      if(OBJ_var.blnSide!==OBJ_board.blnSide) OBJ_board.flip(!OBJ_board.blnSide);
+      //
+      if(OBJ_var.strVS=='robo'){
         OBJ_var.objDrive=p4_fen2state(OBJ_var.arrHist[0][0]);
         changeTurn();
+      }
+      OBJ_var.arrHist.push(new Array('',false,false,false,false));
+      OBJ_var.strMode='play';
     }
-    OBJ_var.arrHist.push(new Array('',false,false,false,false));
-    OBJ_var.strMode='play';
+    else if(OBJ_var.strVS=='human'){
+      var btn=o('btnMatch');
+      var z=0.5;hideG(btn.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdButton)',6,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
+      OBJ_var.strMode='wait';
+      findArena();
+    }
+  }
+  else if(OBJ_var.strMode=='wait'){
+    var btn=o('btnMatch');
+    showG(btn.getElementsByTagName('g')[0]);hideG('gLoad');
+    OBJ_var.strMode='standby';
+  }
 }
 function changeTurn(){
     if(OBJ_var.strVS=='robo'){
