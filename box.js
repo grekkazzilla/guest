@@ -19,18 +19,18 @@ function getMenu(strID,gRoot,wButton,hButton,intPad,intMargin,qtyHor,qtyVer,blnS
 }
 function showDiv(div){
     if(typeof(div)=='string') div=o(div);
-    hideG(OBJ_var.divOn);
-    OBJ_var.divOn=div;
-    if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
+    hideG(OBJ.divOn);
+    OBJ.divOn=div;
+    if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);
     showG(div);
 }
 function showBox(box){
     if(typeof(box)=='string') box=o(box);
-    if(OBJ_var.boxOn==box) hideBox(OBJ_var.boxOn);
+    if(OBJ.boxOn==box) hideBox(OBJ.boxOn);
     else{
         if(box.id=='boxHost'){
             o('btnHost').getElementsByTagName('path')[0].setAttribute('fill','url(#grdIcon)');
-            if(OBJ_var.arrUser[0].dataImage==''){
+            if(OBJ_host.dataImage==''){
                 box.rx=260/2, box.ry=270/2;
                 var xLab=15, yLabRank=200;
                 var xPen=box.rx-100, xPic=box.rx-30, xCam=box.rx+40, yCam=110;
@@ -64,7 +64,7 @@ function showBox(box){
             var g=o('gRank'); jumpG(g,box.rx-g.rx,yRank);
         }
         else if(box.id=='boxGo'){
-            OBJ_var.blnLock=true;
+            OBJ.blnLock=true;
             o('btnClose').blnUnlock=true;
             setLatestHistory();
             setHistoryButtons();
@@ -74,19 +74,19 @@ function showBox(box){
             jumpG(btnClose,box.rx*2-50,10);
             box.appendChild(btnClose);
         }
-        if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
-        OBJ_var.boxOn=box;
-        OBJ_var.divOn.appendChild(box);
+        if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);
+        OBJ.boxOn=box;
+        OBJ.divOn.appendChild(box);
         showG(box);
     }
 }
 function hideBox(box){
     if(typeof(box)=='string') box=o(box);
     hideG(box);
-    OBJ_var.boxOn=null;
+    OBJ.boxOn=null;
     if(box.id=='boxHost') o('btnHost').getElementsByTagName('path')[0].setAttribute('fill','#bdb76d');
     else if(box.id=='boxGo'){
-      OBJ_var.blnLock=false;
+      OBJ.blnLock=false;
       o('btnClose').blnUnlock=false;
     }
 }

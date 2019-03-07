@@ -89,7 +89,7 @@ function getButton(strID,oRoot,intX,intY,intW,intH,blnShown,ctgStyle,fncPic,zPic
         }
     };
     btn.blnLock=false; // lock button against action if true
-    btn.blnUnlock=false; // exclude button from OBJ_var.blnLock blocking
+    btn.blnUnlock=false; // exclude button from OBJ.blnLock blocking
     if(fncDo!==null){
         btn.do=fncDo; // perform with delay (see pushButton())
         btn.onclick=function(){if(this.blnLock!==true){pushButton(this);}};
@@ -98,14 +98,14 @@ function getButton(strID,oRoot,intX,intY,intW,intH,blnShown,ctgStyle,fncPic,zPic
     return btn;
 }
 function pushButton(btn){
-    if((OBJ_var.blnLock===false || btn.blnUnlock===true) && btn.blnLock===false){
-        OBJ_var.blnLock=true;
+    if((OBJ.blnLock===false || btn.blnUnlock===true) && btn.blnLock===false){
+        OBJ.blnLock=true;
         onBtn(btn,1);                       // instant look change
         if(btn.go!==undefined) btn.go();    // perform  instantly
         if(btn.do!==null){                  // perform with delay
             setTimeout(function(){
                 onBtn(btn,0);               // return previous look
-                OBJ_var.blnLock=false;
+                OBJ.blnLock=false;
                 btn.do();
             },250);
         }
@@ -121,7 +121,7 @@ function onBtn(btn,a){ // a: 0 - released button (off/out) look, 1 - pushed butt
         }
     }
 }
-// MAKE TOGGLE BUTTON AND ACTONS (300x210) 
+// MAKE TOGGLE BUTTON AND ACTONS (300x210)
 function getToggle(id,root,x,y,w,h,fncDo,strLabel,xText,yText,strAnchor){
     var tgl=getG(id,root,x,y,1,true,w/2,h/2);
     getRect(null,tgl,0,0,w,h,0,'transparent','#c0c0c0',0);

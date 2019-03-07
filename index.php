@@ -30,47 +30,17 @@
 <script type='text/javascript' src='say.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='pix.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='img.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='put.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='box.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='button.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='run.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='div_pic.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='book.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='arena.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='club.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='watch.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='link.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript'>
-    var OBJ_var=new Object();
-    OBJ_var.wArena=400;
-    OBJ_var.hArena=600;
-    OBJ_var.fltScale=1;
-    OBJ_var.blnLock=true;
-    OBJ_var.boxOn=null;
-    OBJ_var.divOn=null;
-    OBJ_var.wbs=null;
-    OBJ_var.peer=null;
-    OBJ_var.intVar=1;
-    OBJ_var.blnSide=true;
-    OBJ_var.strSide='any';
-    OBJ_var.strVS='human';
-    OBJ_var.arrHist=new Array();
-    OBJ_var.arrUser=new Array();
-    OBJ_var.objDrive=null;
-    OBJ_var.strMode='standby';
-    OBJ_var.numShowMove=0;
-    getUser();
-    function getUser(){
-        var objUser=new Object();
-        objUser.strName='';
-        objUser.lnkPic='';
-        objUser.conn=null;
-        objUser.pid='';
-        objUser.intRank=0;
-        objUser.lnkPic='';
-        objUser.strPic='';
-        objUser.wPic=0;
-        objUser.hPic=0;
-        objUser.dataImage='';
-        OBJ_var.arrUser.push(objUser);
-        return objUser;
-    }
+
 </script>
 </head>
 <body onload='init();'>

@@ -1,7 +1,7 @@
 // CHOOSING CHESS VARIANTS
 function chooseVar(){
     var strFen='';
-    switch(OBJ_var.intVar){
+    switch(OBJ_arena.intVar){
         case 0: strFen=shuffleFen();break;
         case 2: strFen=endgameFen();break;
         case 3: strFen='nnnnknnn/pppppppp/8/8/8/8/PPPPPPPP/1Q1QK1Q1 w - - 0 1';break;
@@ -15,8 +15,8 @@ function chooseVar(){
     }
     OBJ_chess.setBoard(strFen);
     OBJ_board.putBoard();
-    OBJ_var.arrHist=new Array();
-    OBJ_var.arrHist[0]=new Array(strFen,false,false,false,false); // fen position, posA, posB, move notation, arrCheck
+    OBJ_arena.arrHist=new Array();
+    OBJ_arena.arrHist[0]=new Array(strFen,false,false,false,false); // fen position, posA, posB, move notation, arrCheck
 }
 function endgameFen(){
     var arrSquW=new Array('R','N','0','0','K','0','N','R');

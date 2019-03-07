@@ -1,24 +1,14 @@
-var watch=new Object();
-watch.msgArena=function(objClub){
-  var strReq=OBJ_var.intVar+':'+OBJ_var.strSide;
-  objClub.conn.send('msg_arena~'+strReq);
-}
-function setWatch(){
-
-}
-function putwatch(){
-
-}
+var DIV_watch=null;
 function getWatch(gRoot){
-  var div=getG('divWatch',gRoot,0,0,1,false,OBJ_var.wArena/2,OBJ_var.hArena/2);
-  getRect(null,div,10,7,105,45,5,'transparent','url(#grdButton)',1);
-  var z=0.12, p=picEye(); getPath(null,div,14,11,z,'url(#grdButton)','none',0,p[2]);
-  getText(null,div,80,35,18,'Arial','url(#grdIcon)','none',1,'003','middle');
-  getButton(null,div,305,10,40,40,true,'BXBX',picGear(),0.1,function(){},null);
-  getButton(null,div,350,10,40,40,true,'BXBX',picCross(),0.09,function(){showDiv('divArena');},null);
+  DIV_watch=getG('divWatch',gRoot,0,0,1,false,OBJ.w/2,OBJ.h/2);
+  getRect(null,DIV_watch,10,7,105,45,5,'transparent','url(#grdButton)',1);
+  var z=0.12, p=picEye(); getPath(null,DIV_watch,14,11,z,'url(#grdButton)','none',0,p[2]);
+  getText(null,DIV_watch,80,35,18,'Arial','url(#grdIcon)','none',1,'003','middle');
+  getButton(null,DIV_watch,305,10,40,40,true,'BXBX',picGear(),0.1,function(){},null);
+  getButton(null,DIV_watch,350,10,40,40,true,'BXBX',picCross(),0.09,function(){showDiv('divArena');},null);
   var W=390, H=170, X=5, Y=60, S=10;
   for(var i=0;i<3;i++){
-    var box=getG('gWatch'+i,div,X,Y+(H+S)*i,1,true,W/2,H/2);
+    var box=getG('gWatch'+i,DIV_watch,X,Y+(H+S)*i,1,true,W/2,H/2);
     box.objUser=null;
     getRect(null,box,0,0,W,H,0,'#808080','none',0).setAttribute('filter','url(#blr2)');
     getRect(null,box,0,0,W,H,0,'#fff','none',0);

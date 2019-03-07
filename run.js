@@ -1,7 +1,7 @@
 function startGame(){
-  if(OBJ_var.strMode=='standby'){
-    if(OBJ_var.strVS=='robo'){
-      if(OBJ_var.boxOn!==null) hideBox(OBJ_var.boxOn);
+  if(OBJ.strMode=='standby'){
+    if(OBJ_arena.strVS=='robo'){
+      if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);
       hideG('gTop');
       showG('gTime');
       showG('gRobo');
@@ -10,45 +10,45 @@ function startGame(){
       o('gGo').appendChild(o('btnHost'));
       setHistoryButtons();
       //
-      if(OBJ_var.strSide=='white'){
-          OBJ_var.blnSide=true;
+      if(OBJ_arena.strSide=='white'){
+          OBJ_arena.blnSide=true;
       }
-      else if(OBJ_var.strSide=='black'){
-        OBJ_var.blnSide=false;
+      else if(OBJ_arena.strSide=='black'){
+        OBJ_arena.blnSide=false;
       }
-      else if(OBJ_var.strSide=='any'){
+      else if(OBJ_arena.strSide=='any'){
         var rnd=getRand(0,1);
-        if(rnd==0) OBJ_var.blnSide=true;
-        else if(rnd==1) OBJ_var.blnSide=false;
+        if(rnd==0) OBJ_arena.blnSide=true;
+        else if(rnd==1) OBJ_arena.blnSide=false;
       }
       //
-      if(OBJ_var.blnSide!==OBJ_board.blnSide) OBJ_board.flip(!OBJ_board.blnSide);
+      if(OBJ_arena.blnSide!==OBJ_board.blnSide) OBJ_board.flip(!OBJ_board.blnSide);
       //
-      if(OBJ_var.strVS=='robo'){
-        OBJ_var.objDrive=p4_fen2state(OBJ_var.arrHist[0][0]);
+      if(OBJ_arena.strVS=='robo'){
+        OBJ_arena.objDrive=p4_fen2state(OBJ_arena.arrHist[0][0]);
         changeTurn();
       }
-      OBJ_var.arrHist.push(new Array('',false,false,false,false));
-      OBJ_var.strMode='play';
+      OBJ_arena.arrHist.push(new Array('',false,false,false,false));
+      OBJ.strMode='play';
     }
-    else if(OBJ_var.strVS=='human'){
+    else if(OBJ_arena.strVS=='human'){
       var btn=o('btnMatch');
       var z=0.5;hideG(btn.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdButton)',6,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
-      OBJ_var.strMode='wait';
+      OBJ.strMode='watch';
       findArena();
     }
   }
-  else if(OBJ_var.strMode=='wait'){
+  else if(OBJ.strMode=='watch'){
     var btn=o('btnMatch');
     showG(btn.getElementsByTagName('g')[0]);hideG('gLoad');
-    OBJ_var.strMode='standby';
+    OBJ.strMode='standby';
   }
 }
 function changeTurn(){
-    if(OBJ_var.strVS=='robo'){
-        if(OBJ_var.blnSide!==OBJ_chess.turn){
+    if(OBJ_arena.strVS=='robo'){
+        if(OBJ_arena.blnSide!==OBJ_chess.turn){
             setTimeout(function(){
-                var find=OBJ_var.objDrive.findmove(OBJ_var.arrUser[0].intRank);
+                var find=OBJ_arena.objDrive.findmove(OBJ_host.intRank);
                 for(var key in OBJ_chess.arrSqu){
                     if(OBJ_chess.arrSqu[key].boolPlay===true){
                         var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
@@ -61,41 +61,41 @@ function changeTurn(){
             },50);
         }
     }
-    else OBJ_var.blnSide!=OBJ_var.blnSide;
+    else OBJ_arena.blnSide!=OBJ_arena.blnSide;
 }
 function play(gSquare){
-    if(OBJ_var.strMode=='play' && OBJ_var.blnLock===false){
-        if(OBJ_var.numShowMove==0){
+    if(OBJ.strMode=='play' && OBJ.blnLock===false){
+        if(OBJ_arena.numShowMove==0){
           var pos=gSquare.pos;
-          var numLast=OBJ_var.arrHist.length-1;
+          var numLast=OBJ_arena.arrHist.length-1;
           OBJ_board.hideTake();
           if(!OBJ_chess.setPosA(pos)){
               var arrMove=OBJ_chess.setPosB(pos);
               if(arrMove){
                   OBJ_board.hideCheck();
-                  if(!arrMove[0]) OBJ_board.putMove(arrMove,false,!OBJ_var.blnSide);
+                  if(!arrMove[0]) OBJ_board.putMove(arrMove,false,!OBJ_arena.blnSide);
                   else{
                       if(OBJ_chess.turn) showBox('boxPromoteWhite');
                       else showBox('boxPromoteBlack');
                     }
                     // finish move
-                    OBJ_var.arrHist[numLast][0]=OBJ_chess.getFen();
-                    OBJ_var.arrHist[numLast][2]=pos;
-                    OBJ_var.arrHist[numLast][4]=arrMove[4];
+                    OBJ_arena.arrHist[numLast][0]=OBJ_chess.getFen();
+                    OBJ_arena.arrHist[numLast][2]=pos;
+                    OBJ_arena.arrHist[numLast][4]=arrMove[4];
                     setHistoryButtons();
                     // p4wn.js engine
-                    if(OBJ_var.strVS=='robo'){
+                    if(OBJ_arena.strVS=='robo'){
                       for(var key in OBJ_chess.arrSqu){
                           if(OBJ_chess.arrSqu[key].boolPlay===true){
                               var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
-                              if(gSqu.pos==OBJ_var.arrHist[numLast][1]) var posA=gSqu.num;
-                              else if(gSqu.pos==OBJ_var.arrHist[numLast][2]) var posB=gSqu.num;
+                              if(gSqu.pos==OBJ_arena.arrHist[numLast][1]) var posA=gSqu.num;
+                              else if(gSqu.pos==OBJ_arena.arrHist[numLast][2]) var posB=gSqu.num;
                           }
                       }
-                      OBJ_var.objDrive.move(posA,posB,12);
+                      OBJ_arena.objDrive.move(posA,posB,12);
                     }
                     //
-                    OBJ_var.arrHist.push(new Array('',false,false,false,false));
+                    OBJ_arena.arrHist.push(new Array('',false,false,false,false));
                     changeTurn();
                     //
                   }
@@ -104,7 +104,7 @@ function play(gSquare){
               else{
                 OBJ_board.putTake();
                 OBJ_board.putPick();
-                OBJ_var.arrHist[numLast][1]=pos;
+                OBJ_arena.arrHist[numLast][1]=pos;
             }
         }
         else{
