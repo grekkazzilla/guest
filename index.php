@@ -16,29 +16,30 @@
 <script type='text/javascript' src='../lib/p4wn.js'></script>
 <script type='text/javascript' src='../lib/peer.min.js'></script>
 <script type='text/javascript' src='init.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='script.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='svg.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='chess.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='board.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='grekk.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='var.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='control.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='pic.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='unit.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='form.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='load.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='say.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='pix.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='img.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='box.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='button.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='run.js?v=<?php echo rand(0,1000);?>'></script>
+<!-- -->
+<script type='text/javascript' src='inc_script.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='inc_svg.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='inc_chess.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='inc_board.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='inc_pic.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='inc_unit.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='inc_load.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='inc_say.js?v=<?php echo rand(0,1000);?>'></script>
+<!-- -->
+<script type='text/javascript' src='aux_var.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='aux_user.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='aux_link.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='aux_box.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='aux_button.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='aux_run.js?v=<?php echo rand(0,1000);?>'></script>
+<!-- -->
+<script type='text/javascript' src='div_arena.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='div_img.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='div_pic.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='book.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='arena.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='club.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='watch.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='link.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='div_book.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='div_form.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='div_watch.js?v=<?php echo rand(0,1000);?>'></script>
+<!-- -->
 <script type='text/javascript'>
 
 </script>

@@ -1,4 +1,3 @@
-
 function getUser(pid){
   var objUser=new Object();
   objUser.strName='';

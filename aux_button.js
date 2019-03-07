@@ -170,3 +170,8 @@ function pushToggle(tgl,bln){
         tgl.getElementsByTagName('text')[0].setAttribute('fill',strTxt);
     }
 }
+//
+function mirrHor(btn){
+    var pth=btn.getElementsByTagName('path')[0];
+    pth.setAttribute('transform','translate('+(btn.rx-pth.w*pth.z/2+pth.w*pth.z)+','+(btn.ry-pth.h*pth.z/2)+') scale('+(pth.z*-1)+','+pth.z+')');
+}

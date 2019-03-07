@@ -1,3 +1,37 @@
+//////////////////////////////////////////////////////
+function getScale(svgRoot,divChild,wChild,hChild,intPad){
+	document.body.style.textAlign='center';
+	var intPageW=document.documentElement.clientWidth;
+	var intPageH=document.documentElement.clientHeight;
+	var intSVGW=intPageW-intPad*2;
+	var intSVGH=intPageH-intPad*2;
+	svgRoot.setAttribute('width',intSVGW);
+	svgRoot.setAttribute('height',intSVGH);
+	svgRoot.style.marginTop=intPad+"px";
+	var fltRatioW=intSVGW/wChild;
+	var fltRatioH=intSVGH/hChild;
+	var intArenaX=0;
+	var intArenaY=0;
+	var fltScaleFactor=1;
+	if(fltRatioW>fltRatioH){
+		fltScaleFactor=fltRatioH;
+		intArenaX=(intSVGW-wChild*fltScaleFactor)/2;
+	}
+	else if(fltRatioW<fltRatioH){
+		fltScaleFactor=fltRatioW;
+		intArenaY=(intSVGH-hChild*fltScaleFactor)/2;
+	}
+	divChild.setAttribute('transform','translate('+intArenaX+' '+intArenaY+') scale('+fltScaleFactor+')');
+    //
+	document.body.onresize=function(){
+        getScale(svgRoot,divChild,wChild,hChild,intPad);
+    }
+    return fltScaleFactor;
+}
+function getGrid(gRoot,intWidth,intHeight,intPace){
+	for(var i=0;i<intWidth+1;i=i+intPace) getLine(null,gRoot,i,0,i,intHeight,"#c0c0c0",1);
+	for(var i=0;i<intHeight+1;i=i+intPace) getLine(null,gRoot,0,i,intWidth,i,"#c0c0c0",1);
+}
 ////////////////////////////////////////////////////
 /////////// *** CREATE SVG ELEMENTS *** ////////////
 ////////////////////////////////////////////////////
@@ -8,7 +42,7 @@ function getSVG(strObj,strID,objParent){
 	if(objParent!=null) objParent.appendChild(obj);
 	return obj;
 }
-function getG(id,root,x,y,z,blnShown,rx,ry){	
+function getG(id,root,x,y,z,blnShown,rx,ry){
 	var g=getSVG('g',id,root);
     if(blnShown!==null){
         g.x=x;g.y=y;g.z=z;g.r=0;g.rx=rx;g.ry=ry;
@@ -100,10 +134,10 @@ function describeArc(x,y,radius,startAngle,endAngle){
     var end=polarToCartesian(x,y,radius,startAngle);
     var largeArcFlag=endAngle-startAngle<=180 ? "0" : "1";
     var d=[
-        "M",start.x,start.y, 
+        "M",start.x,start.y,
         "A",radius,radius,0,largeArcFlag,0,end.x,end.y
     ].join(" ");
-    return d;       
+    return d;
 }
 // *****************************************//
 // ********* GRADIENTS & FILTERS************//
