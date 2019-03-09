@@ -79,9 +79,8 @@ function getForm(gRoot){
                   if(strChar!='|') strName+=strChar;
               }
               if(strName.length>=3){
-                  OBJ_host.strName=strName;
-                  o('txtName').firstChild.nodeValue=strName;
-                  setLocal('name',strName);
+                  OBJ_host.setName(strName); // > aux_host.js
+                  OBJ_host.putName(); // > aux_host.js
                   showDiv('divArena');
                   showBox('boxHost');
               }

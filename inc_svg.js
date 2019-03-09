@@ -45,7 +45,7 @@ function getSVG(strObj,strID,objParent){
 function getG(id,root,x,y,z,blnShown,rx,ry){
 	var g=getSVG('g',id,root);
     if(blnShown!==null){
-        g.x=x;g.y=y;g.z=z;g.r=0;g.rx=rx;g.ry=ry;
+        g.x=x, g.y=y, g.z=z, g.r=0, g.rx=rx, g.ry=ry, g.w=rx*2, g.h=ry*2;
         if(blnShown===true) showG(g);
         else if(blnShown===false) hideG(g);
     }

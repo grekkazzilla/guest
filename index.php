@@ -15,7 +15,6 @@
 </style>
 <script type='text/javascript' src='../lib/p4wn.js'></script>
 <script type='text/javascript' src='../lib/peer.min.js'></script>
-<script type='text/javascript' src='init.js?v=<?php echo rand(0,1000);?>'></script>
 <!-- -->
 <script type='text/javascript' src='inc_script.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='inc_svg.js?v=<?php echo rand(0,1000);?>'></script>
@@ -26,6 +25,7 @@
 <script type='text/javascript' src='inc_load.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='inc_say.js?v=<?php echo rand(0,1000);?>'></script>
 <!-- -->
+<script type='text/javascript' src='aux_host.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='aux_var.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='aux_user.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='aux_link.js?v=<?php echo rand(0,1000);?>'></script>
@@ -41,7 +41,152 @@
 <script type='text/javascript' src='div_watch.js?v=<?php echo rand(0,1000);?>'></script>
 <!-- -->
 <script type='text/javascript'>
+  var OBJ=new Object();
+  OBJ.w=400;
+  OBJ.h=600;
+  OBJ.fltScale=1;
+  OBJ.blnLock=true;
+  OBJ.boxOn=null;
+  OBJ.divOn=null;
+  OBJ.wbs=null;
+  OBJ.peer=null;
+  OBJ.strMode='standby';
+  var OBJ_arena=new Object();
+  OBJ_arena.intVar=1;
+  OBJ_arena.blnSide=true;
+  OBJ_arena.strSide='any';
+  OBJ_arena.strVS='human';
+  OBJ_arena.arrHist=new Array();
+  OBJ_arena.objDrive=null;
+  OBJ_arena.numShowMove=0;
+  var OBJ_watch=new Object();
+  var ARR_user=new Array();
+  function init(){
+    // DEFINE ROOT ELEMENTS
+    var sctRoot=document.getElementById('sctRoot');
+    var svgRoot=document.getElementsByTagName('svg')[0];
+    var gWrap=svgRoot.getElementsByTagName('g')[0];
+    var dfs=svgRoot.getElementsByTagName('defs')[0];
+    // GRADIENTS & EFFECTS
+    getLinGrd('grdButton','#eee8aa','#bdb76d',1,1,false,'down',dfs);
+    getLinGrd('grdButtonRvs','#bdb76d','#eee8aa',1,1,false,'down',dfs);
+    getLinGrd('grdIcon','#a0a0a0','#000',1,1,false,'down',dfs);
+    getLinGrd('grdIconRvs','#505050','#909090',1,1,false,'down',dfs);
+    getLinGrd('grdPale','#fff','#eee8aa',1,1,false,'down',dfs);
+    getLinGrd('grdPaleRvs','#eee8aa','#fff',1,1,false,'down',dfs);
+    getLinGrd('grdGold','#ffeeaa','#aa8800',1,1,false,'down',dfs);
+    getLinGrd('grdGoldBrd','#d3bc5f','#2b2200',1,1,false,'down',dfs); // gold border
+    getLinGrd('grdSilver','#ececec','#999999',1,1,false,'down',dfs);
+    getLinGrd('grdSilverRvs','#999999','#ececec',1,1,false,'down',dfs);
+    getLinGrd('grdBrain','#fff','#bdb76d',1,1,false,'down',dfs);
+    getLinGrd('grdRed','#ff8080','#aa0000',1,1,false,'down',dfs);
+    getBlurFilter('blr2',2,dfs);
+    getBlurFilter('blr3',3,dfs);
+    getBlurFilter('blr6',3,dfs);
+    getBlurFilter('blr8',8,dfs);
+    getBlurFilter('blr10',10,dfs);
+    getBlurFilter('blr12',12,dfs);
+    getBlurFilter('blr14',14,dfs);
+    // FULL SCALE UP
+    OBJ.fltScale=getScale(svgRoot,gWrap,OBJ.w,OBJ.h,10);
+    //getGrid(gWrap,OBJ.w,OBJ.h,50);
+    //
+    getLoad('gLoad',gWrap,-9999,-9999,1,'none',0);
+    getSay(gWrap,OBJ.w,OBJ.h,'url(#blr3)');
+    //
+    var divArena=getArena(gWrap);
+    OBJ.divOn=divArena;
+    getPic(gWrap);
+    getImage(gWrap);
+    getForm(gWrap);
+    getWatch(gWrap);
+    getBook(gWrap);
+    //
+    OBJ_host.get();
+    OBJ_host.drawButton();
+    OBJ_host.drawBox(divArena);
+    OBJ_host.putName();
+    OBJ_host.putRank(OBJ_host.intRank);
 
+    ////////////////////
+    // SETTING /////////
+    ////////////////////
+    var intVar=getLocal('var',1)*1; if((typeof intVar)!='number' || intVar<0 || intVar>8) intVar=1;
+    var strSide=getLocal('side','any'); if((typeof strSide)!='string' || (strSide!='white' && strSide!='black' && strSide!='any')) strSide='any';
+    var strVS=getLocal('vs','human'); if((typeof strVS)!='string' || (strVS!='human' && strVS!='robo' && strVS!='friend')) strVS='human';
+
+    OBJ_arena.intVar=intVar;
+    OBJ_arena.strSide=strSide;
+    OBJ_arena.strVS=strVS;
+
+    chooseVar();
+    putSide();
+    putVS();
+
+
+    o('gImgHost').getElementsByTagName('image')[0].setAttribute('xlink:href',OBJ_host.dataImage);
+    ////////////////////
+    // USERPIC /////////
+    ////////////////////
+    sendRequest('../upx/'+OBJ_host.lnkPic,'',function(){
+        hideG('gLoad');
+        var arrPic=xhr.responseText.split(':');
+        var wPic=arrPic[0]*1;
+        var hPic=arrPic[1]*1;
+        var strPic=arrPic[2];
+        OBJ_host.wPic=wPic;
+        OBJ_host.hPic=hPic;
+        OBJ_host.strPic=strPic;
+        var zPic=0.225, btnPic=o('btnHost'), pthPic=btnPic.getElementsByTagName('path')[0]
+        showG(btnPic.getElementsByTagName('g')[0]);
+        pthPic.setAttribute('transform','translate('+(btnPic.rx-wPic*zPic/2)+','+(btnPic.ry-hPic*zPic/2)+') scale('+zPic+')');
+        pthPic.setAttribute('d',strPic);
+        ////////////////////
+        // LINK ////////////
+        ////////////////////
+        var strHost='localhost';
+        //var strHost='88.87.93.236';
+        OBJ.peer=new Peer({host:strHost,port:8001,path:'/peerjs'});
+        OBJ.peer.on('open', function(pid){
+          OBJ.wbs=new WebSocket('ws://'+strHost+':8000','echo-protocol');
+          OBJ_host.pid=pid;
+          console.log('my pid: '+OBJ_host.pid);
+          OBJ.wbs.addEventListener('message',function(e){
+            var msg = e.data;
+            var rsp=msg.split('~');
+            if(rsp[0]=='hello'){
+              OBJ.wbs.send('hello~'+OBJ_host.pid);
+              ////////////////////
+              // END SHOW ////////
+              ////////////////////
+              var imgLoad=document.getElementsByTagName('img')[0];
+              imgLoad.parentNode.removeChild(imgLoad);
+              sctRoot.style.display='block';
+              OBJ.blnLock=false;
+            }
+            else if(rsp[0]=='in'){
+              var pid=rsp[1];
+              var objUser=getUser(pid);
+              var peer=new Peer();
+              var conn=peer.connect(objUser.pid);
+            }
+            else if(rsp[0]=='out'){
+              for(var i in ARR_user){
+                if(ARR_user[i].pid==rsp[1]){
+                  ARR_user.splice(i,1);
+                  break;
+                }
+              }
+            }
+          });
+       });
+       OBJ.peer.on('connection',function(conn){
+         conn.on('data',function(data){
+           texted(this,data);
+         });
+       });
+    });
+  }
 </script>
 </head>
 <body onload='init();'>
