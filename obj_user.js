@@ -1,3 +1,4 @@
+var ARR_user=new Array();
 function getUser(pid){
   var objUser=new Object();
   objUser.strName='';

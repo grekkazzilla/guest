@@ -1,23 +1,3 @@
-// CHOOSING CHESS VARIANTS
-function chooseVar(){
-    var strFen='';
-    switch(OBJ_arena.intVar){
-        case 0: strFen=shuffleFen();break;
-        case 2: strFen=endgameFen();break;
-        case 3: strFen='nnnnknnn/pppppppp/8/8/8/8/PPPPPPPP/1Q1QK1Q1 w - - 0 1';break;
-        case 4: strFen='1nn1k1n1/4p3/8/8/8/8/PPPPPPPP/4K3 w - - 0 1';break;
-        case 5: strFen='rnbqkbnr/pppppppp/8/8/2PPPP2/1PP2PP1/PPPPPPPP/RNB1KBNR w KQkq - 0 1';break;
-        case 6: strFen=randomFen();break;
-        case 7: strFen='nnnnknnn/pppppppp/2p2p2/1pppppp1/8/8/PPPPPPPP/RNBQKBNR w KQ - 0 1';break;
-        case 8: strFen='prbknrp1/1pnqbp2/2ppp3/3p4/4P3/3PPP2/2PBQNP1/1PRNKBRP w - - 0 1';break;
-        default: strFen='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';break; // classic by default
-        //default: strFen='k7/8/7P/8/8/8/8/K7 w - - 0 1';break; // classic by default
-    }
-    OBJ_chess.setBoard(strFen);
-    OBJ_board.putBoard();
-    OBJ_arena.arrHist=new Array();
-    OBJ_arena.arrHist[0]=new Array(strFen,false,false,false,false); // fen position, posA, posB, move notation, arrCheck
-}
 function endgameFen(){
     var arrSquW=new Array('R','N','0','0','K','0','N','R');
 	var arrSquB=new Array('r','n','0','0','k','0','n','r');

@@ -28,6 +28,7 @@ $strHost=trim(file_get_contents('../config/host.txt'));
 <script type='text/javascript' src='obj_arena.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='obj_host.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='obj_user.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='obj_watch.js?v=<?php echo rand(0,1000);?>'></script>
 <!-- -->
 <script type='text/javascript' src='aux_var.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='aux_link.js?v=<?php echo rand(0,1000);?>'></script>
@@ -54,9 +55,6 @@ $strHost=trim(file_get_contents('../config/host.txt'));
   OBJ.peer=null;
   OBJ.strMode='standby';
   OBJ.strHost='<?php echo($strHost); ?>';
-
-  var OBJ_watch=new Object();
-  var ARR_user=new Array();
   function init(){
     // DEFINE ROOT ELEMENTS
     var sctRoot=document.getElementById('sctRoot');
@@ -99,23 +97,15 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     getBook(gWrap);
     //
     OBJ_arena.get();
+    OBJ_arena.putVar();
     OBJ_arena.putSide();
+    OBJ_arena.putVS();
+    OBJ_arena.putTime();
     //
     OBJ_host.get();
     OBJ_host.putName();
     OBJ_host.putRank(OBJ_host.intRank);
     OBJ_host.putImage();
-    ////////////////////
-    // SETTING /////////
-    ////////////////////
-
-    chooseVar();
-
-    putVS();
-
-    ////////////////////
-    // USERPIC /////////
-    ////////////////////
     OBJ_host.loadPic('none',function(){
       OBJ.peer=new Peer({host:OBJ.strHost,port:8001,path:'/peerjs'});
       OBJ.peer.on('open', function(pid){
