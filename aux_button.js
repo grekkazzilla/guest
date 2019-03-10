@@ -2,7 +2,8 @@
 // MAKE BUTTON AND ACTIONS
 function getButton(strID,oRoot,intX,intY,intW,intH,blnShown,ctgStyle,fncPic,zPic,fncDo,strTxt){
     // strTxt text~text~...
-    var btn=getG(strID,oRoot,intX,intY,1,blnShown,intW/2,intH/2);
+    var btn=o(strID);
+    if(btn===null) btn=getG(strID,oRoot,intX,intY,1,blnShown,intW/2,intH/2);
     btn.arrOn=new Array();
     if(ctgStyle.substr(0,1)=='A'){
         var arrRct=[5,'url(#grdButton)','none',0];

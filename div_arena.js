@@ -1,46 +1,3 @@
-function sendArena(objClub){
-  var strSend='';
-  objClub.conn.send('send_arena~'+strSend);
-}
-function putSide(){
-    var strSide=OBJ_arena.strSide;
-    var btn=o('btnSide');
-    var arrG=btn.getElementsByTagName('g'), gWhite=arrG[1], gBlack=arrG[2];
-    if(strSide=='white'){
-        gWhite.x=btn.rx-25;
-        showG(gWhite);
-        hideG(gBlack);
-        OBJ_board.flip(true);
-    }
-    else if(strSide=='black'){
-        gBlack.x=btn.rx-25;
-        hideG(gWhite);
-        showG(gBlack);
-        OBJ_board.flip(false);
-    }
-    else if(strSide=='any'){
-        gWhite.x=btn.rx-25-9;
-        gBlack.x=btn.rx-25+9;
-        showG(gWhite);
-        showG(gBlack);
-    }
-}
-function putVS(){
-    var strVS=OBJ_arena.strVS;
-    var btn=o('btnMatch');
-    var pth=btn.getElementsByTagName('path')[1];
-    if(strVS==='human'){
-        var z=0.12, y=5, p=picUser();
-    }
-    else if(strVS=='robo'){
-        var z=0.14, y=10, p=picRobo();
-    }
-    else if(strVS=='friend'){
-        var z=0.10, y=8, p=picGlad();
-    }
-    pth.setAttribute('transform','translate('+(btn.rx-p[0]*z/2)+','+y+') scale('+z+')');
-    pth.setAttribute('d',p[2]);
-}
 function getArena(gRoot){
   var div=getG('divArena',gRoot,0,0,1,true,OBJ.w/2,OBJ.h/2);
   getButton('btnClose',div,-9999,-9999,40,40,false,'BXBX',picCross(),0.09,function(){hideBox(OBJ.boxOn)},null);
@@ -138,7 +95,10 @@ function getArena(gRoot){
   var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,w*6+s*4,90);
   getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
   getButton('btnBook',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
-  getG('btnHost',g,(w+s)*2,0,1,true,(w*2+s)/2,(h+30)/2);
+  var btn=getButton('btnHost',g,(w+s)*2,0,(w*2+s),(h+30),true,'CXDX',picNone(),0,function(){
+    showBox('boxHost');
+  },null);
+  btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
   getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
   getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){showDiv('divWatch');},null);
   // BOX VAR
@@ -243,18 +203,16 @@ function getArena(gRoot){
   getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Take your side','start');
   var btn=getButton(null,box,10,60,w,h,true,'AAAX',picNone(),0,function(){
       hideBox('boxSide');
-      OBJ_arena.strSide='white';
-      setLocal('side','white');
-      putSide();
+      OBJ_arena.setSide('white');
+      OBJ_arena.putSide();
   },null);
   draw_white_pawn(null,btn,(w-50)/2,(h-50)/2,1,true);
   btn.getElementsByTagName('path')[1].setAttribute('stroke','url(#grdIcon)');
   btn.arrOn.push(['path',1,'stroke','url(#grdIcon)','#000']);
   var btn=getButton(null,box,10+w+s,60,w,h,true,'AAAX',picNone(),0,function(){
       hideBox('boxSide');
-      OBJ_arena.strSide='black';
-      setLocal('side','black');
-      putSide();
+      OBJ_arena.setSide('black');
+      OBJ_arena.putSide();
   },null);
   draw_black_pawn(null,btn,(w-50)/2,(h-50)/2,1,true);
   btn.getElementsByTagName('path')[1].setAttribute('fill','url(#grdIcon)');
@@ -262,9 +220,8 @@ function getArena(gRoot){
   btn.arrOn.push(['path',1,'fill','url(#grdIcon)','#000'],['path',1,'stroke','url(#grdIcon)','#000']);
   var btn=getButton(null,box,10+(w+s)*2,60,w,h,true,'AAAX',picNone(),0,function(){
       hideBox('boxSide');
-      OBJ_arena.strSide='any';
-      setLocal('side','any');
-      putSide();
+      OBJ_arena.setSide('any');
+      OBJ_arena.putSide();
   },null);
   draw_white_pawn(null,btn,(w-50)/2-9,(h-50)/2,1,true);
   draw_black_pawn(null,btn,(w-50)/2+9,(h-50)/2,1,true);
@@ -359,6 +316,44 @@ function getArena(gRoot){
   getButton('btnConfirmNo',box,box.rx+5,75,60,60,true,'DXEX',picNo(),0.16,function(){
       showBox('boxHost');
   },null);
+  // BOX HOST
+  var box=getBox('boxHost',div,0,0,false,'#fff');
+  getText('labName',box,0,35,18,'Arial','url(#grdButton)','none',0,'My Name','start');
+  getRect('rctName',box,10,60,0,40,5,'transparent','#eee8aa',1);
+  getText('txtName',box,0,85,18,'Arial','url(#grdIcon)','none',0,'','middle');
+  var w=125, gImage=getG('gImgHost',box,10,110,1,true,w/2,w/2);
+  getRect(null,gImage,0,0,w,w,0,'transparent','url(#grdButton)',1);
+  var img=document.getElementsByTagName('image')[0].cloneNode(true);
+  gImage.appendChild(img);
+  img.setAttribute('x','0');
+  img.setAttribute('y','0');
+  img.setAttribute('width',w);
+  img.setAttribute('height',w);
+  getButton('btnName',box,0,110,60,60,true,'AAAX',picPenA(),0.12,function(){setForm('name');showDiv('divForm');},null);
+  getButton('btnPic',box,0,110,60,60,true,'AAAX',picImage(),0.13,function(){showDiv('divPic');setPix();},null);
+  getButton('btnImage',box,0,0,60,60,true,'AAAC',picCam(),0.13,function(){o('inpImage').click();},null);
+  getButton('btnBin',box,210,175,60,60,false,'AACX',picBin(),0.13,function(){ showBox(box);},null);
+  getText('labRank',box,0,0,18,'Arial','url(#grdButton)','none',0,'Self Ranking','start');
+  var w=40, h=40, s=10, z=0.11, p=picStar();
+  var gRank=getG('gRank',box,0,0,1,true,(40*5+s*4)/2,20);
+  for(var i=0;i<5;i++){
+      var btn=getButton('btnRank'+(i+1),gRank,(w+s)*i,0,w,h,true,'XXAX',p,z,function(){
+          OBJ_host.setRank(this.intRank);
+          OBJ_host.putRank(this.intRank);
+      },null);
+      var pth=btn.getElementsByTagName('path')[0];
+      pth.setAttribute('fill','transparent');
+      pth.setAttribute('stroke','#000');
+      pth.setAttribute('stroke-width','10');
+      pth.setAttribute('filter','url(#blr12)');
+      getPath(null,btn,0,0,1,'url(#grdButton)','#bdb76d',0.5,'M 5 0 C 2.23 0 0 2.23 0 5 L 0 35 C 0 37.77 2.23 40 5 40 L 35 40 C 37.77 40 40 37.77 40 35 L 40 5 C 40 2.23 37.77 0 35 0 L 5 0 z M 19.90625 5.21875 C 20.356973 5.21375 20.758674 5.49315 20.9375 5.90625 L 24.5 14.15625 C 24.66421 14.53895 25.021181 14.7805 25.4375 14.8125 L 34.40625 15.5 C 34.855902 15.5336 35.231836 15.8226 35.375 16.25 C 35.518162 16.6775 35.4015 17.1398 35.0625 17.4375 L 28.3125 23.375 C 27.999716 23.65 27.86925 24.0948 27.96875 24.5 L 30.09375 33.21875 C 30.2015 33.65595 30.01781 34.13805 29.65625 34.40625 C 29.294815 34.67435 28.824393 34.69815 28.4375 34.46875 L 20.6875 29.875 C 20.328208 29.6617 19.885626 29.6558 19.53125 29.875 L 11.90625 34.59375 C 11.522383 34.83085 11.023861 34.8236 10.65625 34.5625 C 10.28871 34.3005 10.12014 33.84595 10.21875 33.40625 L 12.1875 24.625 C 12.27874 24.2188 12.13046 23.80155 11.8125 23.53125 L 4.96875 17.71875 C 4.6257348 17.42755 4.4900292 16.96085 4.625 16.53125 C 4.7600971 16.10185 5.1452959 15.791 5.59375 15.75 L 14.53125 14.9375 C 14.94637 14.899 15.311409 14.6358 15.46875 14.25 L 18.875 5.90625 C 19.045762 5.48915 19.456535 5.22875 19.90625 5.21875 z');
+      getPath(null,btn,(w-p[0]*z)/2,(w-p[1]*z)/2,z,'url(#grdGold)','url(#grdGoldBrd)',5,p[2]);
+      btn.intRank=i+1;
+      btn.arrOn[0]=['path', 0, 'filter', 'url(#blr12)', 'url(#blr8)'];
+      btn.arrOn[1]=['path', 1, 'fill', 'url(#grdButton)', '#bdb76d'];
+      btn.arrOn[2]=['path', 2, 'fill', 'url(#grdGold)', '#aa8800'];
+      btn.arrOn[3]=['path', 2, 'stroke', 'url(#grdGoldBrd)', '#aa8800'];
+  }
   ////////////////////
   // BOX PROMOTE WHITE
   ////////////////////

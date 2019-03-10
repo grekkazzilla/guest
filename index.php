@@ -1,5 +1,5 @@
 <?php
-
+$strHost=trim(file_get_contents('../config/host.txt'));
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,9 +25,11 @@
 <script type='text/javascript' src='inc_load.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='inc_say.js?v=<?php echo rand(0,1000);?>'></script>
 <!-- -->
-<script type='text/javascript' src='aux_host.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='obj_arena.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='obj_host.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='obj_user.js?v=<?php echo rand(0,1000);?>'></script>
+<!-- -->
 <script type='text/javascript' src='aux_var.js?v=<?php echo rand(0,1000);?>'></script>
-<script type='text/javascript' src='aux_user.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='aux_link.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='aux_box.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='aux_button.js?v=<?php echo rand(0,1000);?>'></script>
@@ -51,14 +53,8 @@
   OBJ.wbs=null;
   OBJ.peer=null;
   OBJ.strMode='standby';
-  var OBJ_arena=new Object();
-  OBJ_arena.intVar=1;
-  OBJ_arena.blnSide=true;
-  OBJ_arena.strSide='any';
-  OBJ_arena.strVS='human';
-  OBJ_arena.arrHist=new Array();
-  OBJ_arena.objDrive=null;
-  OBJ_arena.numShowMove=0;
+  OBJ.strHost='<?php echo($strHost); ?>';
+
   var OBJ_watch=new Object();
   var ARR_user=new Array();
   function init(){
@@ -102,89 +98,64 @@
     getWatch(gWrap);
     getBook(gWrap);
     //
+    OBJ_arena.get();
+    OBJ_arena.putSide();
+    //
     OBJ_host.get();
-    OBJ_host.drawButton();
-    OBJ_host.drawBox(divArena);
     OBJ_host.putName();
     OBJ_host.putRank(OBJ_host.intRank);
-
+    OBJ_host.putImage();
     ////////////////////
     // SETTING /////////
     ////////////////////
-    var intVar=getLocal('var',1)*1; if((typeof intVar)!='number' || intVar<0 || intVar>8) intVar=1;
-    var strSide=getLocal('side','any'); if((typeof strSide)!='string' || (strSide!='white' && strSide!='black' && strSide!='any')) strSide='any';
-    var strVS=getLocal('vs','human'); if((typeof strVS)!='string' || (strVS!='human' && strVS!='robo' && strVS!='friend')) strVS='human';
-
-    OBJ_arena.intVar=intVar;
-    OBJ_arena.strSide=strSide;
-    OBJ_arena.strVS=strVS;
 
     chooseVar();
-    putSide();
+
     putVS();
 
-
-    o('gImgHost').getElementsByTagName('image')[0].setAttribute('xlink:href',OBJ_host.dataImage);
     ////////////////////
     // USERPIC /////////
     ////////////////////
-    sendRequest('../upx/'+OBJ_host.lnkPic,'',function(){
-        hideG('gLoad');
-        var arrPic=xhr.responseText.split(':');
-        var wPic=arrPic[0]*1;
-        var hPic=arrPic[1]*1;
-        var strPic=arrPic[2];
-        OBJ_host.wPic=wPic;
-        OBJ_host.hPic=hPic;
-        OBJ_host.strPic=strPic;
-        var zPic=0.225, btnPic=o('btnHost'), pthPic=btnPic.getElementsByTagName('path')[0]
-        showG(btnPic.getElementsByTagName('g')[0]);
-        pthPic.setAttribute('transform','translate('+(btnPic.rx-wPic*zPic/2)+','+(btnPic.ry-hPic*zPic/2)+') scale('+zPic+')');
-        pthPic.setAttribute('d',strPic);
-        ////////////////////
-        // LINK ////////////
-        ////////////////////
-        var strHost='localhost';
-        //var strHost='88.87.93.236';
-        OBJ.peer=new Peer({host:strHost,port:8001,path:'/peerjs'});
-        OBJ.peer.on('open', function(pid){
-          OBJ.wbs=new WebSocket('ws://'+strHost+':8000','echo-protocol');
-          OBJ_host.pid=pid;
-          console.log('my pid: '+OBJ_host.pid);
-          OBJ.wbs.addEventListener('message',function(e){
-            var msg = e.data;
-            var rsp=msg.split('~');
-            if(rsp[0]=='hello'){
-              OBJ.wbs.send('hello~'+OBJ_host.pid);
-              ////////////////////
-              // END SHOW ////////
-              ////////////////////
-              var imgLoad=document.getElementsByTagName('img')[0];
-              imgLoad.parentNode.removeChild(imgLoad);
-              sctRoot.style.display='block';
-              OBJ.blnLock=false;
-            }
-            else if(rsp[0]=='in'){
-              var pid=rsp[1];
-              var objUser=getUser(pid);
-              var peer=new Peer();
-              var conn=peer.connect(objUser.pid);
-            }
-            else if(rsp[0]=='out'){
-              for(var i in ARR_user){
-                if(ARR_user[i].pid==rsp[1]){
-                  ARR_user.splice(i,1);
-                  break;
-                }
+    OBJ_host.loadPic('none',function(){
+      OBJ.peer=new Peer({host:OBJ.strHost,port:8001,path:'/peerjs'});
+      OBJ.peer.on('open', function(pid){
+        OBJ.wbs=new WebSocket('ws://'+OBJ.strHost+':8000','echo-protocol');
+        OBJ_host.pid=pid;
+        console.log('my pid: '+OBJ_host.pid);
+        OBJ.wbs.addEventListener('message',function(e){
+          var msg = e.data;
+          var rsp=msg.split('~');
+          if(rsp[0]=='hello'){
+            OBJ.wbs.send('hello~'+OBJ_host.pid);
+            ////////////////////
+            // END SHOW ////////
+            ////////////////////
+            var imgLoad=document.getElementsByTagName('img')[0];
+            imgLoad.parentNode.removeChild(imgLoad);
+            sctRoot.style.display='block';
+            OBJ.blnLock=false;
+          }
+          else if(rsp[0]=='in'){
+            var pid=rsp[1];
+            var objUser=getUser(pid);
+            var peer=new Peer();
+            var conn=peer.connect(objUser.pid);
+          }
+          else if(rsp[0]=='out'){
+            for(var i in ARR_user){
+              if(ARR_user[i].pid==rsp[1]){
+                ARR_user.splice(i,1);
+                break;
               }
             }
-          });
+          }
+        });
+     });
+     OBJ.peer.on('connection',function(conn){
+       conn.on('data',function(data){
+         texted(this,data);
        });
-       OBJ.peer.on('connection',function(conn){
-         conn.on('data',function(data){
-           texted(this,data);
-         });
-       });
+     });
     });
   }
 </script>

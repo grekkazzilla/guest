@@ -37,8 +37,8 @@ function getImage(gRoot){
       var wImage=rct.wThis/rct.fltScale;
       ctx.drawImage(img,xImage,yImage,wImage,wImage,0,0,196,196);
       OBJ_host.dataImage=cnv.toDataURL('image/png');
-      o('gImgHost').getElementsByTagName('image')[0].setAttribute('xlink:href',OBJ_host.dataImage);
-      setLocal('img',OBJ_host.dataImage);
+      OBJ_host.setImage(OBJ_host.dataImage);
+      OBJ_host.putImage();
       showDiv('divArena');
       showBox('boxHost');
   },null);
