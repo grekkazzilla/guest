@@ -1,41 +1,57 @@
-function findArena(){
-  for(var i in OBJ_club.arr){
-    var u=OBJ_club.arr[i];
-    var conn=G_wrap.peer.connect(ARR_user[i].pid);
+function link_wbs_msg(msg){
+  var rsp=msg.split('~');
+  if(rsp[0]=='hello'){
+    OBJ.wbs.send('hello~'+OBJ_host.pid);
+    var imgLoad=document.getElementsByTagName('img')[0];
+    imgLoad.parentNode.removeChild(imgLoad);
+    sctRoot.style.display='block';
+    OBJ.blnLock=false;
+  }
+  else if(rsp[0]=='in'){
+    var pid=rsp[1];
+    var objUser=getUser(pid);
+    var conn=OBJ.peer.connect(pid);
+    conn.objUser=objUser;
     conn.on('open',function(){
-      this.on('data',function(data){
-        texted(this,data);
+      var objUser=this.objUser;
+      objUser.conn=this;
+      this.on('data', function(data){
+        link_conn_msg(this,data);
       });
-      this.send('watch');
     });
   }
-}
-function linked(conn){
-  var btn=document.createElement('button');
-  btn.style.width='150px';
-  btn.style.height='25px';
-  btn.innerHTML=conn.peer;
-  document.getElementsByTagName('body')[0].appendChild(btn);
-  btn.conn=conn;
-  btn.onclick=function(){
-    this.conn.send('msg~hello from '+this.conn.peer);
+  else if(rsp[0]=='out'){
+    remUser(rsp[1]);
   }
 }
-function texted(conn,data){
+//////////
+function link_conn_msg(conn,data){
   var asw=data.split('~');
-  if(asw[0]=='watch'){
-    if(DIV_arena.strMode=='wait'){
-      conn.send('arena~'+DIV_arena.intVar);
-      linked(conn);
+  var objUser=getUserByPID(conn.peer)
+  if(asw[0]=='watch_req' || asw[0]=='watch_exch' && OBJ.strMode=='watch'){
+    if(asw[0]=='watch_exch'){
+      setUser(objUser,asw[1]);
+      if(objUser.objWatch===null) getWatch(objUser,asw[2]);
+      else setWatch(objUser,asw[2]);
     }
+    objUser.conn.send('watch_resp~'+makeWatchReq());
   }
-  else if(asw[0]=='arena'){
-    if(DIV_arena.strMode=='wait'){
-      conn.send('arena~'+DIV_arena.intVar);
-      linked(conn);
+  else if(asw[0]=='watch_resp' && OBJ.strMode=='watch'){
+    setUser(objUser,asw[1]);
+    if(objUser.objWatch===null) getWatch(objUser,asw[2]);
+    else setWatch(objUser,asw[2]);
+  }
+}
+//////////
+function makeWatchReq(){
+  return OBJ_host.strName+':'+OBJ_host.lnkPic+':'+OBJ_host.intRank+':'+OBJ_host.dataImage+'~'+OBJ_arena.intVar+':'+OBJ_arena.strSide+':'+OBJ_arena.intBase+':'+OBJ_arena.intAdd+':'+OBJ_arena.strClock;
+}
+function link_watch(){
+  for(var i in ARR_user){
+    var objUser=ARR_user[i];
+    if(objUser.objWatch===null){
+      if(OBJ.strMode=='standby') objUser.conn.send('watch_req');
+      else if(OBJ.strMode=='watch') objUser.conn.send('watch_exch~'+makeWatchReq());
     }
-  }
-  else if(asw[0]=='msg'){
-    console.log(asw[1]);
   }
 }

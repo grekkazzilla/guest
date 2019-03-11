@@ -1,5 +1,4 @@
-var DIV_watch=null;
-function getWatch(gRoot){
+function drawWatch(gRoot){
   DIV_watch=getG('divWatch',gRoot,0,0,1,false,OBJ.w/2,OBJ.h/2);
   getRect(null,DIV_watch,10,7,105,45,5,'transparent','url(#grdButton)',1);
   var z=0.12, p=picEye(); getPath(null,DIV_watch,14,11,z,'url(#grdButton)','none',0,p[2]);
@@ -8,8 +7,9 @@ function getWatch(gRoot){
   getButton(null,DIV_watch,350,10,40,40,true,'BXBX',picCross(),0.09,function(){showDiv('divArena');},null);
   var W=390, H=170, X=5, Y=60, S=10;
   for(var i=0;i<3;i++){
-    var box=getG('gWatch'+i,DIV_watch,X,Y+(H+S)*i,1,true,W/2,H/2);
-    box.objUser=null;
+    var box=getG('boxWatch'+i,DIV_watch,X,Y+(H+S)*i,1,true,W/2,H/2);
+    box.objWatch=null;
+    box.num=i;
     getRect(null,box,0,0,W,H,0,'#808080','none',0).setAttribute('filter','url(#blr2)');
     getRect(null,box,0,0,W,H,0,'#fff','none',0);
     getButton('btnWatchUser'+i,box,5,5,105,105,true,'CXAX',picUser(),0.225,function(){},null);
@@ -56,5 +56,27 @@ function getWatch(gRoot){
     var z=0.13, p=picClock(); getPath(null,gIn,5,5,z,'url(#grdButton)','none',0,p[2]);
     getText(null,gIn,70,20,18,'Arial','url(#grdIcon)','none',0,'15 m','middle');
     getText(null,gIn,70,40,18,'Arial','url(#grdIcon)','none',0,'10 s','middle');
+    var xhr = new XMLHttpRequest();
+    xhr.boxWatch=box;
+    box.xhr=xhr;
+    box.loadPic=function(){
+      this.xhr.open('POST', '../upx/'+this.objWatch.objUser.lnkPic, true);
+    	this.xhr.onreadystatechange = this.xhr.checkState;
+    	this.xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    	this.xhr.send('');
+    }
+    xhr.checkState=function(){
+    	if(this.readyState==4){
+        if(this.status==200){
+          var box=this.boxWatch;
+          var btn=o('btnWatchUser'+box.num);
+          var pth=btn.getElementsByTagName('path')[0];
+          var arr=this.responseText.split(':');
+          var z=0.225, w=arr[0], h=arr[1], d=arr[2];
+          pth.setAttribute('transform','translate('+(btn.rx-w*z/2)+','+(btn.ry-h*z/2)+') scale('+z+')');
+          pth.setAttribute('d',d);
+        }
+      }
+    }
   }
 }

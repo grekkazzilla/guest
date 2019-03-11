@@ -93,7 +93,7 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     getPic(gWrap);
     getImage(gWrap);
     getForm(gWrap);
-    getWatch(gWrap);
+    drawWatch(gWrap);
     getBook(gWrap);
     //
     OBJ_arena.get();
@@ -108,44 +108,22 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     OBJ_host.putImage();
     OBJ_host.loadPic('none',function(){
       OBJ.peer=new Peer({host:OBJ.strHost,port:8001,path:'/peerjs'});
-      OBJ.peer.on('open', function(pid){
+      OBJ.peer.on('open',function(pid){
         OBJ.wbs=new WebSocket('ws://'+OBJ.strHost+':8000','echo-protocol');
         OBJ_host.pid=pid;
         console.log('my pid: '+OBJ_host.pid);
         OBJ.wbs.addEventListener('message',function(e){
-          var msg = e.data;
-          var rsp=msg.split('~');
-          if(rsp[0]=='hello'){
-            OBJ.wbs.send('hello~'+OBJ_host.pid);
-            ////////////////////
-            // END SHOW ////////
-            ////////////////////
-            var imgLoad=document.getElementsByTagName('img')[0];
-            imgLoad.parentNode.removeChild(imgLoad);
-            sctRoot.style.display='block';
-            OBJ.blnLock=false;
-          }
-          else if(rsp[0]=='in'){
-            var pid=rsp[1];
-            var objUser=getUser(pid);
-            var peer=new Peer();
-            var conn=peer.connect(objUser.pid);
-          }
-          else if(rsp[0]=='out'){
-            for(var i in ARR_user){
-              if(ARR_user[i].pid==rsp[1]){
-                ARR_user.splice(i,1);
-                break;
-              }
-            }
-          }
+          link_wbs_msg(e.data);
         });
-     });
-     OBJ.peer.on('connection',function(conn){
-       conn.on('data',function(data){
-         texted(this,data);
-       });
-     });
+      });
+      OBJ.peer.on('connection',function(conn){
+        conn.on('open',function(){
+
+        });
+        conn.on('data',function(data){
+          link_conn_msg(this,data);
+        });
+      });
     });
   }
 </script>
