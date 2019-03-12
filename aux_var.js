@@ -1,6 +1,6 @@
 function endgameFen(){
     var arrSquW=new Array('R','N','0','0','K','0','N','R');
-	var arrSquB=new Array('r','n','0','0','k','0','n','r');
+	  var arrSquB=new Array('r','n','0','0','k','0','n','r');
     var arrPawnW=new Array('P','P','P','P','P','P','P','P');
     var arrPawnB=new Array('p','p','p','p','p','p','p','p');
     var arr=new Array(0,1,6,7);

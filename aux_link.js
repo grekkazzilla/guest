@@ -47,8 +47,8 @@ function makeWatchReq(){
   return OBJ_host.strName+':'+OBJ_host.lnkPic+':'+OBJ_host.intRank+':'+OBJ_host.dataImage+'~'+OBJ_arena.intVar+':'+OBJ_arena.strSide+':'+OBJ_arena.intBase+':'+OBJ_arena.intAdd+':'+OBJ_arena.strClock;
 }
 function link_watch(){
-  for(var i in ARR_user){
-    var objUser=ARR_user[i];
+  for(var i in OBJ_user.arr){
+    var objUser=OBJ_user.arr[i];
     if(objUser.objWatch===null){
       if(OBJ.strMode=='standby') objUser.conn.send('watch_req');
       else if(OBJ.strMode=='watch') objUser.conn.send('watch_exch~'+makeWatchReq());

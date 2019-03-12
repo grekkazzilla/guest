@@ -19,20 +19,68 @@ function setWatch(objUser,strWatch){
   putWatch(OBJ_watch.numPage);
 }
 function putWatch(numPage){
-  var qtyPage=Math.ceil(OBJ_watch.arr.length/3);
+  var qtyWatch=OBJ_watch.arr.length;
+  var qtyPage=Math.ceil(qtyWatch/3);
+  if(qtyPage==0) qtyPage=1;
+  // icn quantity
+  var strWatchQuantity=qtyWatch;
+  if(qtyWatch<10) strWatchQuantity='00'+strWatchQuantity;
+  else if(qtyWatch<100) strWatchQuantity='0'+strWatchQuantity;
+  else if(qtyWatch>999) strWatchQuantity='999';
+  txtWatchQuantity.firstChild.nodeValue=strWatchQuantity;
+  // btn next
+  o('btnWatchNext').getElementsByTagName('text')[0].firstChild.nodeValue='page '+(numPage+1)+' / '+qtyPage;
+  //
   for(var i=0;i<3;i++){
     var boxWatch=o('boxWatch'+i);
-    var txtName=boxWatch.getElementsByTagName('text')[0];
     var num=numPage*3+i;
     if(num<OBJ_watch.arr.length){
+      // name
       var objWatch=OBJ_watch.arr[num];
       var objUser=objWatch.objUser;
-      txtName.firstChild.nodeValue=objUser.strName;
+      boxWatch.getElementsByTagName('text')[0].firstChild.nodeValue=objUser.strName;
       boxWatch.objWatch=objWatch;
-      boxWatch.loadPic();
+      // pic
+      showG('btnWatchUser'+i);
+      objUser.loadPic();
+      // rank
+      for(var j=0;j<5;j++){
+        var pth=o('pthWatchStar'+i+j), z=0.09;
+        if(objUser.intRank<j+1) var z=0;
+        pth.setAttribute('transform','translate('+pth.x+','+pth.y+') scale('+z+')');
+      }
+      // var
+      o('txtWatchVar'+i).firstChild.nodeValue=OBJ_arena.arrName[objWatch.intVar];
+      // side
+      showG('icnWatchSide'+i);
+      var gWhite=o('gWhite'+i), gBlack=o('gBlack'+i);
+      if(objWatch.strSide=='white'){showG(gWhite);hideG(gBlack);}
+      else if(objWatch.strSide=='black'){hideG(gWhite);showG(gBlack);}
+      else{jumpG(gWhite,gWhite.x-9,gWhite.y);jumpG(gBlack,gBlack.x+9,gBlack.y);}
+      // time
+      var g=o('gWatchTime'+i);
+      showG(g);
+      var pth=g.getElementsByTagName('path')[0];
+      var txtA=g.getElementsByTagName('text')[0];
+      var txtB=g.getElementsByTagName('text')[1];
+      if(objWatch.strClock=='simple_delay') var z=0.12, p=picClock();
+      else if(objWatch.strClock=='accumulation') var z=0.11, p=picHeap();
+      else if(objWatch.strClock=='compensation') var z=0.11, p=picUp();
+      if(objWatch.intAdd==0) var yA=30, strB='';
+      else var yA=21, strB=objWatch.intAdd+' sec';
+      pth.setAttribute('transform','translate(0,'+(g.ry-p[1]*z/2)+') scale('+z+')');
+      pth.setAttribute('d',p[2]);
+      txtA.setAttribute('y',yA);
+      txtA.firstChild.nodeValue=objWatch.intBase/60+' min';
+      txtB.firstChild.nodeValue=strB;
     }
     else{
-      txtName.firstChild.nodeValue='';
+      boxWatch.getElementsByTagName('text')[0].firstChild.nodeValue='';
+      hideG('btnWatchUser'+i);
+      for(var j=0;j<5;j++) o('pthWatchStar'+i+j).setAttribute('transform','scale(0)');
+      o('txtWatchVar'+i).firstChild.nodeValue='';
+      hideG('icnWatchSide'+i);
+      hideG('gWatchTime'+i);
       boxWatch.objWatch=null;
     }
   }
@@ -46,4 +94,5 @@ function remWatch(objWatch){
       break;
     }
   }
+  putWatch(OBJ_watch.numPage);
 }

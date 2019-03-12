@@ -101,7 +101,10 @@ function getArena(gRoot){
   },null);
   btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
   getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
-  getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){showDiv('divWatch');},null);
+  getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){
+    putWatch(OBJ_watch.numPage);
+    showDiv('divWatch');
+  },null);
   // BOX VAR
   var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=5;
   var box=getMenu('boxVar',div,w,h,m,s,qtyHor,qtyVer,false);
