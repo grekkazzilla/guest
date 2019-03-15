@@ -15,6 +15,9 @@ OBJ_host.get=function(){
   this.wPic=0;
   this.hPic=0;
   this.dataImage=dataImage;
+  getFind();
+  this.strFind=asmFind();
+  this.numFind=1000;
 }
 // setName < btnSubForm < divForm < div_form.js
 OBJ_host.setName=function(strName){

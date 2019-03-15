@@ -1,6 +1,6 @@
 var OBJ_arena=new Object({
   intVar:1,
-  arrName:new Array('Shuffle','Classic','End Game','Three Queens','Revolt','Pawn Attack','Random','Knight Horde','Triangle'),
+  arrName:new Array('Shuffle','Classic','End Game','Three Queens','Revolt','Pawn Attack','Random','Horde','Wedge'),
   blnSide:true,
   strSide:'any',
   strVS:'human',

@@ -35,13 +35,19 @@ function startGame(){
       var btn=o('btnMatch');
       var z=0.5;hideG(btn.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdButton)',6,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
       OBJ.strMode='watch';
-      link_watch();
+      setFind();
+      OBJ.wbs.send('arena_on~'+OBJ_host.numFind);
     }
   }
   else if(OBJ.strMode=='watch'){
     var btn=o('btnMatch');
     showG(btn.getElementsByTagName('g')[0]);hideG('gLoad');
     OBJ.strMode='standby';
+    OBJ.wbs.send('arena_off');
+    /*for(var i in OBJ_user.arr){
+      var objUser=OBJ_user.arr[i];
+      if(objUser.conn!==null) objUser.conn.send('watch_rem');
+    }*/
   }
 }
 function changeTurn(){

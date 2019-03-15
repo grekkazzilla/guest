@@ -28,8 +28,8 @@ function putWatch(numPage){
   else if(qtyWatch<100) strWatchQuantity='0'+strWatchQuantity;
   else if(qtyWatch>999) strWatchQuantity='999';
   txtWatchQuantity.firstChild.nodeValue=strWatchQuantity;
-  // btn next
-  o('btnWatchNext').getElementsByTagName('text')[0].firstChild.nodeValue='page '+(numPage+1)+' / '+qtyPage;
+  // txt page
+  o('txtWatchPage').firstChild.nodeValue=(numPage+1)+' / '+qtyPage;
   //
   for(var i=0;i<3;i++){
     var boxWatch=o('boxWatch'+i);
@@ -43,6 +43,8 @@ function putWatch(numPage){
       // pic
       showG('btnWatchUser'+i);
       objUser.loadPic();
+      // btn
+      showG('btnWatchMatch'+i);
       // rank
       for(var j=0;j<5;j++){
         var pth=o('pthWatchStar'+i+j), z=0.09;
@@ -63,7 +65,7 @@ function putWatch(numPage){
       var pth=g.getElementsByTagName('path')[0];
       var txtA=g.getElementsByTagName('text')[0];
       var txtB=g.getElementsByTagName('text')[1];
-      if(objWatch.strClock=='simple_delay') var z=0.12, p=picClock();
+      if(objWatch.strClock=='simple_delay') var z=0.13, p=picClock();
       else if(objWatch.strClock=='accumulation') var z=0.11, p=picHeap();
       else if(objWatch.strClock=='compensation') var z=0.11, p=picUp();
       if(objWatch.intAdd==0) var yA=30, strB='';

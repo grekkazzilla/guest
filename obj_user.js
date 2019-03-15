@@ -1,5 +1,6 @@
 var OBJ_user=new Object();
 OBJ_user.arr=new Array();
+OBJ_user.numLink=0; // used for trying to link with users one by one
 function getUser(pid){
   var objUser=new Object();
   objUser.strName='';
@@ -53,12 +54,6 @@ function setUser(objUser,strUser){
   objUser.lnkPic=arr[1];
   objUser.intRank=arr[2];
   objUser.dataImage=arr[3];
-}
-function getUserByPID(pid){
-  for(var i in OBJ_user.arr){
-    var objUser=OBJ_user.arr[i];
-    if(objUser.pid==pid) return objUser;
-  }
 }
 function remUser(pid){
   for(var i in OBJ_user.arr){

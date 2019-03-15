@@ -3,12 +3,10 @@ function drawWatch(gRoot){
   getRect(null,div,10,7,105,45,5,'transparent','url(#grdButton)',1);
   var z=0.12, p=picEye(); getPath(null,div,14,11,z,'url(#grdButton)','none',0,p[2]);
   getText('txtWatchQuantity',div,80,35,18,'Arial','url(#grdIcon)','none',1,'','middle');
-  var btn=getButton('btnWatchNext',div,123,10,177,40,true,'BXBA',picArrowC(),0.09,function(){},'');
-  var txt=btn.getElementsByTagName('text')[0];
-  txt.setAttribute('x',70);
-  txt.setAttribute('y',25);
-  var pth=btn.getElementsByTagName('path')[0];
-  pth.setAttribute('transform','translate('+(pth.x+65)+','+pth.y+') scale('+pth.z+')');
+  getText(null,div,165,23,18,'Arial','url(#grdButton)','none',1,'page','middle');
+  getText('txtWatchPage',div,165,47,18,'Arial','url(#grdIcon)','none',1,'1 / 1','middle');
+  getButton('btnWatchNext',div,260,10,40,40,true,'BXBX',picArrowC(),0.09,function(){},null);
+  mirrHor(getButton('btnWatchPrev',div,215,10,40,40,true,'BXBX',picArrowC(),0.09,function(){},null));
   getButton(null,div,305,10,40,40,true,'BXBX',picGear(),0.1,function(){},null);
   getButton(null,div,350,10,40,40,true,'BXBX',picCross(),0.09,function(){showDiv('divArena');},null);
   var W=390, H=170, X=5, Y=60, S=10;
@@ -19,7 +17,7 @@ function drawWatch(gRoot){
     getRect(null,box,0,0,W,H,0,'#808080','none',0).setAttribute('filter','url(#blr2)');
     getRect(null,box,0,0,W,H,0,'#fff','none',0);
     getButton('btnWatchUser'+i,box,5,5,105,105,false,'CXAX',picNone(),0,function(){},null);
-    getButton(null,box,W-65,5,60,60,true,'AAAX',picFence(),0.13,function(){},null);
+    getButton('btnWatchMatch'+i,box,W-65,5,60,60,false,'AAAX',picFence(),0.13,function(){},null);
     getText(null,box,130,25,18,'Arial','url(#grdIcon)','none',0,'','start');
     for(var j=0;j<5;j++){
       getPath('pthWatchStar'+i+j,box,130+35*j,33,0,'url(#grdGold)','none',0,picStar()[2]);

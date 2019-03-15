@@ -35,6 +35,7 @@ $strHost=trim(file_get_contents('../config/host.txt'));
 <script type='text/javascript' src='aux_box.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='aux_button.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='aux_run.js?v=<?php echo rand(0,1000);?>'></script>
+<script type='text/javascript' src='aux_find.js?v=<?php echo rand(0,1000);?>'></script>
 <!-- -->
 <script type='text/javascript' src='div_arena.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='div_img.js?v=<?php echo rand(0,1000);?>'></script>
@@ -118,10 +119,9 @@ $strHost=trim(file_get_contents('../config/host.txt'));
       });
       OBJ.peer.on('connection',function(conn){
         conn.on('open',function(){
-
-        });
-        conn.on('data',function(data){
-          link_conn_msg(this,data);
+          this.on('data',function(data){console.log(this);
+            link_conn_msg(this,data);
+          });
         });
       });
     });
