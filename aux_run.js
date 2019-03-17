@@ -44,10 +44,13 @@ function startGame(){
     showG(btn.getElementsByTagName('g')[0]);hideG('gLoad');
     OBJ.strMode='standby';
     OBJ.wbs.send('arena_off');
-    /*for(var i in OBJ_user.arr){
+    for(var i in OBJ_user.arr){
       var objUser=OBJ_user.arr[i];
-      if(objUser.conn!==null) objUser.conn.send('watch_rem');
-    }*/
+      if(objUser.conn!==null){
+        objUser.conn.close();
+        //objUser.conn.close();
+      }
+    }
   }
 }
 function changeTurn(){

@@ -22,8 +22,10 @@ ws.on('connection',function(ws){
         ws.num=r[1];
         for(var i in uuu){
           var u=uuu[i];
-          if(u.num==ws.num) ws.send('arena_on~'+u.pid);
-          if(u.str!='' && u.str.charAt(ws.num)=='1') u.send('watch_on~'+ws.pid);
+          if(u!=ws){
+            if(u.num==ws.num) ws.send('arena_on~'+u.pid);
+            if(u.str!='' && u.str.charAt(ws.num)=='1') u.send('watch_on~'+ws.pid);
+          }
         }
       }
       else if(r[0]=='arena_off') ws.num=1000;
@@ -31,14 +33,21 @@ ws.on('connection',function(ws){
         ws.str=r[1];
         for(var i in uuu){
           var u=uuu[i];
-          if(ws.str.charAt(u.num)=='1') ws.send('watch_on~'+u.pid);
+          if(u!=ws){
+            if(ws.str.charAt(u.num)=='1') ws.send('watch_on~'+u.pid);
+          }
         }
       }
       else if(r[0]=='watch_off') ws.str='';
    });
    //
    ws.on('close',function(){
-
+     for(var i in uuu){
+       if(uuu[i]==ws){
+         uuu.splice(i,1);
+         break;
+       }
+     }
    });
 });
 /*

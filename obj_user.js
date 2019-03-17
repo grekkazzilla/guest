@@ -1,12 +1,14 @@
 var OBJ_user=new Object();
 OBJ_user.arr=new Array();
 OBJ_user.numLink=0; // used for trying to link with users one by one
-function getUser(pid){
+function getUser(conn){
   var objUser=new Object();
   objUser.strName='';
   objUser.lnkPic='';
   objUser.conn=null; // object peer established connection
-  objUser.pid=pid; // string peer id
+  conn.objUser=objUser;
+  objUser.conn=conn;
+  objUser.pid=conn.peer;
   objUser.intRank=0;
   objUser.lnkPic='';
   objUser.strPic='';
@@ -46,6 +48,7 @@ function getUser(pid){
       }
     }
   }
+  objUser.bufSend=new Array();
   return objUser;
 }
 function setUser(objUser,strUser){
@@ -53,15 +56,17 @@ function setUser(objUser,strUser){
   objUser.strName=arr[0];
   objUser.lnkPic=arr[1];
   objUser.intRank=arr[2];
-  objUser.dataImage=arr[3];
 }
-function remUser(pid){
+function remUser(objUser){
   for(var i in OBJ_user.arr){
-    var objUser=OBJ_user.arr[i];
-    if(objUser.pid==pid){
+    if(OBJ_user.arr[i]==objUser){
       if(objUser.objWatch!==null) remWatch(objUser.objWatch);
       OBJ_user.arr.splice(i,1);
       break;
     }
   }
+}
+function isUser(pid){
+  for(var i in OBJ_user.arr) if(OBJ_user.arr[i].pid==pid) return OBJ_user.arr[i];
+  return false;
 }

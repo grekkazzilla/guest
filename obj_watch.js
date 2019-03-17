@@ -16,7 +16,7 @@ function setWatch(objUser,strWatch){
   objWatch.intBase=arr[2];
   objWatch.intAdd=arr[3];
   objWatch.strClock=arr[4];
-  putWatch(OBJ_watch.numPage);
+  if(OBJ.divOn==o('divWatch')) putWatch(OBJ_watch.numPage);
 }
 function putWatch(numPage){
   var qtyWatch=OBJ_watch.arr.length;
@@ -96,5 +96,9 @@ function remWatch(objWatch){
       break;
     }
   }
-  putWatch(OBJ_watch.numPage);
+  if(OBJ.divOn==o('divWatch')) putWatch(OBJ_watch.numPage);
+}
+function isWatch(objUser){
+  for(var i in OBJ_watch.arr) if(OBJ_watch.arr[i].objUser==objUser) return OBJ_watch.arr[i];
+  return false;
 }

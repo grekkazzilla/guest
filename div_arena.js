@@ -101,9 +101,13 @@ function getArena(gRoot){
   },null);
   btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
   getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
-  getButton('btnOnLine',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){
+  getButton('btnWatch',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){
     putWatch(OBJ_watch.numPage);
     showDiv('divWatch');
+    if(OBJ.blnWatch===false){
+      OBJ.blnWatch=true;
+      OBJ.wbs.send('watch_on~'+asmFind());
+    }
   },null);
   // BOX VAR
   var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=5;

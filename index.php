@@ -56,6 +56,7 @@ $strHost=trim(file_get_contents('../config/host.txt'));
   OBJ.peer=null;
   OBJ.strMode='standby';
   OBJ.strHost='<?php echo($strHost); ?>';
+  OBJ.blnWatch=false;
   function init(){
     // DEFINE ROOT ELEMENTS
     var sctRoot=document.getElementById('sctRoot');
@@ -118,11 +119,7 @@ $strHost=trim(file_get_contents('../config/host.txt'));
         });
       });
       OBJ.peer.on('connection',function(conn){
-        conn.on('open',function(){
-          this.on('data',function(data){console.log(this);
-            link_conn_msg(this,data);
-          });
-        });
+        link_pcn_msg(conn.peer,conn,'');
       });
     });
   }
