@@ -122,6 +122,7 @@ $strHost=trim(file_get_contents('../config/host.txt'));
         link_pcn_msg(conn.peer,conn,'');
       });
     });
+    OBJ_host.objMatch=null; // objUser linked opponent when found and chosen
   }
 </script>
 </head>

@@ -11,10 +11,10 @@ function getWatch(objUser,strWatch){
 function setWatch(objUser,strWatch){
   var objWatch=objUser.objWatch;
   var arr=strWatch.split(':');
-  objWatch.intVar=arr[0];
+  objWatch.intVar=arr[0]*1;
   objWatch.strSide=arr[1];
-  objWatch.intBase=arr[2];
-  objWatch.intAdd=arr[3];
+  objWatch.intBase=arr[2]*1;
+  objWatch.intAdd=arr[3]*1;
   objWatch.strClock=arr[4];
   if(OBJ.divOn==o('divWatch')) putWatch(OBJ_watch.numPage);
 }
@@ -79,6 +79,7 @@ function putWatch(numPage){
     else{
       boxWatch.getElementsByTagName('text')[0].firstChild.nodeValue='';
       hideG('btnWatchUser'+i);
+      hideG('btnWatchMatch'+i);
       for(var j=0;j<5;j++) o('pthWatchStar'+i+j).setAttribute('transform','scale(0)');
       o('txtWatchVar'+i).firstChild.nodeValue='';
       hideG('icnWatchSide'+i);

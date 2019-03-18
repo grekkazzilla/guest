@@ -44,14 +44,24 @@ function startGame(){
     showG(btn.getElementsByTagName('g')[0]);hideG('gLoad');
     OBJ.strMode='standby';
     OBJ.wbs.send('arena_off');
-    for(var i in OBJ_user.arr){
+    for(var i=0;i<OBJ_user.arr.length;i++){
       var objUser=OBJ_user.arr[i];
       if(objUser.conn!==null){
-        objUser.conn.close();
-        //objUser.conn.close();
+        link_pcn_msg(objUser.pid,null,'close');
+        remUser(objUser);
+        i--;
       }
     }
   }
+}
+function startGame0(){
+  hideG('gTop');
+  showG('gTime');
+  showG('gRobo');
+  hideG('gBottom');
+  showG('gGo');
+  o('gGo').appendChild(o('btnHost'));
+  setHistoryButtons();
 }
 function changeTurn(){
     if(OBJ_arena.strVS=='robo'){

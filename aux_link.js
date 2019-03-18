@@ -21,30 +21,41 @@ function link_pcn_msg(pid,conn,msgSend){
       }
       this.on('data',function(data){
         var msg=data.split('~');
-        var objUser=this.objUser;
         if(msg[0]=='greet_req'){
-          if(OBJ.strMode=='watch') objUser.bufSend.push('greet_rsp~'+OBJ_host.strName+':'+OBJ_host.lnkPic+':'+OBJ_host.intRank+'~'+OBJ_arena.intVar+':'+OBJ_arena.strSide+':'+OBJ_arena.intBase+':'+OBJ_arena.intAdd+':'+OBJ_arena.strClock);
-          else objUser.bufSend.push('greet_rej');
+          if(OBJ.strMode=='watch') objUser.conn.send('greet_rsp~'+OBJ_host.strName+':'+OBJ_host.lnkPic+':'+OBJ_host.intRank+'~'+OBJ_arena.intVar+':'+OBJ_arena.strSide+':'+OBJ_arena.intBase+':'+OBJ_arena.intAdd+':'+OBJ_arena.strClock);
+          else objUser.conn.send('greet_rej');
         }
         else if(msg[0]=='greet_rsp'){
           setUser(objUser,msg[1]);
           if(isWatch(objUser)===false) getWatch(objUser,msg[2]);
         }
-        else if(msg[0]=='greet_rej'){
-          remUser(objUser);
-        }
         else if(msg[0]=='close'){
-          console.log(OBJ_host.strName+' has closed '+objUser.pid+' connection');
-          //objUser.conn.close();
+          objUser.conn.close();
         }
-        if(objUser.bufSend.length>0) objUser.conn.send(objUser.bufSend.shift());
+        else if(msg[0]=='match_req'){
+          var strUser=msg[1];
+          var strSide=msg[2];
+          if(strSide=='white') var strSide='black';
+          else if(strSide=='black') var strSide='white';
+          OBJ_arena.setSide(strSide);
+          OBJ_arena.putSide();
+          objUser.conn.send('match_rsp~'+OBJ_arena.arrHist[0][0]);
+        }
+        else if(msg[0]=='match_rsp'){
+          var strFen=msg[1];
+          OBJ_chess.setBoard(strFen);
+          OBJ_board.putBoard();
+          OBJ_arena.arrHist=new Array();
+          OBJ_arena.arrHist[0]=new Array(strFen,false,false,false,false);
+        }
+      });
+      this.on('close',function(){
+        remUser(objUser);
       });
     });
-    conn.on('close',function(){
-      console.log(OBJ_host.strName+' has closed '+objUser.pid+' connection');
-    });
   }
-  else{
-    if(msgSend!='') objUser.conn.send(msgSend);
+  else if(msgSend!=''){
+    objUser.conn.send(msgSend);
+    OBJ.test++;
   }
 }
