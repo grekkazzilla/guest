@@ -45,6 +45,13 @@ function getUser(conn){
             pth.setAttribute('d',d);
           }
         }
+        var btn=o('btnUser');
+        if(btn.objUser==objUser){
+          var pth=btn.getElementsByTagName('path')[0];
+          var z=0.225, w=arr[0], h=arr[1], d=arr[2];
+          pth.setAttribute('transform','translate('+(btn.rx-w*z/2)+','+(btn.ry-h*z/2)+') scale('+z+')');
+          pth.setAttribute('d',d);
+        }
       }
     }
   }

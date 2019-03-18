@@ -84,7 +84,7 @@ function hideBox(box){
     if(typeof(box)=='string') box=o(box);
     hideG(box);
     OBJ.boxOn=null;
-    if(box.id=='boxHost') o('btnHost').getElementsByTagName('path')[0].setAttribute('fill','#bdb76d');
+    if(box.id=='boxHost') o('btnHost').getElementsByTagName('path')[0].setAttribute('fill','url(#grdButton)');
     else if(box.id=='boxGo'){
       OBJ.blnLock=false;
       o('btnClose').blnUnlock=false;

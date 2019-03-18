@@ -47,7 +47,7 @@ function getArena(gRoot){
                       btn.intHold++;
                       if(btn.intHold>=7 || btn.blnHeld===false){
                           if(btn.intHold>=7) showBox('boxVS');
-                          else startGame();
+                          else startGame(true);
                           onBtn(btn,0);
                           btn.intHold=0;
                           btn.blnHeld=false;
@@ -72,7 +72,7 @@ function getArena(gRoot){
                       btn.intHold++;
                       if(btn.intHold>=7 || btn.blnHeld===false){
                           if(btn.intHold>=7) showBox('boxVS');
-                          else startGame();
+                          else startGame(true);
                           onBtn(btn,0);
                           btn.intHold=0;
                           btn.blnHeld=false;
@@ -99,7 +99,7 @@ function getArena(gRoot){
   var btn=getButton('btnHost',g,(w+s)*2,0,(w*2+s),(h+30),true,'CXDX',picNone(),0,function(){
     showBox('boxHost');
   },null);
-  btn.arrOn[2]=['path',0,'fill','#bdb76d','url(#grdPale)'];
+  btn.arrOn[2]=['path',0,'fill','url(#grdButton)','url(#grdPale)'];
   getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
   getButton('btnWatch',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){
     putWatch(OBJ_watch.numPage);
@@ -130,6 +130,12 @@ function getArena(gRoot){
       else{arrText[0].setAttribute('y',25);arrText[1].setAttribute('y',45);}
       x+=w+s;if((i+1)%qtyHor==0){x-=(w+s)*qtyHor;y+=h+s;}
   }
+  // BTN USER
+  var btn=getButton('btnUser',div,136.8,6,126.4,90,false,'CXDX',picNone(),0,function(){
+
+  },null);
+  btn.arrOn[2]=['path',0,'fill','url(#grdButton)','url(#grdPale)'];
+  btn.objUser=null;
   // G ROBO
   var W=126.4, H=90, G=getG('gRobo',div,200-W/2,6,1,false,W/2,H/2);
   getRect(null,G,0,0,W,H,5,'transparent','url(#grdButton)',1);

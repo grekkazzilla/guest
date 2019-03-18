@@ -18,21 +18,12 @@ function drawWatch(gRoot){
     getRect(null,box,0,0,W,H,0,'#fff','none',0);
     getButton('btnWatchUser'+i,box,5,5,105,105,false,'CXAX',picNone(),0,function(){},null);
     getButton('btnWatchMatch'+i,box,W-65,5,60,60,false,'AAAX',picFence(),0.13,function(){
+      OBJ.blnLock=true;
+      var z=0.375;hideG(this.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdPale)',6,(this.rx*2-100*z)/2,(this.ry*2-100*z)/2,z,this);
       var objWatch=this.parentNode.objWatch;
       var objUser=objWatch.objUser;
-      if(objWatch.strSide=='white') var strSide='black';
-      else if(objWatch.strSide=='black') var strSide='white';
-      else if(objWatch.strSide=='any'){
-        if(getRand(0,1)==1) var strSide='white';
-        else var strSide='black';
-      }
-      link_pcn_msg(objUser.pid,null,'match_req~'+OBJ_host.strName+':'+OBJ_host.lnkPic+':'+OBJ_host.intRank+'~'+strSide);
-      OBJ_arena.setVar(objWatch.intVar);
-      OBJ_arena.putVar();
-      OBJ_arena.setSide(strSide);
-      OBJ_arena.putSide();
-      startGame0();
-      showDiv('divArena');
+      OBJ_watch.objLoad=objWatch;
+      link_pcn_msg(objUser.pid,null,'match_req~'+OBJ_host.strName+':'+OBJ_host.lnkPic+':'+OBJ_host.intRank);
     },null);
     getText(null,box,130,25,18,'Arial','url(#grdIcon)','none',0,'','start');
     for(var j=0;j<5;j++){

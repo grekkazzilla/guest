@@ -1,43 +1,42 @@
-function startGame(){
-  if(OBJ.strMode=='standby'){
-    if(OBJ_arena.strVS=='robo'){
-      if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);
-      hideG('gTop');
-      showG('gTime');
-      showG('gRobo');
-      hideG('gBottom');
-      showG('gGo');
-      o('gGo').appendChild(o('btnHost'));
-      setHistoryButtons();
-      //
-      if(OBJ_arena.strSide=='white'){
-          OBJ_arena.blnSide=true;
-      }
-      else if(OBJ_arena.strSide=='black'){
-        OBJ_arena.blnSide=false;
-      }
+function startGame(blnFindSide){
+  if(OBJ.strMode=='match' || (OBJ.strMode=='standby' && OBJ_arena.strVS=='robo')){
+    if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);
+    hideG('gTop');
+    showG('gTime');
+    hideG('gBottom');
+    showG('gGo');
+    o('gGo').appendChild(o('btnHost'));
+    setHistoryButtons();
+    //
+    if(blnFindSide===true){
+      if(OBJ_arena.strSide=='white') OBJ_arena.blnSide=true;
+      else if(OBJ_arena.strSide=='black') OBJ_arena.blnSide=false;
       else if(OBJ_arena.strSide=='any'){
         var rnd=getRand(0,1);
         if(rnd==0) OBJ_arena.blnSide=true;
         else if(rnd==1) OBJ_arena.blnSide=false;
       }
-      //
-      if(OBJ_arena.blnSide!==OBJ_board.blnSide) OBJ_board.flip(!OBJ_board.blnSide);
-      //
-      if(OBJ_arena.strVS=='robo'){
-        OBJ_arena.objDrive=p4_fen2state(OBJ_arena.arrHist[0][0]);
-        changeTurn();
-      }
-      OBJ_arena.arrHist.push(new Array('',false,false,false,false));
-      OBJ.strMode='play';
+    }
+    if(OBJ_arena.blnSide!==OBJ_board.blnSide) OBJ_board.flip(!OBJ_board.blnSide);
+    //
+    if(OBJ_arena.strVS=='robo'){
+      showG('gRobo');
+      OBJ_arena.objDrive=p4_fen2state(OBJ_arena.arrHist[0][0]);
+      changeTurn();
     }
     else if(OBJ_arena.strVS=='human'){
-      var btn=o('btnMatch');
-      var z=0.5;hideG(btn.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdButton)',6,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
-      OBJ.strMode='watch';
-      setFind();
-      OBJ.wbs.send('arena_on~'+OBJ_host.numFind);
+      showG('btnUser');
     }
+    //
+    OBJ_arena.arrHist.push(new Array('',false,false,false,false));
+    OBJ.strMode='play';
+  }
+  else if(OBJ.strMode=='standby' && OBJ_arena.strVS=='human'){
+    var btn=o('btnMatch');
+    var z=0.5;hideG(btn.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdButton)',6,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
+    OBJ.strMode='watch';
+    setFind();
+    OBJ.wbs.send('arena_on~'+OBJ_host.numFind);
   }
   else if(OBJ.strMode=='watch'){
     var btn=o('btnMatch');
@@ -53,15 +52,6 @@ function startGame(){
       }
     }
   }
-}
-function startGame0(){
-  hideG('gTop');
-  showG('gTime');
-  showG('gRobo');
-  hideG('gBottom');
-  showG('gGo');
-  o('gGo').appendChild(o('btnHost'));
-  setHistoryButtons();
 }
 function changeTurn(){
     if(OBJ_arena.strVS=='robo'){

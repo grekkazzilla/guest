@@ -33,20 +33,28 @@ function link_pcn_msg(pid,conn,msgSend){
           objUser.conn.close();
         }
         else if(msg[0]=='match_req'){
-          var strUser=msg[1];
-          var strSide=msg[2];
-          if(strSide=='white') var strSide='black';
-          else if(strSide=='black') var strSide='white';
-          OBJ_arena.setSide(strSide);
-          OBJ_arena.putSide();
-          objUser.conn.send('match_rsp~'+OBJ_arena.arrHist[0][0]);
+          if(OBJ.strMode=='watch'){
+            setUser(objUser,msg[1]);
+            OBJ.strMode='match';
+            startGame(true);
+            o('btnUser').objUser=objUser;
+            objUser.loadPic();
+            objUser.conn.send('match_rsp~'+OBJ_arena.arrHist[0][0]+'~'+OBJ_arena.blnSide);
+          }
+          else objUser.conn.send('match_rej');
         }
         else if(msg[0]=='match_rsp'){
           var strFen=msg[1];
+          if(msg[2]=='true') OBJ_arena.blnSide=false;
+          else OBJ_arena.blnSide=true
+          startGame(false);
           OBJ_chess.setBoard(strFen);
           OBJ_board.putBoard();
           OBJ_arena.arrHist=new Array();
-          OBJ_arena.arrHist[0]=new Array(strFen,false,false,false,false);
+          OBJ_arena.arrHist[0]=new Array(strFen,false,false,false,false); // fen position, posA, posB, move notation, arrCheck
+          showDiv('divArena');
+          o('btnUser').objUser=objUser;
+          objUser.loadPic();
         }
       });
       this.on('close',function(){
