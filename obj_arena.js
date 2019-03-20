@@ -4,6 +4,7 @@ var OBJ_arena=new Object({
   blnSide:true,
   strSide:'any',
   strVS:'human',
+  objMatch:null,
   arrHist:new Array(),
   objDrive:null,
   numShowMove:0

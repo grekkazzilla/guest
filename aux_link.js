@@ -34,9 +34,10 @@ function link_pcn_msg(pid,conn,msgSend){
         }
         else if(msg[0]=='match_req'){
           if(OBJ.strMode=='watch'){
-            setUser(objUser,msg[1]);
             OBJ.strMode='match';
+            setUser(objUser,msg[1]);
             startGame(true);
+            OBJ_arena.objMatch=objUser;
             o('btnUser').objUser=objUser;
             objUser.loadPic();
             objUser.conn.send('match_rsp~'+OBJ_arena.arrHist[0][0]+'~'+OBJ_arena.blnSide);
@@ -44,17 +45,26 @@ function link_pcn_msg(pid,conn,msgSend){
           else objUser.conn.send('match_rej');
         }
         else if(msg[0]=='match_rsp'){
+          OBJ.strMode='match';
           var strFen=msg[1];
           if(msg[2]=='true') OBJ_arena.blnSide=false;
           else OBJ_arena.blnSide=true
           startGame(false);
+          OBJ_arena.objMatch=objUser;
           OBJ_chess.setBoard(strFen);
           OBJ_board.putBoard();
           OBJ_arena.arrHist=new Array();
           OBJ_arena.arrHist[0]=new Array(strFen,false,false,false,false); // fen position, posA, posB, move notation, arrCheck
+          var gLoad=o('gLoad');hideG(gLoad);showG(gLoad.parentNode.getElementsByTagName('g')[0]);
+          remWatch(objUser.objWatch);
           showDiv('divArena');
+          OBJ.blnLock=false;
           o('btnUser').objUser=objUser;
           objUser.loadPic();
+        }
+        else if(msg[0]=='move'){
+          play(o('g'+msg[1]),true);
+          play(o('g'+msg[2]),true);
         }
       });
       this.on('close',function(){

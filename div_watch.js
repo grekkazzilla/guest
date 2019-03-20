@@ -22,7 +22,6 @@ function drawWatch(gRoot){
       var z=0.375;hideG(this.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdPale)',6,(this.rx*2-100*z)/2,(this.ry*2-100*z)/2,z,this);
       var objWatch=this.parentNode.objWatch;
       var objUser=objWatch.objUser;
-      OBJ_watch.objLoad=objWatch;
       link_pcn_msg(objUser.pid,null,'match_req~'+OBJ_host.strName+':'+OBJ_host.lnkPic+':'+OBJ_host.intRank);
     },null);
     getText(null,box,130,25,18,'Arial','url(#grdIcon)','none',0,'','start');

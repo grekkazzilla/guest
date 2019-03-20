@@ -18,7 +18,7 @@ OBJ_board.drawBoard=function(gRoot,strID,x,y,z,wSquare,pntLight,pntDark,boolShow
             var gSquare=getG('g'+pos,gBoard,x,y,1,true,wSquare/2,wSquare/2);
             getRect(null,gSquare,0,0,wSquare,wSquare,0,pnt,'none',0);
             gSquare.pos=pos;
-            gSquare.onclick=function(){play(this);}
+            gSquare.onclick=function(){play(this,false);}
             x+=wSquare;
             //getText(null,gSquare,25,20,15,'Arial','#000','none',0,pos,'middle');
         }
@@ -138,7 +138,7 @@ OBJ_board.putTake=function(){
                     break;
                 }
             }
-            if(!circ) OBJ_board.drawCircle(gSquare); 
+            if(!circ) OBJ_board.drawCircle(gSquare);
         }
     }
 }

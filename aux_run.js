@@ -17,7 +17,9 @@ function startGame(blnFindSide){
         else if(rnd==1) OBJ_arena.blnSide=false;
       }
     }
-    if(OBJ_arena.blnSide!==OBJ_board.blnSide) OBJ_board.flip(!OBJ_board.blnSide);
+    if(OBJ_arena.blnSide!==OBJ_board.blnSide){
+      OBJ_board.flip(!OBJ_board.blnSide);
+    }
     //
     if(OBJ_arena.strVS=='robo'){
       showG('gRobo');
@@ -65,15 +67,15 @@ function changeTurn(){
                         if(gSqu.num==find[1]) var gSquB=gSqu;
                     }
                 }
-                play(gSquA);
-                play(gSquB);
+                play(gSquA,true);
+                play(gSquB,true);
             },50);
         }
     }
-    else OBJ_arena.blnSide!=OBJ_arena.blnSide;
+    //else OBJ_arena.blnSide!=OBJ_arena.blnSide; // for testing purposes
 }
-function play(gSquare){
-    if(OBJ.strMode=='play' && OBJ.blnLock===false){
+function play(gSquare,blnRobo){
+    if(blnRobo===true || (OBJ.strMode=='play' && OBJ_arena.blnSide===OBJ_chess.turn && OBJ.blnLock===false)){
         if(OBJ_arena.numShowMove==0){
           var pos=gSquare.pos;
           var numLast=OBJ_arena.arrHist.length-1;
@@ -92,6 +94,10 @@ function play(gSquare){
                     OBJ_arena.arrHist[numLast][2]=pos;
                     OBJ_arena.arrHist[numLast][4]=arrMove[4];
                     setHistoryButtons();
+                    // vs human
+                    if(OBJ_arena.strVS=='human'){
+                      link_pcn_msg(OBJ_arena.objMatch.pid,null,'move~'+arrMove[1]+'~'+arrMove[2]);
+                    }
                     // p4wn.js engine
                     if(OBJ_arena.strVS=='robo'){
                       for(var key in OBJ_chess.arrSqu){
@@ -102,10 +108,10 @@ function play(gSquare){
                           }
                       }
                       OBJ_arena.objDrive.move(posA,posB,12);
+                      changeTurn();
                     }
                     //
                     OBJ_arena.arrHist.push(new Array('',false,false,false,false));
-                    changeTurn();
                     //
                   }
                   OBJ_board.hidePick();

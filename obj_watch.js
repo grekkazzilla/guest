@@ -1,7 +1,6 @@
 var OBJ_watch=new Object();
 OBJ_watch.arr=new Array();
 OBJ_watch.numPage=0;
-OBJ_watch.objLoad=null;
 function getWatch(objUser,strWatch){
   var objWatch=new Object();
   objUser.objWatch=objWatch;
