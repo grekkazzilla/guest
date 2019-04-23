@@ -106,7 +106,7 @@ OBJ_board.hidePick=function(){
     OBJ_board.pthPick.setAttribute('transform','translate(-9999,-9999)');
 }
 OBJ_board.putTake=function(){
-    var arrTake=OBJ_chess.arrTake;
+    var arrTake=OBJ_chess.arrSqu[OBJ_chess.posA].unit.arrMove;
     for(var i=0;i<arrTake.length;i++){
         var pos=arrTake[i][0];
         var squ=OBJ_chess.arrSqu[pos];

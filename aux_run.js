@@ -1,6 +1,8 @@
 function startGame(blnFindSide){
   if(OBJ.strMode=='match' || (OBJ.strMode=='standby' && OBJ_arena.strVS=='robo')){
     if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);
+    var btn=o('btnMatch');
+    var z=0.5;hideG(btn.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdButton)',6,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
     hideG('gTop');
     showG('gTime');
     hideG('gBottom');
@@ -56,12 +58,12 @@ function startGame(blnFindSide){
   }
 }
 function changeTurn(){
-    if(OBJ_arena.strVS=='robo'){
-        if(OBJ_arena.blnSide!==OBJ_chess.turn){
+    /*if(OBJ_arena.strVS=='robo'){
+        if(OBJ_arena.blnSide!==OBJ_chess.blnTurn){
             setTimeout(function(){
                 var find=OBJ_arena.objDrive.findmove(OBJ_host.intRank);
                 for(var key in OBJ_chess.arrSqu){
-                    if(OBJ_chess.arrSqu[key].boolPlay===true){
+                    if(OBJ_chess.arrSqu[key].blnPlay===true){
                         var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
                         if(gSqu.num==find[0]) var gSquA=gSqu;
                         if(gSqu.num==find[1]) var gSquB=gSqu;
@@ -71,11 +73,11 @@ function changeTurn(){
                 play(gSquB,true);
             },50);
         }
-    }
-    //else OBJ_arena.blnSide!=OBJ_arena.blnSide; // for testing purposes
+    }*/
+    OBJ_arena.blnSide=OBJ_chess.blnTurn; // for testing purposes
 }
 function play(gSquare,blnRobo){
-    if(blnRobo===true || (OBJ.strMode=='play' && OBJ_arena.blnSide===OBJ_chess.turn && OBJ.blnLock===false)){
+    if(blnRobo===true || (OBJ.strMode=='play' && OBJ_arena.blnSide===OBJ_chess.blnTurn && OBJ.blnLock===false)){
         if(OBJ_arena.numShowMove==0){
           var pos=gSquare.pos;
           var numLast=OBJ_arena.arrHist.length-1;
@@ -86,7 +88,7 @@ function play(gSquare,blnRobo){
                   OBJ_board.hideCheck();
                   if(!arrMove[0]) OBJ_board.putMove(arrMove,false,!OBJ_arena.blnSide);
                   else{
-                      if(OBJ_chess.turn) showBox('boxPromoteWhite');
+                      if(OBJ_chess.blnTurn) showBox('boxPromoteWhite');
                       else showBox('boxPromoteBlack');
                     }
                     // finish move
@@ -101,7 +103,7 @@ function play(gSquare,blnRobo){
                     // p4wn.js engine
                     if(OBJ_arena.strVS=='robo'){
                       for(var key in OBJ_chess.arrSqu){
-                          if(OBJ_chess.arrSqu[key].boolPlay===true){
+                          if(OBJ_chess.arrSqu[key].blnPlay===true){
                               var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
                               if(gSqu.pos==OBJ_arena.arrHist[numLast][1]) var posA=gSqu.num;
                               else if(gSqu.pos==OBJ_arena.arrHist[numLast][2]) var posB=gSqu.num;

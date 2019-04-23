@@ -10,10 +10,10 @@ OBJ_chess.getBoard=function(qtyHor, qtyVer, mrgBan, nameVar){
    OBJ_chess.mrgBan=mrgBan; // forbidden margin of unplayable squares around the board, on each side
    OBJ_chess.dstVer=qtyVer+mrgBan*2; // vertical full distance of squares, both forbidden and playable
    OBJ_chess.dstHor=qtyHor+mrgBan*2; // horizontal full distance of squares, both forbidden and playable
-   OBJ_chess.turn=false; // true for white to move, false for black to move
+   OBJ_chess.blnTurn=false; // true for white to move, false for black to move
    OBJ_chess.posA=false; // the position with the picked unit on it, ready to move
    OBJ_chess.posB=false; // the position where the picked unit moves
-   OBJ_chess.lock=false; // if true, locking the program from ending a move and from selecting a new pos
+   OBJ_chess.blnLock=false; // if true, locking the program from ending a move and from selecting a new pos
    OBJ_chess.arrCheck=new Array(); // squares with currently checked kings
    OBJ_chess.arrTake=new Array(); // squares where the picked unit can go
    OBJ_chess.posEnPassant=false; // if a pawn has moved two squares, for fen notation
@@ -24,7 +24,7 @@ OBJ_chess.getBoard=function(qtyHor, qtyVer, mrgBan, nameVar){
    var arrABC=new Array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
    for(var i=0;i<OBJ_chess.dstHor*OBJ_chess.dstVer;i++){
       var squ=new Object();
-      squ.boolPlay=false; // forbidden or playable square
+      squ.blnPlay=false; // forbidden or playable square
       squ.pos=i; // square position on board
       squ.unit=false; // a unit on this square
       OBJ_chess.arrSqu.push(squ); // adding all squares to collection
@@ -32,11 +32,11 @@ OBJ_chess.getBoard=function(qtyHor, qtyVer, mrgBan, nameVar){
          numHor--;
          numVer=0;
       }
-      if(numHor>mrgBan && numHor<(qtyHor+mrgBan*2)-(mrgBan-1) && numVer>(mrgBan-1) && numVer<(qtyVer+mrgBan*2)-mrgBan) squ.boolPlay=true;
+      if(numHor>mrgBan && numHor<(qtyHor+mrgBan*2)-(mrgBan-1) && numVer>(mrgBan-1) && numVer<(qtyVer+mrgBan*2)-mrgBan) squ.blnPlay=true;
       squ.numHor=numHor-mrgBan; // horizontal line number
       squ.numVer=numVer-mrgBan+1; // vertical line number
       // square notation
-      if(squ.boolPlay) squ.strNota=arrABC[numVer-mrgBan]+squ.numHor;
+      if(squ.blnPlay) squ.strNota=arrABC[numVer-mrgBan]+squ.numHor;
       else squ.strNota='';
       numVer++;
    }
@@ -78,8 +78,8 @@ OBJ_chess.setBoard=function(strFen){
             pos++;
         }
     }
-    if(arr[1]=='w') OBJ_chess.turn=true;
-    else OBJ_chess.turn=false;
+    if(arr[1]=='w') OBJ_chess.blnTurn=true;
+    else OBJ_chess.blnTurn=false;
     // CASTLING RULES
     // [pos if free], [pos if checked], [castled unit 1], [castled unit 2]
     if(OBJ_chess.nameVar=='double12x16'){
@@ -128,7 +128,7 @@ OBJ_chess.setBoard=function(strFen){
             }
         }
         var d=1;
-        if(OBJ_chess.turn===false) d=-1;
+        if(OBJ_chess.blnTurn===false) d=-1;
         var posPawn=posEnPassant+OBJ_chess.dstVer*d;
         var unitPawn=OBJ_chess.arrSqu[posPawn].unit;
         for(var i=-1;i<=1;i+=2){
@@ -145,6 +145,8 @@ OBJ_chess.setBoard=function(strFen){
     OBJ_chess.numHalfClock=arr[4]*1;
     // FULLMOVE
     OBJ_chess.numFullMove=arr[5]*1;
+    //
+    OBJ_chess.setArrMove(OBJ_chess.blnTurn);
 }
 OBJ_chess.kingCastled=function(unit,pos){
    if(unit.king===true){
@@ -181,6 +183,7 @@ OBJ_chess.getUnit=function(name,side,pos){
     obj.arrCastle=new Array(); // castling rules;
     obj.objCastle=false; // links to unit having castling rules defined
     obj.king=false;
+    obj.arrMove=new Array(); // // all possible moves with respective takes [[posMoveA, [posTake0, posTake1, posTake2, ...]], [posMoveB, [posTake0, posTake1, ...]], ...] filled in addMove()
     switch(name){
         case "pawn": obj.strFen="p";obj.ctg='none';break;
         case "bishop": obj.strFen="b";obj.ctg='slide';break;
@@ -199,15 +202,12 @@ OBJ_chess.getUnit=function(name,side,pos){
     return obj;
 }
 OBJ_chess.setPosA=function(posA){
-    if(!OBJ_chess.lock){
+    if(!OBJ_chess.blnLock){
         var squA=OBJ_chess.arrSqu[posA];
         var unitA=squA.unit;
-        if(unitA && unitA.side===OBJ_chess.turn){
+        if(unitA && unitA.side===OBJ_chess.blnTurn){
             OBJ_chess.posA=posA;
-            OBJ_chess.addTake(unitA);
-            OBJ_chess.addCastle(unitA);
-            if(unitA.arrTake.length>0) for(var key in unitA.arrTake) OBJ_chess.arrTake.push(unitA.arrTake[key]);
-            OBJ_chess.testTake(posA,squA,unitA);
+            //if(unitA.arrTake.length>0) for(var key in unitA.arrTake) OBJ_chess.arrTake.push(unitA.arrTake[key]);
             return true;
         }
         else return false;
@@ -215,7 +215,7 @@ OBJ_chess.setPosA=function(posA){
     else return false;
 }
 OBJ_chess.setPosB=function(pos){
-    if(!OBJ_chess.lock){
+    if(!OBJ_chess.blnLock){
         var posA=OBJ_chess.posA;
         var posB=pos;
         if(posA){
@@ -224,9 +224,11 @@ OBJ_chess.setPosB=function(pos){
             var unitA=squA.unit;
             var unitB=squB.unit;
             OBJ_chess.posA=false;
-            if(OBJ_chess.inArrTake(posB)){
+            if(OBJ_chess.inArrMove(unitA,posB)){
                 if(!OBJ_chess.pawnPromoted(posA,posB)){
                     var arrTake=OBJ_chess.setMove(posA,posB);
+                    var arrMove=OBJ_chess.setArrMove(OBJ_chess.blnTurn);
+                    if(arrMove[0]===true) console.log('checkmate!');
                     var arrCastle=OBJ_chess.kingCastled(unitA,posB);
                     if(arrCastle) OBJ_chess.setCastle(arrCastle);
                     var arrCheck=OBJ_chess.kingChecked();
@@ -234,7 +236,7 @@ OBJ_chess.setPosB=function(pos){
                     // CLEAR ALL UNIT TAKES
                     for(var key in OBJ_chess.arrUnit){
                         var unit=OBJ_chess.arrUnit[key];
-                        if(unit.side!==OBJ_chess.turn) unit.arrTake=new Array();
+                        if(unit.side!==OBJ_chess.blnTurn) unit.arrTake=new Array();
                     }
                     // CLEAR CASTLING IF MOVED
                     if(unitA.arrCastle.length>0) unitA.arrCastle=new Array();
@@ -259,32 +261,32 @@ OBJ_chess.setMove=function(posA,posB){
     var squB=OBJ_chess.arrSqu[posB];
     var unitA=squA.unit;
     squA.unit=false;
-    for(var i=0;i<OBJ_chess.arrTake.length;i++){
-        if(posB==OBJ_chess.arrTake[i][0]){
-            for(var j=0;j<OBJ_chess.arrTake[i][1].length;j++){
-                var posC=OBJ_chess.arrTake[i][1][j];
-                var squC=OBJ_chess.arrSqu[posC];
-                var unitC=squC.unit;
-                if(unitC){
-                    unitC.pos=false;
-                    squC.unit=false;
-                    arrTake.push(posC);
-                }
-            }
-            break;
+    for(var i=0;i<unitA.arrMove.length;i++){
+      if(posB==unitA.arrMove[i][0]){
+        for(var j=0;j<unitA.arrMove[i][1].length;j++){
+          var posC=unitA.arrMove[i][1][j];
+          var squC=OBJ_chess.arrSqu[posC];
+          var unitC=squC.unit;
+          if(unitC){
+            unitC.pos=false;
+            squC.unit=false;
+            arrTake.push(posC);
+          }
         }
+        break;
+      }
     }
     squB.unit=unitA;
     unitA.pos=posB;
    //
-   if(OBJ_chess.turn===false) OBJ_chess.numFullMove++;
-   OBJ_chess.turn=!OBJ_chess.turn;
+   if(OBJ_chess.blnTurn===false) OBJ_chess.numFullMove++;
+   OBJ_chess.blnTurn=!OBJ_chess.blnTurn;
    if(arrTake.length>0) return arrTake;
    return false;
 }
-OBJ_chess.addTake=function(unit){
+OBJ_chess.addMove=function(unit){
    var v=OBJ_chess.dstVer;
-   OBJ_chess.arrTake=new Array();
+   unit.arrMove=new Array();
    var posA=unit.pos;
    var posB, squB, arrStep=new Array();
    if(unit.name=='pawn'){
@@ -294,9 +296,9 @@ OBJ_chess.addTake=function(unit){
          var s=arrStep[i];
          posB=posA+s;
          squB=OBJ_chess.arrSqu[posB];
-         if(squB.boolPlay){
+         if(squB.blnPlay){
             if((i==0 && !squB.unit) || (i>0 && squB.unit && squB.unit.side!=unit.side)){
-               OBJ_chess.arrTake.push([posB,[posB]]);
+               unit.arrMove.push([posB,[posB]]);
             }
          }
       }
@@ -316,8 +318,10 @@ OBJ_chess.addTake=function(unit){
                break;
             }
          }
-         if(boolPush) OBJ_chess.arrTake.push([posJump,[posJump]]);
-      }   
+         if(boolPush){
+           unit.arrMove.push([posJump,[posJump]]);
+         }
+      }
    }
    else if(unit.ctg=='slide'){
       if(unit.name=='bishop') arrStep=[v+1,v-1,-v-1,-v+1];
@@ -327,12 +331,16 @@ OBJ_chess.addTake=function(unit){
          var s=arrStep[i];
          posB=posA+s;
          squB=OBJ_chess.arrSqu[posB];
-         if(squB.unit && squB.unit.side!=unit.side) OBJ_chess.arrTake.push([posB,[posB]]);
-         while(squB.boolPlay && !squB.unit){
-            OBJ_chess.arrTake.push([posB,[posB]]);
+         if(squB.unit && squB.unit.side!=unit.side){
+           unit.arrMove.push([posB,[posB]]);
+         }
+         while(squB.blnPlay && !squB.unit){
+            unit.arrMove.push([posB,[posB]]);
             posB+=s;
             squB=OBJ_chess.arrSqu[posB];
-            if(squB.unit && squB.unit.side!=unit.side) OBJ_chess.arrTake.push([posB,[posB]]);
+            if(squB.unit && squB.unit.side!=unit.side){
+              unit.arrMove.push([posB,[posB]]);
+            }
          }
       }
    }
@@ -343,9 +351,9 @@ OBJ_chess.addTake=function(unit){
          var s=arrStep[i];
          posB=posA+s;
          squB=OBJ_chess.arrSqu[posB];
-         if(squB.boolPlay){
+         if(squB.blnPlay){
             if(!squB.unit || (squB.unit.side!=unit.side)){
-               OBJ_chess.arrTake.push([posB,[posB]]);
+               unit.arrMove.push([posB,[posB]]);
             }
          }
       }
@@ -371,7 +379,7 @@ OBJ_chess.addCastle=function(unitA){
                 }
                 if(bool){
                     var arr=unitA.arrCastle[i][1]; // if checked
-                    var arrTmp=OBJ_chess.arrTake;
+                    var arrTmp=unitA.arrMove;
                     for(var j=0;j<arr.length;j++){
                         var posC=arr[j];
                         var squC=OBJ_chess.arrSqu[posC];
@@ -384,19 +392,19 @@ OBJ_chess.addCastle=function(unitA){
                         squC.unit=false;
                         if(!bool) break;
                     }
-                    OBJ_chess.arrTake=arrTmp;
+                    unitA.arrMove=arrTmp;
                 }
             }
             else bool=false;
             if(bool){
                 var posD=unitA.arrCastle[i][2][1];
-                OBJ_chess.arrTake.push([posD,[posD]]);    
+                unitA.arrMove.push([posD,[posD]]);
             }
         }
     }
 }
 OBJ_chess.kingChecked=function(){
-    var boolSide=OBJ_chess.turn;
+    var boolSide=OBJ_chess.blnTurn;
     var arrKingPos=new Array();
     OBJ_chess.arrCheck=new Array();
     for(var i=0;i<OBJ_chess.arrUnit.length;i++){
@@ -407,10 +415,10 @@ OBJ_chess.kingChecked=function(){
         var squ=OBJ_chess.arrSqu[i];
         var unit=squ.unit;
         if(unit && unit.side!==boolSide){
-            OBJ_chess.addTake(unit);
+            OBJ_chess.addMove(unit);
             for(var j=0;j<arrKingPos.length;j++){
                 var posKing=arrKingPos[j];
-                if(OBJ_chess.inArrCapture(posKing)) OBJ_chess.arrCheck.push(posKing);
+                if(OBJ_chess.inArrTake(unit,posKing)) OBJ_chess.arrCheck.push(posKing);
             }
         }
     }
@@ -424,22 +432,23 @@ OBJ_chess.pawnPromoted=function(posA,posB){
       if((unit.side && squ.numHor==OBJ_chess.qtyHor-1) || (!unit.side && squ.numHor==2)){
           OBJ_chess.posA=posA;
           OBJ_chess.posB=posB;
-          OBJ_chess.lock=true;
+          OBJ_chess.blnLock=true;
           OBJ_chess.arrTake=new Array([posB,[posB]]);
+          //unit.arrMove=new Array([posB,[posB]]);
           return true;
       }
    }
    return false;
 }
 OBJ_chess.promotePawn=function(name,side){
-    if(OBJ_chess.lock){
+    if(OBJ_chess.blnLock){
         var posA=OBJ_chess.posA;
         var posB=OBJ_chess.posB;
         var squ=OBJ_chess.arrSqu[posA];
         var unit=squ.unit;
         unit=OBJ_chess.getUnit(name,side,posA);
         OBJ_chess.posB=false;
-        OBJ_chess.lock=false;
+        OBJ_chess.blnLock=false;
         var move=OBJ_chess.setPosB(posB);
         return move;
     }
@@ -469,7 +478,7 @@ OBJ_chess.enPassant=function(unit,posA,posB){
             var pos=posB+OBJ_chess.dstVer*i*d;
             for(var j=-1;j<=1;j+=2){
                var squ=OBJ_chess.arrSqu[pos+j];
-               if(squ.boolPlay){
+               if(squ.blnPlay){
                   var unitOpp=squ.unit;
                   if(unitOpp && unitOpp.name=='pawn' && unitOpp.side!==unit.side){
                      // save take attr [pos to ocupy, [pos with unit to take]]
@@ -481,58 +490,19 @@ OBJ_chess.enPassant=function(unit,posA,posB){
       }
    }
 }
-OBJ_chess.inArrTake=function(pos){
-   for(var i=0;i<OBJ_chess.arrTake.length;i++){
-       if(OBJ_chess.arrTake[i][0]==pos) return true;
+OBJ_chess.inArrMove=function(unit,pos){
+   for(var i=0;i<unit.arrMove.length;i++){
+       if(unit.arrMove[i][0]==pos) return true;
    }
    return false;
 }
-OBJ_chess.inArrCapture=function(pos){
-    for(var i=0;i<OBJ_chess.arrTake.length;i++){
-        for(var j=0;j<OBJ_chess.arrTake[i][1].length;j++){
-            if(OBJ_chess.arrTake[i][1][j]==pos) return true;
-        }
+OBJ_chess.inArrTake=function(unit,pos){
+    for(var i=0;i<unit.arrMove.length;i++){
+      for(var j=0;j<unit.arrMove[i][1].length;j++){
+        if(unit.arrMove[i][1][j]==pos) return true;
+      }
     }
    return false;
-}
-OBJ_chess.testTake=function(posA,squA,unitA){
-    // ban moves if after checked
-    var arrNew=new Array();
-    var arrOld=OBJ_chess.arrTake;
-    for(var i=0;i<arrOld.length;i++){
-        var posB=arrOld[i][0];
-        var squB=OBJ_chess.arrSqu[posB];
-        // move forward
-        unitA.pos=posB;
-        squA.unit=false;
-        var arrTest=new Array();
-        for(var j=0;j<arrOld[i][1].length;j++){
-            var posC=arrOld[i][1][j];
-            var squC=OBJ_chess.arrSqu[posC];
-            var unitC=squC.unit;
-            if(unitC){
-                unitC.pos=false;
-                squC.unit=false;
-                arrTest.push([posC,unitC]);
-            }
-        }
-        squB.unit=unitA;
-        // see if checked
-        if(!OBJ_chess.kingChecked()) arrNew.push(arrOld[i]);
-        // move back
-        unitA.pos=posA;
-        squA.unit=unitA;
-        squB.unit=false;
-        for(var j=0;j<arrTest.length;j++){
-            var posC=arrTest[j][0];
-            var unitC=arrTest[j][1];
-            var squC=OBJ_chess.arrSqu[posC];
-            unitC.pos=posC;
-            squC.unit=unitC;
-        }
-    }
-    OBJ_chess.arrTake=arrNew;
-    //
 }
 OBJ_chess.clearBoard=function(){
     for(var i=0;i<OBJ_chess.arrSqu.length;i++){
@@ -551,7 +521,7 @@ OBJ_chess.getFen=function(){
     var arrCastle=new Array();
     for(var i in OBJ_chess.arrSqu){
         var squ=OBJ_chess.arrSqu[i];
-        if(squ.boolPlay===true){
+        if(squ.blnPlay===true){
             var unit=squ.unit;
             if(unit===false) cntEmpty++;
             else{
@@ -584,11 +554,11 @@ OBJ_chess.getFen=function(){
                 }
                 if(cntTotal/OBJ_chess.qtyVer<OBJ_chess.qtyHor) strFen+='/';
             }
-            
+
         }
     }
     // TURN
-    if(OBJ_chess.turn===true) strFen+=' w';
+    if(OBJ_chess.blnTurn===true) strFen+=' w';
     else strFen+=' b';
     // CASTLING
     var strCastle='';
@@ -603,4 +573,60 @@ OBJ_chess.getFen=function(){
     else strFen+=' '+OBJ_chess.arrSqu[OBJ_chess.posEnPassant].strNota;
     //
     return strFen+' '+OBJ_chess.numHalfClock+' '+OBJ_chess.numFullMove;
+}
+//
+OBJ_chess.setArrMove=function(blnTurn){
+  var blnCheckMate=true;
+  var blnStaleMate=true;
+  for(var i in OBJ_chess.arrSqu){
+    var objSqu=OBJ_chess.arrSqu[i];
+    var objUnit=objSqu.unit;
+    if(objUnit!==false && objUnit.side==blnTurn){
+      OBJ_chess.addMove(objUnit);
+      OBJ_chess.addCastle(objUnit);
+      OBJ_chess.banMove(objUnit);
+      if(objUnit.arrMove.length>0 && blnCheckMate===true) blnCheckMate=false;
+    }
+  }
+  return new Array(blnCheckMate,blnStaleMate);
+}
+OBJ_chess.banMove=function(objUnit){
+  // ban moves if after checked
+  var posA=objUnit.pos;
+  var squA=OBJ_chess.arrSqu[objUnit.pos];
+  var arrNew=new Array();
+  var arrOld=objUnit.arrMove;
+  for(var i=0;i<arrOld.length;i++){
+    var posB=arrOld[i][0];
+    var squB=OBJ_chess.arrSqu[posB];
+    // move forward
+    objUnit.pos=posB;
+    squA.unit=false;
+    var arrTest=new Array();
+    for(var j=0;j<arrOld[i][1].length;j++){
+      var posC=arrOld[i][1][j];
+      var squC=OBJ_chess.arrSqu[posC];
+      var unitC=squC.unit;
+      if(unitC){
+        unitC.pos=false;
+        squC.unit=false;
+        arrTest.push([posC,unitC]);
+      }
+    }
+    squB.unit=objUnit;
+    // see if checked
+    if(!OBJ_chess.kingChecked()) arrNew.push(arrOld[i]);
+    // move back
+    objUnit.pos=posA;
+    squA.unit=objUnit;
+    squB.unit=false;
+    for(var j=0;j<arrTest.length;j++){
+      var posC=arrTest[j][0];
+      var unitC=arrTest[j][1];
+      var squC=OBJ_chess.arrSqu[posC];
+      unitC.pos=posC;
+      squC.unit=unitC;
+    }
+  }
+  objUnit.arrMove=arrNew;
 }
