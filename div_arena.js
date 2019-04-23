@@ -380,7 +380,7 @@ function getArena(gRoot){
   for(var i=0;i<arr.length;i++){
       var btn=getButton(null,box,s+(w+s)*i,s,w,h,true,ctgStyle,picNone(),0,function(){
           var move=OBJ_chess.promotePawn(this.name,true);
-          OBJ_board.putMove(move,this.name,!OBJ_board.blnSide);
+          OBJ_board.putMove(move,this.name);
           hideBox('boxPromoteWhite');
           changeTurn();
       },null);
@@ -398,7 +398,7 @@ function getArena(gRoot){
   for(var i=0;i<arr.length;i++){
       var btn=getButton(null,box,s+(w+s)*i,s,w,h,true,ctgStyle,picNone(),0,function(){
           var move=OBJ_chess.promotePawn(this.name,false);
-          OBJ_board.putMove(move,this.name,!OBJ_board.blnSide);
+          OBJ_board.putMove(move,this.name);
           hideBox('boxPromoteBlack');
           changeTurn();
       },null);

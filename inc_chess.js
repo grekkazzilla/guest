@@ -433,8 +433,6 @@ OBJ_chess.pawnPromoted=function(posA,posB){
           OBJ_chess.posA=posA;
           OBJ_chess.posB=posB;
           OBJ_chess.blnLock=true;
-          OBJ_chess.arrTake=new Array([posB,[posB]]);
-          //unit.arrMove=new Array([posB,[posB]]);
           return true;
       }
    }
@@ -446,7 +444,9 @@ OBJ_chess.promotePawn=function(name,side){
         var posB=OBJ_chess.posB;
         var squ=OBJ_chess.arrSqu[posA];
         var unit=squ.unit;
+        var arrMove=unit.arrMove;
         unit=OBJ_chess.getUnit(name,side,posA);
+        unit.arrMove=arrMove;
         OBJ_chess.posB=false;
         OBJ_chess.blnLock=false;
         var move=OBJ_chess.setPosB(posB);

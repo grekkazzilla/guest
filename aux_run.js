@@ -58,7 +58,7 @@ function startGame(blnFindSide){
   }
 }
 function changeTurn(){
-    /*if(OBJ_arena.strVS=='robo'){
+    if(OBJ_arena.strVS=='robo'){
         if(OBJ_arena.blnSide!==OBJ_chess.blnTurn){
             setTimeout(function(){
                 var find=OBJ_arena.objDrive.findmove(OBJ_host.intRank);
@@ -73,8 +73,8 @@ function changeTurn(){
                 play(gSquB,true);
             },50);
         }
-    }*/
-    OBJ_arena.blnSide=OBJ_chess.blnTurn; // for testing purposes
+    }
+    //OBJ_arena.blnSide=OBJ_chess.blnTurn; // for testing purposes
 }
 function play(gSquare,blnRobo){
     if(blnRobo===true || (OBJ.strMode=='play' && OBJ_arena.blnSide===OBJ_chess.blnTurn && OBJ.blnLock===false)){
@@ -86,37 +86,44 @@ function play(gSquare,blnRobo){
               var arrMove=OBJ_chess.setPosB(pos);
               if(arrMove){
                   OBJ_board.hideCheck();
-                  if(!arrMove[0]) OBJ_board.putMove(arrMove,false,!OBJ_arena.blnSide);
-                  else{
+                  if(arrMove[0]===false) OBJ_board.putMove(arrMove,false,!OBJ_arena.blnSide);
+                  else if(arrMove[0]===true){
+                    if(OBJ_arena.blnSide===OBJ_chess.blnTurn){
                       if(OBJ_chess.blnTurn) showBox('boxPromoteWhite');
                       else showBox('boxPromoteBlack');
                     }
-                    // finish move
-                    OBJ_arena.arrHist[numLast][0]=OBJ_chess.getFen();
-                    OBJ_arena.arrHist[numLast][2]=pos;
-                    OBJ_arena.arrHist[numLast][4]=arrMove[4];
-                    setHistoryButtons();
-                    // vs human
-                    if(OBJ_arena.strVS=='human'){
-                      link_pcn_msg(OBJ_arena.objMatch.pid,null,'move~'+arrMove[1]+'~'+arrMove[2]);
-                    }
-                    // p4wn.js engine
-                    if(OBJ_arena.strVS=='robo'){
-                      for(var key in OBJ_chess.arrSqu){
-                          if(OBJ_chess.arrSqu[key].blnPlay===true){
-                              var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
-                              if(gSqu.pos==OBJ_arena.arrHist[numLast][1]) var posA=gSqu.num;
-                              else if(gSqu.pos==OBJ_arena.arrHist[numLast][2]) var posB=gSqu.num;
-                          }
-                      }
-                      OBJ_arena.objDrive.move(posA,posB,12);
+                    else{
+                      var move=OBJ_chess.promotePawn('queen',OBJ_chess.blnTurn);
+                      OBJ_board.putMove(move,'queen');
                       changeTurn();
                     }
-                    //
-                    OBJ_arena.arrHist.push(new Array('',false,false,false,false));
-                    //
                   }
-                  OBJ_board.hidePick();
+                  // finish move
+                  OBJ_arena.arrHist[numLast][0]=OBJ_chess.getFen();
+                  OBJ_arena.arrHist[numLast][2]=pos;
+                  OBJ_arena.arrHist[numLast][4]=arrMove[4];
+                  setHistoryButtons();
+                  // vs human
+                  if(OBJ_arena.strVS=='human'){
+                    link_pcn_msg(OBJ_arena.objMatch.pid,null,'move~'+arrMove[1]+'~'+arrMove[2]);
+                  }
+                  // p4wn.js engine
+                  if(OBJ_arena.strVS=='robo'){
+                    for(var key in OBJ_chess.arrSqu){
+                      if(OBJ_chess.arrSqu[key].blnPlay===true){
+                        var gSqu=o('g'+OBJ_chess.arrSqu[key].pos);
+                        if(gSqu.pos==OBJ_arena.arrHist[numLast][1]) var posA=gSqu.num;
+                        else if(gSqu.pos==OBJ_arena.arrHist[numLast][2]) var posB=gSqu.num;
+                      }
+                    }
+                    OBJ_arena.objDrive.move(posA,posB,12);
+                    changeTurn();
+                  }
+                  //
+                  OBJ_arena.arrHist.push(new Array('',false,false,false,false));
+                  //
+                }
+                OBJ_board.hidePick();
               }
               else{
                 OBJ_board.putTake();
