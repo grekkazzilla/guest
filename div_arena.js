@@ -16,10 +16,12 @@ function getArena(gRoot){
       pos-=12;
       num+=10;
   }
+  //
+  getText(null,div,200,25,18,'Arial','url(#grdButton)','none',0,'increment 15 min + 10 sec','middle').style.fontStyle='italic';
   // G TOP
-  var w=60, h=60, s=6.4, g=getG('gTop',div,4,6,1,true,w*6+s*4,90);
-  getButton('btnVar',g,0,30,w,h,true,'AAAX',picListA(),0.11,function(){showBox('boxVar');},null);
-  var btn=getButton('btnSide',g,(w+s),30,w,h,true,'AAAX',picNone(),0.11,function(){showBox('boxSide');},null);
+  var x=30, w=60, h=60, s=6.4, g=getG('gTop',div,4,6,1,true,w*6+s*4,90);
+  getButton('btnVar',g,x,30,w,h,true,'AAAX',picListA(),0.11,function(){showBox('boxVar');},null);
+  var btn=getButton('btnSide',g,x+(w+s),30,w,h,true,'AAAX',picNone(),0.11,function(){showBox('boxSide');},null);
   draw_white_pawn(null,btn,(w-50)/2-9,(h-50)/2,0.985,true);
   draw_black_pawn(null,btn,(w-50)/2+9,(h-50)/2,1,true);
   btn.getElementsByTagName('path')[1].setAttribute('fill','transparent');
@@ -28,80 +30,26 @@ function getArena(gRoot){
   btn.getElementsByTagName('path')[2].setAttribute('fill','url(#grdIcon)');
   btn.getElementsByTagName('path')[2].setAttribute('stroke','url(#grdIcon)');
   btn.arrOn.push(['path',1,'stroke','url(#grdIcon)','#000'],['path',2,'fill','url(#grdIcon)','#000'],['path',2,'stroke','url(#grdIcon)','#000']);
-  var btn=getButton('btnMatch',g,(w+s)*2,0,(w*2+s),h+30,true,'CXAX',picFence(),0.13,null,null);
-  var gPath=btn.getElementsByTagName('g')[0];
-  var pth=gPath.getElementsByTagName('path')[0]; pth.setAttribute('transform','translate('+(pth.x)+','+(pth.y+20)+') scale('+pth.z+')');
-  getPath(null,gPath,0,0,0,'url(#grdButton)','none',0,picNone()[2]);
-  btn.arrOn.push(['path',1,'fill','url(#grdButton)','#eee8aa']);
-  btn.intHold=0;
-  btn.blnHeld=false;
-  if(isTouch()){
-      btn.ontouchstart=function(){
-          if(OBJ.blnLock===false){
-              OBJ.blnLock=true;
-              if(this.blnHeld===false){
-                  this.blnHeld=true;
-                  onBtn(this,1);
-                  this.tmr=setInterval(function(){
-                      var btn=o('btnMatch');
-                      btn.intHold++;
-                      if(btn.intHold>=7 || btn.blnHeld===false){
-                          if(btn.intHold>=7) showBox('boxVS');
-                          else startGame(true);
-                          onBtn(btn,0);
-                          btn.intHold=0;
-                          btn.blnHeld=false;
-                          OBJ.blnLock=false;
-                          clearInterval(btn.tmr);
-                      }
-                  },100);
-              }
-          }
-      }
-      btn.ontouchend=function(){this.blnHeld=false;}
-  }
-  else{
-      btn.onmousedown=function(){
-          if(OBJ.blnLock===false){
-              OBJ.blnLock=true;
-              if(this.blnHeld===false){
-                  this.blnHeld=true;
-                  onBtn(this,1);
-                  this.tmr=setInterval(function(){
-                      var btn=o('btnMatch');
-                      btn.intHold++;
-                      if(btn.intHold>=7 || btn.blnHeld===false){
-                          if(btn.intHold>=7) showBox('boxVS');
-                          else startGame(true);
-                          onBtn(btn,0);
-                          btn.intHold=0;
-                          btn.blnHeld=false;
-                          OBJ.blnLock=false;
-                          clearInterval(btn.tmr);
-                      }
-                  },100);
-              }
-          }
-      }
-      btn.onmouseup=function(){this.blnHeld=false;}
-      btn.onmouseout=function(){this.blnHeld=false;}
-  }
-  var btn=getButton('btnTime',g,(w+s)*4,30,(w*2+s),h,true,'AAAX',picClock(),0.13,function(){showBox('boxTime');},null);
+  var btn=getButton('btnMatch',g,x+(w+s)*2,30,w,h,true,'CXAX',picFence(),0.13,function(){
+
+  },null);
+  var btn=getButton('btnTime_',g,x+(w+s)*3,30,w,h,true,'AAAX',picClock(),0.135,function(){showBox('boxTime');},null);
+  var btn=getButton('btnTime__',g,x+(w+s)*4,30,w,h,true,'AAAX',picGear(),0.125,function(){showBox('boxTime');},null);
+  var btn=getButton('btnTime',g,x+(w+s)*3,30,(w*2+s),h,false,'AAAX',picClock(),0.13,function(){showBox('boxTime');},null);
   var pth=btn.getElementsByTagName('path')[0];
   pth.setAttribute('transform','translate('+(pth.x-35)+','+pth.y+') scale('+pth.z+')');
   getText(null,btn,83,25,18,'Arial','url(#grdIcon)','none',0,'15 min','middle');
   getText(null,btn,83,47,18,'Arial','url(#grdIcon)','none',0,'10 sec','middle');
   btn.arrOn.push(['text',0,'fill','url(#grdIcon)','#eee8aa'],['text',1,'fill','url(#grdIcon)','#eee8aa']);
   // G BOTTOM
-  var w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,w*6+s*4,90);
-  getButton('btnMenu',g,0,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
-  getButton('btnBook',g,(w+s),0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
-  var btn=getButton('btnHost',g,(w+s)*2,0,(w*2+s),(h+30),true,'CXDX',picNone(),0,function(){
+  var x=30, w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,w*6+s*4,90);
+  getButton('btnRank',g,x,0,w,h,true,'AAAX',picBoot(),0.135,function(){},null);
+  getButton('btnMenu',g,x+(w+s)*1,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
+  var btn=getButton('btnHost',g,x+(w+s)*2,0,w,h,true,'CXAX',picUser(),0.13,function(){
     showBox('boxHost');
   },null);
-  btn.arrOn[2]=['path',0,'fill','url(#grdButton)','url(#grdPale)'];
-  getButton('btnSetUp',g,(w+s)*4,0,w,h,true,'AAAX',picGear(),0.13,function(){},null);
-  getButton('btnWatch',g,(w+s)*5,0,w,h,true,'AAAX',picEye(),0.13,function(){
+  getButton('btnBook',g,x+(w+s)*3,0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
+  getButton('btnWatch',g,x+(w+s)*4,0,w,h,true,'AAAX',picEye(),0.13,function(){
     putWatch(OBJ_watch.numPage);
     showDiv('divWatch');
     if(OBJ.blnWatch===false){
@@ -336,10 +284,14 @@ function getArena(gRoot){
   },null);
   // BOX HOST
   var box=getBox('boxHost',div,0,0,false,'#fff');
+  var wPic=80, hPic=80, gPic=getG('gPic',box,10,20,1,true,wPic/2,hPic/2);
+  getRect(null,gPic,0,0,wPic,hPic,5,'transparent','#eee8aa',1);
+  getPath(null,gPic,0,0,0,'url(#grdIcon)','none',0,'');
+  getLine('linHost',box,100,20,100,0,'#eee8aa',1);
   getText('labName',box,0,35,18,'Arial','url(#grdButton)','none',0,'My Name','start');
-  getRect('rctName',box,10,60,0,40,5,'transparent','#eee8aa',1);
+  getRect('rctName',box,110,60,0,40,5,'transparent','#eee8aa',1);
   getText('txtName',box,0,85,18,'Arial','url(#grdIcon)','none',0,'','middle');
-  var w=125, gImage=getG('gImgHost',box,10,110,1,true,w/2,w/2);
+  var w=125, gImage=getG('gImgHost',box,110,110,1,true,w/2,w/2);
   getRect(null,gImage,0,0,w,w,0,'transparent','url(#grdButton)',1);
   var img=document.getElementsByTagName('image')[0].cloneNode(true);
   gImage.appendChild(img);
@@ -350,7 +302,7 @@ function getArena(gRoot){
   getButton('btnName',box,0,110,60,60,true,'AAAX',picPenA(),0.12,function(){setForm('name');showDiv('divForm');},null);
   getButton('btnPic',box,0,110,60,60,true,'AAAX',picImage(),0.13,function(){showDiv('divPic');setPix();},null);
   getButton('btnImage',box,0,0,60,60,true,'AAAC',picCam(),0.13,function(){o('inpImage').click();},null);
-  getButton('btnBin',box,210,175,60,60,false,'AACX',picBin(),0.13,function(){ showBox(box);},null);
+  getButton('btnBin',box,310,175,60,60,false,'AACX',picBin(),0.13,function(){ showBox(box);},null);
   getText('labRank',box,0,0,18,'Arial','url(#grdButton)','none',0,'Self Ranking','start');
   var w=40, h=40, s=10, z=0.11, p=picStar();
   var gRank=getG('gRank',box,0,0,1,true,(40*5+s*4)/2,20);

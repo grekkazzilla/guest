@@ -12,6 +12,7 @@ function getPic(gRoot){
       g.onclick=function(){
           if(OBJ.blnLock===false){
               showDiv('divArena');
+              showBox('boxHost');
               OBJ_host.loadPic(this.strFile,function(){OBJ.blnLock=false;});
           }
       }

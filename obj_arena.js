@@ -79,23 +79,6 @@ OBJ_arena.putSide=function(){
       showG(gBlack);
   }
 }
-// < boxVS
-OBJ_arena.setVS=function(strVS){
-  OBJ_arena.strVS=strVS;
-  setLocal('vs',strVS);
-}
-// < index.php
-// < boxVS
-OBJ_arena.putVS=function(){
-  var strVS=OBJ_arena.strVS;
-  var btn=o('btnMatch');
-  var pth=btn.getElementsByTagName('path')[1];
-  if(strVS==='human') var z=0.12, y=5, p=picUser();
-  else if(strVS=='robo') var z=0.14, y=10, p=picRobo();
-  else if(strVS=='friend') var z=0.10, y=8, p=picGlad();
-  pth.setAttribute('transform','translate('+(btn.rx-p[0]*z/2)+','+y+') scale('+z+')');
-  pth.setAttribute('d',p[2]);
-}
 // < boxTime
 OBJ_arena.setTime=function(intBase,intAdd,strClock){
   OBJ_arena.intBase=intBase;

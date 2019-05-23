@@ -101,7 +101,6 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     OBJ_arena.get();
     OBJ_arena.putVar();
     OBJ_arena.putSide();
-    OBJ_arena.putVS();
     OBJ_arena.putTime();
     //
     OBJ_host.get();
