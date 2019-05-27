@@ -17,7 +17,7 @@ function getArena(gRoot){
       num+=10;
   }
   //
-  getText(null,div,200,25,18,'Arial','url(#grdButton)','none',0,'increment 15 min + 10 sec','middle').style.fontStyle='italic';
+  getText('txtTimeTop',div,200,25,18,'Arial','url(#grdButton)','none',0,'','middle').style.fontStyle='italic';
   // G TOP
   var x=30, w=60, h=60, s=6.4, g=getG('gTop',div,4,6,1,true,w*6+s*4,90);
   getButton('btnVar',g,x,30,w,h,true,'AAAX',picListA(),0.11,function(){showBox('boxVar');},null);
@@ -33,14 +33,8 @@ function getArena(gRoot){
   var btn=getButton('btnMatch',g,x+(w+s)*2,30,w,h,true,'CXAX',picFence(),0.13,function(){
 
   },null);
-  var btn=getButton('btnTime_',g,x+(w+s)*3,30,w,h,true,'AAAX',picClock(),0.135,function(){showBox('boxTime');},null);
-  var btn=getButton('btnTime__',g,x+(w+s)*4,30,w,h,true,'AAAX',picGear(),0.125,function(){showBox('boxTime');},null);
-  var btn=getButton('btnTime',g,x+(w+s)*3,30,(w*2+s),h,false,'AAAX',picClock(),0.13,function(){showBox('boxTime');},null);
-  var pth=btn.getElementsByTagName('path')[0];
-  pth.setAttribute('transform','translate('+(pth.x-35)+','+pth.y+') scale('+pth.z+')');
-  getText(null,btn,83,25,18,'Arial','url(#grdIcon)','none',0,'15 min','middle');
-  getText(null,btn,83,47,18,'Arial','url(#grdIcon)','none',0,'10 sec','middle');
-  btn.arrOn.push(['text',0,'fill','url(#grdIcon)','#eee8aa'],['text',1,'fill','url(#grdIcon)','#eee8aa']);
+  var btn=getButton('btnTime',g,x+(w+s)*3,30,w,h,true,'AAAX',picClock(),0.135,function(){showBox('boxTime');},null);
+  var btn=getButton('btnSetUp',g,x+(w+s)*4,30,w,h,true,'AAAX',picGear(),0.125,function(){},null);
   // G BOTTOM
   var x=30, w=60, h=60, s=6.4, g=getG('gBottom',div,4,504,1,true,w*6+s*4,90);
   getButton('btnRank',g,x,0,w,h,true,'AAAX',picBoot(),0.135,function(){},null);
@@ -223,120 +217,57 @@ function getArena(gRoot){
   var z=0.12, p=picEnvelope(); getPath(null,btn,70,btn.ry-p[1]*z/2,z,'url(#grdIcon)','none',0,p[2]);
   btn.arrOn.push(['path',1,'fill','url(#grdIcon)','#eee8aa']);
   // BOX TIME
-  /*var w=126.4, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=4, arr=new Array(
-      ['simple_delay',1,5],
-      ['simple_delay',3,3],
-      ['simple_delay',5,0],
-      ['compensation',5,30],
-      ['simple_delay',10,0],
-      ['simple_delay',15,0],
-      ['accumulation',15,15],
-      ['simple_delay',30,0]
-  );
-  var box=getMenu('boxTime',div,w,h,m,s,qtyHor,qtyVer,false);
-  getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Time Control','start');
-  for(var i=0;i<arr.length;i++){
-      if(arr[i][0]=='simple_delay') var p=picClock(), z=0.13, dx=30;
-      else if(arr[i][0]=='accumulation') var p=picHeap(), z=0.12, dx=33;
-      else if(arr[i][0]=='compensation') var p=picUp(), z=0.12, dx=30;
-      var btn=getButton(null,box,x,y,w,h,true,'AAAC',p,z,function(){
-        OBJ_arena.setTime(this.intBase,this.intAdd,this.strClock);
-        OBJ_arena.putTime();
-        hideBox('boxTime');
-      },'a~b');
-      var pth=btn.getElementsByTagName('path')[0]; pth.setAttribute('transform','translate('+(pth.x-dx)+','+pth.y+') scale('+pth.z+')');
-      if(arr[i][2]==0) var yA=37, strB='';
-      else var yA=25, strB=arr[i][2]+' sec';
-      var txtA=btn.getElementsByTagName('text')[0]; txtA.setAttribute('x','85'); txtA.setAttribute('y',yA); txtA.firstChild.nodeValue=arr[i][1]+' min';
-      var txtB=btn.getElementsByTagName('text')[1]; txtB.setAttribute('x','85'); txtB.setAttribute('y','47'); txtB.firstChild.nodeValue=strB;
-      x+=w+s;if((i+1)%qtyHor==0){x-=(w+s)*qtyHor;y+=h+s;}
-      btn.arrOn.push(['text',0,'fill','url(#grdIcon)','#eee8aa'],['text',1,'fill','url(#grdIcon)','#eee8aa']);
-      btn.strClock=arr[i][0];
-      btn.intBase=arr[i][1]*60;
-      btn.intAdd=arr[i][2]*1;
-  }*/
-  var w=70.25, h=67.5, y=60, m=10, s=5, x=m, y=120, qtyHor=5, qtyVer=6;
+  var w=372, h=260, y=60, m=10, s=5, x=m, y=120, qtyHor=1, qtyVer=1;
   var box=getMenu('boxTime',div,w,h,m,s,qtyHor,qtyVer,false);
   getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Time Control','start');
   getButton(null,box,box.rx*2-95,10,40,40,true,'BXBX',picArrowC(),0.09,function(){},null);
   //
-  getButton(null,box,10,65,115,60,true,'AAAC',picNone(),0,function(){},'Moves : 40');
-  getButton(null,box,137.5,65,115,60,true,'AAAX',picNone(),0,function(){},null);
-  getButton(null,box,265,65,115,60,true,'AAAX',picNone(),0,function(){},null);
-  //
-  getText(null,box,15,160,18,'Arial','url(#grdIcon)','none',0,'Moves : 40','start');
-  var gSlide=getG('gSlideBaseTime',box,1,170,1,true,194,25);
+  var gSlide=getG('gSlideBaseTime',box,1,90,1,true,194,25);
+  getText(null,gSlide,15,-10,18,'Arial','url(#grdIcon)','none',0,'Base time : 30 min','start');
   var pth=getPath(null,gSlide,0,0,1,'transparent','#808080',3,'M 25.21875 5.71875 C 15.17045 6.235763 7.125 14.689729 7.125 25 C 7.125 35.64286 15.6875 44.28125 26.1875 44.28125 L 360.78125 44.28125 C 371.56696 44.28125 380.28125 35.64286 380.28125 25 C 380.28125 14.35714 371.56696 5.71875 360.78125 5.71875 L 26.1875 5.71875 C 25.85937 5.71875 25.54289 5.70207 25.21875 5.71875 z');
   pth.setAttribute('filter','url(#blr2)');
   getPath(null,gSlide,0,0,1,'#fff','none',0,'M 8.90625 0 C 3.97601 0 0 4.84975 0 10.875 L 0 39.125 C 0 45.15024 3.97601 50 8.90625 50 L 378.53125 50 C 383.46149 50 387.4375 45.15024 387.4375 39.125 L 387.4375 10.875 C 387.4375 4.84975 383.46149 0 378.53125 0 L 8.90625 0 z M 25.21875 5.71875 C 25.54289 5.70207 25.85937 5.71875 26.1875 5.71875 L 360.78125 5.71875 C 371.56696 5.71875 380.28125 14.35714 380.28125 25 C 380.28125 35.64286 371.56696 44.28125 360.78125 44.28125 L 26.1875 44.28125 C 15.6875 44.28125 7.125 35.64286 7.125 25 C 7.125 14.689729 15.17045 6.235763 25.21875 5.71875 z');
-  var btnSlide=getG('btnSlide',gSlide,box.rx*2-20-40,0,1,true,18,25);
+  var btnSlide=getG('btnSlideBaseTime',gSlide,box.rx*2-20-40,0,1,true,18,25);
   getRect(null,btnSlide,0,0,36,50,10,'url(#grdButton)','#bdb76d',0.5);
   getCircle(null,btnSlide,18,25,13,'url(#grdButtonRvs)','none',0);
-  //
-  getText(null,box,15,250,18,'Arial','url(#grdIcon)','none',0,'Base time : 30 min','start');
-  var gSlide=getG('gSlideBaseTime',box,1,260,1,true,194,25);
-  var pth=getPath(null,gSlide,0,0,1,'transparent','#808080',3,'M 25.21875 5.71875 C 15.17045 6.235763 7.125 14.689729 7.125 25 C 7.125 35.64286 15.6875 44.28125 26.1875 44.28125 L 360.78125 44.28125 C 371.56696 44.28125 380.28125 35.64286 380.28125 25 C 380.28125 14.35714 371.56696 5.71875 360.78125 5.71875 L 26.1875 5.71875 C 25.85937 5.71875 25.54289 5.70207 25.21875 5.71875 z');
-  pth.setAttribute('filter','url(#blr2)');
-  getPath(null,gSlide,0,0,1,'#fff','none',0,'M 8.90625 0 C 3.97601 0 0 4.84975 0 10.875 L 0 39.125 C 0 45.15024 3.97601 50 8.90625 50 L 378.53125 50 C 383.46149 50 387.4375 45.15024 387.4375 39.125 L 387.4375 10.875 C 387.4375 4.84975 383.46149 0 378.53125 0 L 8.90625 0 z M 25.21875 5.71875 C 25.54289 5.70207 25.85937 5.71875 26.1875 5.71875 L 360.78125 5.71875 C 371.56696 5.71875 380.28125 14.35714 380.28125 25 C 380.28125 35.64286 371.56696 44.28125 360.78125 44.28125 L 26.1875 44.28125 C 15.6875 44.28125 7.125 35.64286 7.125 25 C 7.125 14.689729 15.17045 6.235763 25.21875 5.71875 z');
-  var btnSlide=getG('btnSlide',gSlide,box.rx*2-20-40,0,1,true,18,25);
-  getRect(null,btnSlide,0,0,36,50,10,'url(#grdButton)','#bdb76d',0.5);
-  getCircle(null,btnSlide,18,25,13,'url(#grdButtonRvs)','none',0);
-  //
-  getText(null,box,15,340,18,'Arial','url(#grdIcon)','none',0,'Per move : 10 sec','start');
-  var gSlide=getG('gSlideDelayTime',box,1,350,1,true,194,25);
-  var pth=getPath(null,gSlide,0,0,1,'transparent','#808080',3,'M 25.21875 5.71875 C 15.17045 6.235763 7.125 14.689729 7.125 25 C 7.125 35.64286 15.6875 44.28125 26.1875 44.28125 L 360.78125 44.28125 C 371.56696 44.28125 380.28125 35.64286 380.28125 25 C 380.28125 14.35714 371.56696 5.71875 360.78125 5.71875 L 26.1875 5.71875 C 25.85937 5.71875 25.54289 5.70207 25.21875 5.71875 z');
-  pth.setAttribute('filter','url(#blr2)');
-  getPath(null,gSlide,0,0,1,'#fff','none',0,'M 8.90625 0 C 3.97601 0 0 4.84975 0 10.875 L 0 39.125 C 0 45.15024 3.97601 50 8.90625 50 L 378.53125 50 C 383.46149 50 387.4375 45.15024 387.4375 39.125 L 387.4375 10.875 C 387.4375 4.84975 383.46149 0 378.53125 0 L 8.90625 0 z M 25.21875 5.71875 C 25.54289 5.70207 25.85937 5.71875 26.1875 5.71875 L 360.78125 5.71875 C 371.56696 5.71875 380.28125 14.35714 380.28125 25 C 380.28125 35.64286 371.56696 44.28125 360.78125 44.28125 L 26.1875 44.28125 C 15.6875 44.28125 7.125 35.64286 7.125 25 C 7.125 14.689729 15.17045 6.235763 25.21875 5.71875 z');
-  var btnSlide=getG('btnSlide',gSlide,box.rx*2-20-40,0,1,true,18,25);
-  getRect(null,btnSlide,0,0,36,50,10,'url(#grdButton)','#bdb76d',0.5);
-  getCircle(null,btnSlide,18,25,13,'url(#grdButtonRvs)','none',0);
-  //
-  var btn=getButton(null,box,m,box.ry*2-h-m,box.rx*2-m*2,h,true,'AAAC',picNone(),0,function(){},'Clock : sudden death');
-  var txt=btn.getElementsByTagName('text')[0];
-  txt.setAttribute('y','37');
-  //
-//
-/*var rct=getRect(null,gSlide,0,0,20,50,0,'transparent','none',0);
-rct.onmousedown=function(){
-o('btnSlide').blnHold=true;
-putMenuTime(o('rctSlide0'));
-}
-rct.onmouseover=function(){
-if(o('btnSlide').blnHold===true) putMenuTime(o('rctSlide0'));
-}
-rct.onmouseup=function(){
-o('btnSlide').blnHold=false;
-}
-var rct=getRect(null,gSlide,gSlide.rx*2-20,0,20,50,0,'transparent','none',0);
-rct.onmousedown=function(){
-o('btnSlide').blnHold=true;
-putMenuTime(o('menuTime').rctMax);
-}
-rct.onmouseover=function(){
-if(o('btnSlide').blnHold===true) putMenuTime(o('menuTime').rctMax);
-}
-rct.onmouseup=function(){
-o('btnSlide').blnHold=false;
-}*/
-//
-  /*for(var i=0;i<246;i++){
-    var rct=getRect('rctSlide'+i,gSlide,-9999,0,0,50,0,'transparent','none',0);
+  btnSlide.blnHold=false;
+  var arr=new Array(0,0.25,0.5,0.75,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,45,60,90,120,150,180);
+  gSlide.len=arr.length;
+  var mRct=20, wRct=(gSlide.rx*2-mRct*2)/arr.length;
+  var rct=getRect(null,gSlide,0,0,mRct,50,0,'transparent','none',0);
+  rct.onmousedown=function(){putBaseTime(o('rctSlideBaseTime0'));}
+  rct.onmouseup=function(){o('btnSlideBaseTime').blnHold=false;}
+  for(var i=0;i<arr.length;i++){
+    var rct=getRect('rctSlideBaseTime'+i,gSlide,(mRct+i*wRct),0,wRct,50,0,'transparent','none',0);
     rct.onmousedown=function(){
-      o('btnSlide').blnHold=true;
-      putMenuTime(this);
+      o('btnSlideBaseTime').blnHold=true;
+      putBaseTime(this);
     }
     rct.onmouseover=function(){
-      if(o('btnSlide').blnHold===true) putMenuTime(this);
+      if(o('btnSlideBaseTime').blnHold===true){
+        putBaseTime(this);
+      }
     }
-    rct.onmouseup=function(){
-      o('btnSlide').blnHold=false;
-    }
-    rct.intVal=undefined;
+    rct.onmouseup=function(){o('btnSlideBaseTime').blnHold=false;}
+    rct.val=arr[i]*60;
+    rct.ctg='slide';
   }
-  box.elemSet=null;
-  box.rctOn=o('rctSlide0');
-  box.rctMax=rct;
-  setMenuTime(null);*/
+  var rct=getRect(null,gSlide,gSlide.rx*2-mRct,0,mRct,50,0,'transparent','none',0);
+  rct.onmousedown=function(){putBaseTime(o('rctSlideBaseTime'+(this.parentNode.len-1)));}
+  rct.onmouseup=function(){o('btnSlideBaseTime').blnHold=false;}
+  //
+  getText(null,box,15,180,18,'Arial','url(#grdIcon)','none',0,'Per move : 10 sec','start');
+  var gSlide=getG('gSlideDelayTime',box,1,190,1,true,194,25);
+  var pth=getPath(null,gSlide,0,0,1,'transparent','#808080',3,'M 25.21875 5.71875 C 15.17045 6.235763 7.125 14.689729 7.125 25 C 7.125 35.64286 15.6875 44.28125 26.1875 44.28125 L 360.78125 44.28125 C 371.56696 44.28125 380.28125 35.64286 380.28125 25 C 380.28125 14.35714 371.56696 5.71875 360.78125 5.71875 L 26.1875 5.71875 C 25.85937 5.71875 25.54289 5.70207 25.21875 5.71875 z');
+  pth.setAttribute('filter','url(#blr2)');
+  getPath(null,gSlide,0,0,1,'#fff','none',0,'M 8.90625 0 C 3.97601 0 0 4.84975 0 10.875 L 0 39.125 C 0 45.15024 3.97601 50 8.90625 50 L 378.53125 50 C 383.46149 50 387.4375 45.15024 387.4375 39.125 L 387.4375 10.875 C 387.4375 4.84975 383.46149 0 378.53125 0 L 8.90625 0 z M 25.21875 5.71875 C 25.54289 5.70207 25.85937 5.71875 26.1875 5.71875 L 360.78125 5.71875 C 371.56696 5.71875 380.28125 14.35714 380.28125 25 C 380.28125 35.64286 371.56696 44.28125 360.78125 44.28125 L 26.1875 44.28125 C 15.6875 44.28125 7.125 35.64286 7.125 25 C 7.125 14.689729 15.17045 6.235763 25.21875 5.71875 z');
+  var btnSlide=getG('btnSlide',gSlide,box.rx*2-20-40,0,1,true,18,25);
+  getRect(null,btnSlide,0,0,36,50,10,'url(#grdButton)','#bdb76d',0.5);
+  getCircle(null,btnSlide,18,25,13,'url(#grdButtonRvs)','none',0);
+  //
+  var btn=getButton(null,box,m,box.ry*2-60-m,box.rx*2-m*2,60,true,'AAAC',picNone(),0,function(){},'Clock : sudden death');
+  var txt=btn.getElementsByTagName('text')[0];
+  txt.setAttribute('y','37');
   // BOX MENU
   var w=60, h=60, m=10, s=10, x=m, y=60, qtyHor=3, qtyVer=2, arr=new Array(
       [picEnter(),0.13,function(){}],

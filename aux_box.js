@@ -90,4 +90,10 @@ function hideBox(box){
       OBJ.blnLock=false;
       o('btnClose').blnUnlock=false;
     }
+    else if(box.id=='boxTime'){
+      setLocal('base',OBJ_arena.intBase);
+      setLocal('add',OBJ_arena.intAdd);
+      setLocal('clock',OBJ_arena.strClock);
+      OBJ_arena.putTime();
+    }
 }

@@ -94,20 +94,39 @@ OBJ_arena.putTime=function(){
   var intBase=OBJ_arena.intBase;
   var intAdd=OBJ_arena.intAdd;
   var strClock=OBJ_arena.strClock;
-  var btn=o('btnTime');
-  var pth=btn.getElementsByTagName('path')[0];
-  var txtA=btn.getElementsByTagName('text')[0];
-  var txtB=btn.getElementsByTagName('text')[1];
-  var strA=intBase/60+' min', strB=intAdd+' sec', yA=25;
-  if(intAdd==0) strB='', yA=37;
-  txtA.firstChild.nodeValue=strA;
-  txtB.firstChild.nodeValue=strB;
-  txtA.setAttribute('y',yA);
-  if(strClock=='simple_delay') var p=picClock(), z=0.13, x=14;
-  else if(strClock=='accumulation') var p=picHeap(), z=0.12, x=12;
-  else if(strClock=='compensation') var p=picUp(), z=0.12, x=15;
-  pth.setAttribute('transform','translate('+x+','+(btn.ry-p[1]*z/2)+') scale('+z+')');
-  pth.setAttribute('d',p[2]);
+  var arrRect=o('gSlideBaseTime').getElementsByTagName('rect');
+  for(var i in arrRect){
+    var rct=arrRect[i];
+    if(rct.ctg=='slide' && rct.val==intBase) putBaseTime(rct);
+  }
+  if(intBase<60) var str=intBase+' sec';
+  else var str=intBase/60+' min';
+  o('txtTimeTop').firstChild.nodeValue=str;
+  //var btn=o('btnTime');
+  //var pth=btn.getElementsByTagName('path')[0];
+  //var txtA=btn.getElementsByTagName('text')[0];
+  //var txtB=btn.getElementsByTagName('text')[1];
+  //var strA=intBase/60+' min', strB=intAdd+' sec', yA=25;
+  //if(intAdd==0) strB='', yA=37;
+  //txtA.firstChild.nodeValue=strA;
+  //txtB.firstChild.nodeValue=strB;
+  //txtA.setAttribute('y',yA);
+  //if(strClock=='simple_delay') var p=picClock(), z=0.13, x=14;
+  //else if(strClock=='accumulation') var p=picHeap(), z=0.12, x=12;
+  //else if(strClock=='compensation') var p=picUp(), z=0.12, x=15;
+  //pth.setAttribute('transform','translate('+x+','+(btn.ry-p[1]*z/2)+') scale('+z+')');
+  //pth.setAttribute('d',p[2]);
+
+
+}
+function putBaseTime(rct){
+  var g=o('gSlideBaseTime');
+  var btn=o('btnSlideBaseTime');
+  jumpG(btn,(rct.getAttribute('x')*1+rct.getAttribute('width')*1/2-btn.rx),0);
+  if(rct.val<60) var str=rct.val+' sec';
+  else var str=rct.val/60+' min';
+  g.getElementsByTagName('text')[0].firstChild.nodeValue='Base time : '+str;
+  OBJ_arena.intBase=rct.val;
 }
 //
 function sendArena(objClub){
