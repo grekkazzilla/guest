@@ -255,25 +255,46 @@ function getArena(gRoot){
       btn.intBase=arr[i][1]*60;
       btn.intAdd=arr[i][2]*1;
   }*/
-  var w=66.5, h=60, y=70, m=10, s=10, x=m, y=60, qtyHor=5, qtyVer=4;
+  var w=70.25, h=67.5, y=60, m=10, s=5, x=m, y=120, qtyHor=5, qtyVer=6;
   var box=getMenu('boxTime',div,w,h,m,s,qtyHor,qtyVer,false);
-  getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Time Control : simple delay','start');
-  getButton(null,box,15,60,w,h,true,'AAAX',picSkull(),0.12,function(){
-
-  },null);
-  getButton(null,box,15+w+s,60,w,h,true,'AAAX',picHour(),0.12,function(){
-
-  },null);
-  getButton(null,box,15+(w+s)*2,60,w,h,true,'AAAX',picHeap(),0.12,function(){
-
-  },null);
-  var gSlide=getG('gSlide',box,2,263,1,true,194,25);
+  getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Time Control','start');
+  getButton(null,box,box.rx*2-95,10,40,40,true,'BXBX',picArrowC(),0.09,function(){},null);
+  //
+  getButton(null,box,10,65,115,60,true,'AAAC',picNone(),0,function(){},'Moves : 40');
+  getButton(null,box,137.5,65,115,60,true,'AAAX',picNone(),0,function(){},null);
+  getButton(null,box,265,65,115,60,true,'AAAX',picNone(),0,function(){},null);
+  //
+  getText(null,box,15,160,18,'Arial','url(#grdIcon)','none',0,'Moves : 40','start');
+  var gSlide=getG('gSlideBaseTime',box,1,170,1,true,194,25);
   var pth=getPath(null,gSlide,0,0,1,'transparent','#808080',3,'M 25.21875 5.71875 C 15.17045 6.235763 7.125 14.689729 7.125 25 C 7.125 35.64286 15.6875 44.28125 26.1875 44.28125 L 360.78125 44.28125 C 371.56696 44.28125 380.28125 35.64286 380.28125 25 C 380.28125 14.35714 371.56696 5.71875 360.78125 5.71875 L 26.1875 5.71875 C 25.85937 5.71875 25.54289 5.70207 25.21875 5.71875 z');
   pth.setAttribute('filter','url(#blr2)');
   getPath(null,gSlide,0,0,1,'#fff','none',0,'M 8.90625 0 C 3.97601 0 0 4.84975 0 10.875 L 0 39.125 C 0 45.15024 3.97601 50 8.90625 50 L 378.53125 50 C 383.46149 50 387.4375 45.15024 387.4375 39.125 L 387.4375 10.875 C 387.4375 4.84975 383.46149 0 378.53125 0 L 8.90625 0 z M 25.21875 5.71875 C 25.54289 5.70207 25.85937 5.71875 26.1875 5.71875 L 360.78125 5.71875 C 371.56696 5.71875 380.28125 14.35714 380.28125 25 C 380.28125 35.64286 371.56696 44.28125 360.78125 44.28125 L 26.1875 44.28125 C 15.6875 44.28125 7.125 35.64286 7.125 25 C 7.125 14.689729 15.17045 6.235763 25.21875 5.71875 z');
   var btnSlide=getG('btnSlide',gSlide,box.rx*2-20-40,0,1,true,18,25);
   getRect(null,btnSlide,0,0,36,50,10,'url(#grdButton)','#bdb76d',0.5);
   getCircle(null,btnSlide,18,25,13,'url(#grdButtonRvs)','none',0);
+  //
+  getText(null,box,15,250,18,'Arial','url(#grdIcon)','none',0,'Base time : 30 min','start');
+  var gSlide=getG('gSlideBaseTime',box,1,260,1,true,194,25);
+  var pth=getPath(null,gSlide,0,0,1,'transparent','#808080',3,'M 25.21875 5.71875 C 15.17045 6.235763 7.125 14.689729 7.125 25 C 7.125 35.64286 15.6875 44.28125 26.1875 44.28125 L 360.78125 44.28125 C 371.56696 44.28125 380.28125 35.64286 380.28125 25 C 380.28125 14.35714 371.56696 5.71875 360.78125 5.71875 L 26.1875 5.71875 C 25.85937 5.71875 25.54289 5.70207 25.21875 5.71875 z');
+  pth.setAttribute('filter','url(#blr2)');
+  getPath(null,gSlide,0,0,1,'#fff','none',0,'M 8.90625 0 C 3.97601 0 0 4.84975 0 10.875 L 0 39.125 C 0 45.15024 3.97601 50 8.90625 50 L 378.53125 50 C 383.46149 50 387.4375 45.15024 387.4375 39.125 L 387.4375 10.875 C 387.4375 4.84975 383.46149 0 378.53125 0 L 8.90625 0 z M 25.21875 5.71875 C 25.54289 5.70207 25.85937 5.71875 26.1875 5.71875 L 360.78125 5.71875 C 371.56696 5.71875 380.28125 14.35714 380.28125 25 C 380.28125 35.64286 371.56696 44.28125 360.78125 44.28125 L 26.1875 44.28125 C 15.6875 44.28125 7.125 35.64286 7.125 25 C 7.125 14.689729 15.17045 6.235763 25.21875 5.71875 z');
+  var btnSlide=getG('btnSlide',gSlide,box.rx*2-20-40,0,1,true,18,25);
+  getRect(null,btnSlide,0,0,36,50,10,'url(#grdButton)','#bdb76d',0.5);
+  getCircle(null,btnSlide,18,25,13,'url(#grdButtonRvs)','none',0);
+  //
+  getText(null,box,15,340,18,'Arial','url(#grdIcon)','none',0,'Per move : 10 sec','start');
+  var gSlide=getG('gSlideDelayTime',box,1,350,1,true,194,25);
+  var pth=getPath(null,gSlide,0,0,1,'transparent','#808080',3,'M 25.21875 5.71875 C 15.17045 6.235763 7.125 14.689729 7.125 25 C 7.125 35.64286 15.6875 44.28125 26.1875 44.28125 L 360.78125 44.28125 C 371.56696 44.28125 380.28125 35.64286 380.28125 25 C 380.28125 14.35714 371.56696 5.71875 360.78125 5.71875 L 26.1875 5.71875 C 25.85937 5.71875 25.54289 5.70207 25.21875 5.71875 z');
+  pth.setAttribute('filter','url(#blr2)');
+  getPath(null,gSlide,0,0,1,'#fff','none',0,'M 8.90625 0 C 3.97601 0 0 4.84975 0 10.875 L 0 39.125 C 0 45.15024 3.97601 50 8.90625 50 L 378.53125 50 C 383.46149 50 387.4375 45.15024 387.4375 39.125 L 387.4375 10.875 C 387.4375 4.84975 383.46149 0 378.53125 0 L 8.90625 0 z M 25.21875 5.71875 C 25.54289 5.70207 25.85937 5.71875 26.1875 5.71875 L 360.78125 5.71875 C 371.56696 5.71875 380.28125 14.35714 380.28125 25 C 380.28125 35.64286 371.56696 44.28125 360.78125 44.28125 L 26.1875 44.28125 C 15.6875 44.28125 7.125 35.64286 7.125 25 C 7.125 14.689729 15.17045 6.235763 25.21875 5.71875 z');
+  var btnSlide=getG('btnSlide',gSlide,box.rx*2-20-40,0,1,true,18,25);
+  getRect(null,btnSlide,0,0,36,50,10,'url(#grdButton)','#bdb76d',0.5);
+  getCircle(null,btnSlide,18,25,13,'url(#grdButtonRvs)','none',0);
+  //
+  var btn=getButton(null,box,m,box.ry*2-h-m,box.rx*2-m*2,h,true,'AAAC',picNone(),0,function(){},'Clock : sudden death');
+  var txt=btn.getElementsByTagName('text')[0];
+  txt.setAttribute('y','37');
+  //
 //
 /*var rct=getRect(null,gSlide,0,0,20,50,0,'transparent','none',0);
 rct.onmousedown=function(){
@@ -323,7 +344,7 @@ o('btnSlide').blnHold=false;
       [picGlad(),0.11,function(){}],
       [picChart(),0.11,function(){}],
       [picCoin_0(),0.13,function(){}],
-      [picHand(),0.14,function(){}],
+      [picHand(),0.14,function(){}]
   );
   var box=getMenu('boxMenu',div,w,h,m,s,qtyHor,qtyVer,false);
   getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Menu','start');
