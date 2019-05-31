@@ -85,7 +85,7 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     getBlurFilter('blr14',14,dfs);
     // FULL SCALE UP
     OBJ.fltScale=getScale(svgRoot,gWrap,OBJ.w,OBJ.h,10);
-    //getGrid(gWrap,OBJ.w,OBJ.h,50);
+    //getGrid(gWrap,OBJ.w,OBJ.h,10);
     //
     getLoad('gLoad',gWrap,-9999,-9999,1,'none',0);
     getSay(gWrap,OBJ.w,OBJ.h,'url(#blr3)');
@@ -101,7 +101,8 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     OBJ_arena.get();
     OBJ_arena.putVar();
     OBJ_arena.putSide();
-    OBJ_arena.putTime();
+    OBJ_arena.putTimeTop();
+    OBJ_arena.putTimeBox();
     //
     OBJ_host.get();
     OBJ_host.putName();

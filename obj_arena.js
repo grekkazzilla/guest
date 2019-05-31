@@ -19,7 +19,7 @@ OBJ_arena.get=function(){
   OBJ_arena.strVS=strVS;
   var intBase=getLocal('base',900)*1; if((typeof intBase)!='number' || intBase<60 || intBase>86400) intVar=900;
   var intAdd=getLocal('add',0)*1; if((typeof intAdd)!='number' || intAdd<0 || intAdd>86400) intAdd=0;
-  var strClock=getLocal('clock','simple_delay'); if((typeof strClock)!='string' || (strClock!='simple_delay' && strClock!='accumulation' && strClock!='compensation')) strClock='simple_delay';
+  var strClock=getLocal('clock','Simple Delay'); if((typeof strClock)!='string' || (strClock!='Sudden Death' && strClock!='Simple Delay' && strClock!='Increment' && strClock!='Bronstein')) strClock='Simple Delay';
   OBJ_arena.intBase=intBase;
   OBJ_arena.intAdd=intAdd;
   OBJ_arena.strClock=strClock;
@@ -90,43 +90,67 @@ OBJ_arena.setTime=function(intBase,intAdd,strClock){
 }
 // < index.php
 // < boxTime
-OBJ_arena.putTime=function(){
+OBJ_arena.putTimeTop=function(){
+  var intBase=OBJ_arena.intBase;
+  var intAdd=OBJ_arena.intAdd;
+  var strClock=OBJ_arena.strClock
+  if(intBase==0) var str='0';
+  else if(intBase<60) var str=intBase+' sec';
+  else var str=intBase/60+' min';
+  if(intAdd>0) str+=' + '+intAdd+' sec';
+  if(strClock=='Increment') str+=' increment';
+  else if(strClock=='Bronstein') str+=' Bronstein';
+  o('txtTimeTop').firstChild.nodeValue=str;
+
+}
+OBJ_arena.putTimeBox=function(){
   var intBase=OBJ_arena.intBase;
   var intAdd=OBJ_arena.intAdd;
   var strClock=OBJ_arena.strClock;
+  //
   var arrRect=o('gSlideBaseTime').getElementsByTagName('rect');
   for(var i in arrRect){
     var rct=arrRect[i];
     if(rct.ctg=='slide' && rct.val==intBase) putBaseTime(rct);
   }
-  if(intBase<60) var str=intBase+' sec';
-  else var str=intBase/60+' min';
-  o('txtTimeTop').firstChild.nodeValue=str;
-  //var btn=o('btnTime');
-  //var pth=btn.getElementsByTagName('path')[0];
-  //var txtA=btn.getElementsByTagName('text')[0];
-  //var txtB=btn.getElementsByTagName('text')[1];
-  //var strA=intBase/60+' min', strB=intAdd+' sec', yA=25;
-  //if(intAdd==0) strB='', yA=37;
-  //txtA.firstChild.nodeValue=strA;
-  //txtB.firstChild.nodeValue=strB;
-  //txtA.setAttribute('y',yA);
-  //if(strClock=='simple_delay') var p=picClock(), z=0.13, x=14;
-  //else if(strClock=='accumulation') var p=picHeap(), z=0.12, x=12;
-  //else if(strClock=='compensation') var p=picUp(), z=0.12, x=15;
-  //pth.setAttribute('transform','translate('+x+','+(btn.ry-p[1]*z/2)+') scale('+z+')');
-  //pth.setAttribute('d',p[2]);
-
-
+  //
+  var arrRect=o('gSlideAddTime').getElementsByTagName('rect');
+  for(var i in arrRect){
+    var rct=arrRect[i];
+    if(rct.ctg=='slide' && rct.val==intAdd) putAddTime(rct);
+  }
+  putClock(strClock);
 }
 function putBaseTime(rct){
   var g=o('gSlideBaseTime');
   var btn=o('btnSlideBaseTime');
   jumpG(btn,(rct.getAttribute('x')*1+rct.getAttribute('width')*1/2-btn.rx),0);
-  if(rct.val<60) var str=rct.val+' sec';
+  if(rct.val==0){
+    var str='0';
+    if(OBJ_arena.intAdd==0) putAddTime(o('rctSlideAddTime15'));
+  }
+  else if(rct.val<60) var str=rct.val+' sec';
   else var str=rct.val/60+' min';
   g.getElementsByTagName('text')[0].firstChild.nodeValue='Base time : '+str;
   OBJ_arena.intBase=rct.val;
+}
+function putAddTime(rct){
+  var g=o('gSlideAddTime');
+  var btn=o('btnSlideAddTime');
+  jumpG(btn,(rct.getAttribute('x')*1+rct.getAttribute('width')*1/2-btn.rx),0);
+  if(rct.val==0){
+    if(OBJ_arena.intBase==0) putBaseTime(o('rctSlideBaseTime15'));
+    if(OBJ_arena.strClock!='Sudden Death') putClock('Sudden Death');
+  }
+  g.getElementsByTagName('text')[0].firstChild.nodeValue='Per move : '+rct.val+' sec';
+  OBJ_arena.intAdd=rct.val;
+  if(OBJ_arena.intAdd>0 && OBJ_arena.strClock=='Sudden Death') putClock('Simple Delay');
+}
+function putClock(str){
+  OBJ_arena.strClock=str
+  o('btnClock').getElementsByTagName('text')[0].firstChild.nodeValue='Clock : '+str;
+  if(str=='Sudden Death' && OBJ_arena.intAdd>0) putAddTime(o('rctSlideAddTime0'));
+  else if(OBJ_arena.intAdd==0) putAddTime(o('rctSlideAddTime10'));
 }
 //
 function sendArena(objClub){

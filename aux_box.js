@@ -28,6 +28,7 @@ function showBox(box){
     if(typeof(box)=='string') box=o(box);
     if(OBJ.boxOn==box) hideBox(OBJ.boxOn);
     else{
+        if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);
         if(box.id=='boxHost'){
             o('btnHost').getElementsByTagName('path')[0].setAttribute('fill','url(#grdButton)');
             if(OBJ_host.dataImage==''){
@@ -70,12 +71,14 @@ function showBox(box){
             setLatestHistory();
             setHistoryButtons();
         }
+        else if(box.id=='boxTime' || box.id=='boxClock'){
+          o('txtTimeTop').firstChild.nodeValue='...';
+        }
         if(box.id!='boxPromoteWhite' && box.id!='boxPromoteBlack'){
             var btnClose=document.getElementById('btnClose');
             jumpG(btnClose,box.rx*2-50,10);
             box.appendChild(btnClose);
         }
-        if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);
         OBJ.boxOn=box;
         OBJ.divOn.appendChild(box);
         showG(box);
@@ -90,10 +93,10 @@ function hideBox(box){
       OBJ.blnLock=false;
       o('btnClose').blnUnlock=false;
     }
-    else if(box.id=='boxTime'){
+    else if(box.id=='boxTime' || box.id=='boxClock'){
       setLocal('base',OBJ_arena.intBase);
       setLocal('add',OBJ_arena.intAdd);
       setLocal('clock',OBJ_arena.strClock);
-      OBJ_arena.putTime();
+      OBJ_arena.putTimeTop();
     }
 }
