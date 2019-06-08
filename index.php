@@ -119,7 +119,11 @@ $strHost=trim(file_get_contents('../config/host.txt'));
         });
       });
       OBJ.peer.on('connection',function(conn){
-        link_pcn_msg(conn.peer,conn,'');
+        conn.on('open',function(){
+          this.on('data',function(data){
+            link(this,data);
+          });
+        });
       });
     });
     OBJ_host.objMatch=null; // objUser linked opponent when found and chosen

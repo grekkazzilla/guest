@@ -1,52 +1,22 @@
-function startGame(blnFindSide){
-  if(OBJ.strMode=='match' || (OBJ.strMode=='standby' && OBJ_arena.strVS=='robo')){
+function startGame(){
+  if(OBJ.strMode=='standby' && OBJ_arena.strVS=='human'){
     if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);
     var btn=o('btnMatch');
-    var z=0.5;hideG(btn.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdButton)',6,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
-    hideG('gTop');
-    showG('gTime');
-    hideG('gBottom');
-    showG('gGo');
-    o('gGo').appendChild(o('btnHost'));
-    setHistoryButtons();
-    //
-    if(blnFindSide===true){
-      if(OBJ_arena.strSide=='white') OBJ_arena.blnSide=true;
-      else if(OBJ_arena.strSide=='black') OBJ_arena.blnSide=false;
-      else if(OBJ_arena.strSide=='any'){
-        var rnd=getRand(0,1);
-        if(rnd==0) OBJ_arena.blnSide=true;
-        else if(rnd==1) OBJ_arena.blnSide=false;
-      }
+    var z=0.425;hideG(btn.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdButton)',9,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
+    btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa']);
+    OBJ.strMode='arena';
+    for(var i in OBJ_user.arr){
+      OBJ_user.arr[i].conn.send('arena_on~'+OBJ_arena.intVar+':'+OBJ_arena.strSide+':'+OBJ_arena.intBase+':'+OBJ_arena.intAdd+':'+OBJ_arena.strClock);
     }
-    if(OBJ_arena.blnSide!==OBJ_board.blnSide){
-      OBJ_board.flip(!OBJ_board.blnSide);
-    }
-    //
-    if(OBJ_arena.strVS=='robo'){
-      showG('gRobo');
-      OBJ_arena.objDrive=p4_fen2state(OBJ_arena.arrHist[0][0]);
-      changeTurn();
-    }
-    else if(OBJ_arena.strVS=='human'){
-      showG('btnUser');
-    }
-    //
-    OBJ_arena.arrHist.push(new Array('',false,false,false,false));
-    OBJ.strMode='play';
   }
-  else if(OBJ.strMode=='standby' && OBJ_arena.strVS=='human'){
-    var btn=o('btnMatch');
-    var z=0.5;hideG(btn.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdButton)',6,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
-    OBJ.strMode='watch';
-    setFind();
-    OBJ.wbs.send('arena_on~'+OBJ_host.numFind);
-  }
-  else if(OBJ.strMode=='watch'){
+  else if(OBJ.strMode=='arena'){
     var btn=o('btnMatch');
     showG(btn.getElementsByTagName('g')[0]);hideG('gLoad');
+    btn.arrOn.unshift();
     OBJ.strMode='standby';
-    OBJ.wbs.send('arena_off');
+    for(var i in OBJ_user.arr){
+      OBJ_user.arr[i].conn.send('arena_off');
+    }
     for(var i=0;i<OBJ_user.arr.length;i++){
       var objUser=OBJ_user.arr[i];
       if(objUser.conn!==null){

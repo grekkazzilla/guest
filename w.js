@@ -16,36 +16,21 @@ ws.on('connection',function(ws){
          ws.pid=r[1];
          ws.num=1000;
          ws.str='';
+         for(var i in uuu){
+           uuu[i].send('in~'+ws.pid);
+         }
          uuu.push(ws);
       }
-      else if(r[0]=='arena_on'){
-        ws.num=r[1];
-        for(var i in uuu){
-          var u=uuu[i];
-          if(u!=ws){
-            if(u.num==ws.num) ws.send('arena_on~'+u.pid);
-            if(u.str!='' && u.str.charAt(ws.num)=='1') u.send('watch_on~'+ws.pid);
-          }
-        }
-      }
-      else if(r[0]=='arena_off') ws.num=1000;
-      else if(r[0]=='watch_on'){
-        ws.str=r[1];
-        for(var i in uuu){
-          var u=uuu[i];
-          if(u!=ws){
-            if(ws.str.charAt(u.num)=='1') ws.send('watch_on~'+u.pid);
-          }
-        }
-      }
-      else if(r[0]=='watch_off') ws.str='';
    });
    //
    ws.on('close',function(){
-     for(var i in uuu){
+     for(var i=0;i<uuu.length;i++){
        if(uuu[i]==ws){
          uuu.splice(i,1);
-         break;
+         i--;
+       }
+       else{
+         uuu[i].send('out~'+ws.pid);
        }
      }
    });

@@ -2,11 +2,21 @@ var OBJ_watch=new Object();
 OBJ_watch.arr=new Array();
 OBJ_watch.numPage=0;
 function getWatch(objUser,strWatch){
-  var objWatch=new Object();
-  objUser.objWatch=objWatch;
-  objWatch.objUser=objUser;
-  OBJ_watch.arr.push(objWatch);
-  setWatch(objUser,strWatch);
+  if(isWatch(objUser)===false){
+    var objWatch=new Object();
+    objUser.objWatch=objWatch;
+    objWatch.objUser=objUser;
+    OBJ_watch.arr.push(objWatch);
+    setWatch(objUser,strWatch);
+  }
+  else setWatch(objUser,strWatch);
+}
+function isWatch(objUser){
+  for(var i in OBJ_watch.arr){
+    var objWatch=OBJ_watch.arr[i];
+    if(objUser==objWatch.objUser) return true;
+  }
+  return false;
 }
 function setWatch(objUser,strWatch){
   var objWatch=objUser.objWatch;
@@ -65,9 +75,10 @@ function putWatch(numPage){
       var pth=g.getElementsByTagName('path')[0];
       var txtA=g.getElementsByTagName('text')[0];
       var txtB=g.getElementsByTagName('text')[1];
-      if(objWatch.strClock=='simple_delay') var z=0.13, p=picClock();
-      else if(objWatch.strClock=='accumulation') var z=0.11, p=picHeap();
-      else if(objWatch.strClock=='compensation') var z=0.11, p=picUp();
+      if(objWatch.strClock=='Simple Delay') var z=0.13, p=picClock();
+      else if(objWatch.strClock=='Increment') var z=0.11, p=picHeap();
+      else if(objWatch.strClock=='Bronstein') var z=0.11, p=picUp();
+      else var z=0.11, p=picSkull();
       if(objWatch.intAdd==0) var yA=30, strB='';
       else var yA=21, strB=objWatch.intAdd+' sec';
       pth.setAttribute('transform','translate(0,'+(g.ry-p[1]*z/2)+') scale('+z+')');

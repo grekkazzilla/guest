@@ -31,7 +31,7 @@ function getArena(gRoot){
   btn.getElementsByTagName('path')[2].setAttribute('stroke','url(#grdIcon)');
   btn.arrOn.push(['path',1,'stroke','url(#grdIcon)','#000'],['path',2,'fill','url(#grdIcon)','#000'],['path',2,'stroke','url(#grdIcon)','#000']);
   var btn=getButton('btnMatch',g,x+(w+s)*2,30,w,h,true,'CXAX',picFence(),0.13,function(){
-
+    startGame();
   },null);
   var btn=getButton('btnTime',g,x+(w+s)*3,30,w,h,true,'AAAX',picClock(),0.135,function(){showBox('boxTime');},null);
   var btn=getButton('btnSetUp',g,x+(w+s)*4,30,w,h,true,'AAAX',picGear(),0.125,function(){},null);
@@ -43,12 +43,11 @@ function getArena(gRoot){
     showBox('boxHost');
   },null);
   getButton('btnBook',g,x+(w+s)*3,0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
-  getButton('btnWatch',g,x+(w+s)*4,0,w,h,true,'AAAX',picEye(),0.13,function(){
+  var btn=getButton('btnWatch',g,x+(w+s)*4,0,w,h,true,'AAAX',picEye(),0.13,function(){
     putWatch(OBJ_watch.numPage);
     showDiv('divWatch');
     if(OBJ.blnWatch===false){
       OBJ.blnWatch=true;
-      OBJ.wbs.send('watch_on~'+asmFind());
     }
   },null);
   // BOX VAR
