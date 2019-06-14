@@ -30,7 +30,7 @@ ws.on('connection',function(ws){
          i--;
        }
        else{
-         uuu[i].send('out~'+ws.pid);
+         //uuu[i].send('out~'+ws.pid);
        }
      }
    });

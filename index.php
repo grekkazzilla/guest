@@ -109,22 +109,11 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     OBJ_host.putRank(OBJ_host.intRank);
     OBJ_host.putImage();
     OBJ_host.loadPic('none',function(){
-      OBJ.peer=new Peer({host:OBJ.strHost,port:8001,path:'/peerjs'});
-      OBJ.peer.on('open',function(pid){
-        OBJ.wbs=new WebSocket('ws://'+OBJ.strHost+':8000','echo-protocol');
-        OBJ_host.pid=pid;
-        console.log('my pid: '+OBJ_host.pid);
-        OBJ.wbs.addEventListener('message',function(e){
-          link_wbs_msg(e.data);
-        });
-      });
-      OBJ.peer.on('connection',function(conn){
-        conn.on('open',function(){
-          this.on('data',function(data){
-            link(this,data);
-          });
-        });
-      });
+      link();
+      var imgLoad=document.getElementsByTagName('img')[0];
+      imgLoad.parentNode.removeChild(imgLoad);
+      sctRoot.style.display='block';
+      OBJ.blnLock=false;
     });
     OBJ_host.objMatch=null; // objUser linked opponent when found and chosen
   }

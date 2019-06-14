@@ -9,7 +9,9 @@ function getWatch(objUser,strWatch){
     OBJ_watch.arr.push(objWatch);
     setWatch(objUser,strWatch);
   }
-  else setWatch(objUser,strWatch);
+  else{
+    setWatch(objUser,strWatch);
+  }
 }
 function isWatch(objUser){
   for(var i in OBJ_watch.arr){
