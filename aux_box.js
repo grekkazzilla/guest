@@ -19,6 +19,12 @@ function getMenu(strID,gRoot,wButton,hButton,intPad,intMargin,qtyHor,qtyVer,blnS
 }
 function showDiv(div){
     if(typeof(div)=='string') div=o(div);
+    if(OBJ.divOn==o('divWatch')){
+      OBJ.strMode='standby';
+      for(var i in OBJ_user.arr){
+        OBJ_user.arr[i].conn.send('arena_off');
+      }
+    }
     hideG(OBJ.divOn);
     OBJ.divOn=div;
     if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);

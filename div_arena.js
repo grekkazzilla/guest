@@ -31,25 +31,24 @@ function getArena(gRoot){
   btn.getElementsByTagName('path')[2].setAttribute('stroke','url(#grdIcon)');
   btn.arrOn.push(['path',1,'stroke','url(#grdIcon)','#000'],['path',2,'fill','url(#grdIcon)','#000'],['path',2,'stroke','url(#grdIcon)','#000']);
   var btn=getButton('btnMatch',g,x+(w+s)*2,30,w,h,true,'CXAX',picFence(),0.13,function(){
-    startGame();
+    if(OBJ.strMode=='standby' && OBJ_arena.strVS=='human'){
+      OBJ.strMode='arena';
+      for(var i in OBJ_user.arr){
+        OBJ_user.arr[i].conn.send('arena_on~'+OBJ_arena.intVar+':'+OBJ_arena.strSide+':'+OBJ_arena.intBase+':'+OBJ_arena.intAdd+':'+OBJ_arena.strClock);
+      }
+      putWatch(OBJ_watch.numPage);
+      showDiv('divWatch');
+    }
   },null);
   var btn=getButton('btnTime',g,x+(w+s)*3,30,w,h,true,'AAAX',picClock(),0.135,function(){showBox('boxTime');},null);
   var btn=getButton('btnSetUp',g,x+(w+s)*4,30,w,h,true,'AAAX',picGear(),0.125,function(){},null);
   // G BOTTOM
   var w=60, h=60, s=10, g=getG('gBottom',div,0,530,1,true,OBJ.w/2,h/2), x=g.rx-(w*5+s*4)/2;
-  getButton('btnRank',g,x,0,w,h,true,'AAAX',picBoot(),0.135,function(){},null);
   getButton('btnMenu',g,x+(w+s)*1,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
   var btn=getButton('btnHost',g,x+(w+s)*2,0,w,h,true,'CXAX',picUser(),0.13,function(){
     showBox('boxHost');
   },null);
   getButton('btnBook',g,x+(w+s)*3,0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
-  var btn=getButton('btnWatch',g,x+(w+s)*4,0,w,h,true,'AAAX',picEye(),0.13,function(){
-    putWatch(OBJ_watch.numPage);
-    showDiv('divWatch');
-    if(OBJ.blnWatch===false){
-      OBJ.blnWatch=true;
-    }
-  },null);
   // BOX VAR
   var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=5;
   var box=getMenu('boxVar',div,w,h,m,s,qtyHor,qtyVer,false);
@@ -309,12 +308,10 @@ function getArena(gRoot){
     x+=w+s;if((i+1)%qtyHor==0){x-=(w+s)*qtyHor;y+=h+s;}
   }
   // BOX MENU
-  var w=60, h=60, m=10, s=10, x=m, y=60, qtyHor=3, qtyVer=2, arr=new Array(
-      [picEnter(),0.13,function(){}],
+  var w=60, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=2, arr=new Array(
       [picBulb(),0.13,function(){}],
       [picGlad(),0.11,function(){}],
-      [picChart(),0.11,function(){}],
-      [picCoin_0(),0.13,function(){}],
+      [picBoot(),0.135,function(){}],
       [picHand(),0.14,function(){}]
   );
   var box=getMenu('boxMenu',div,w,h,m,s,qtyHor,qtyVer,false);

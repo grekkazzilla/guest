@@ -120,24 +120,3 @@ function pcn(conn,data){
     OBJ.test++;
   }
 }*/
-function startGame(){
-  if(OBJ.strMode=='standby' && OBJ_arena.strVS=='human'){
-    if(OBJ.boxOn!==null) hideBox(OBJ.boxOn);
-    var btn=o('btnMatch');
-    var z=0.425;hideG(btn.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdButton)',9,(btn.rx*2-100*z)/2,(btn.ry*2-100*z)/2,z,btn);
-    btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa']);
-    OBJ.strMode='arena';
-    for(var i in OBJ_user.arr){
-      OBJ_user.arr[i].conn.send('arena_on~'+OBJ_arena.intVar+':'+OBJ_arena.strSide+':'+OBJ_arena.intBase+':'+OBJ_arena.intAdd+':'+OBJ_arena.strClock);
-    }
-  }
-  else if(OBJ.strMode=='arena'){
-    var btn=o('btnMatch');
-    showG(btn.getElementsByTagName('g')[0]);hideG('gLoad');
-    btn.arrOn.unshift();
-    OBJ.strMode='standby';
-    for(var i in OBJ_user.arr){
-      OBJ_user.arr[i].conn.send('arena_off');
-    }
-  }
-}

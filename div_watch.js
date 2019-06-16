@@ -18,11 +18,13 @@ function drawWatch(gRoot){
     getRect(null,box,0,0,W,H,0,'#fff','none',0);
     getButton('btnWatchUser'+i,box,5,5,105,105,false,'CXAX',picNone(),0,function(){},null);
     getButton('btnWatchMatch'+i,box,W-65,5,60,60,false,'AAAX',picFence(),0.13,function(){
-      OBJ.blnLock=true;
-      var z=0.375;hideG(this.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdPale)',6,(this.rx*2-100*z)/2,(this.ry*2-100*z)/2,z,this);
-      var objWatch=this.parentNode.objWatch;
-      var objUser=objWatch.objUser;
-      link_pcn_msg(objUser.pid,null,'match_req~'+OBJ_host.strName+':'+OBJ_host.lnkPic+':'+OBJ_host.intRank);
+      //OBJ.blnLock=true;
+      //var z=0.375;hideG(this.getElementsByTagName('g')[0]);drawLoad('gLoad','url(#grdPale)',6,(this.rx*2-100*z)/2,(this.ry*2-100*z)/2,z,this);
+      //var objWatch=this.parentNode.objWatch;
+      //var objUser=objWatch.objUser;
+      //link_pcn_msg(objUser.pid,null,'match_req~'+OBJ_host.strName+':'+OBJ_host.lnkPic+':'+OBJ_host.intRank);
+      var z=0.7;drawLoad('gLoad','url(#grdButton)',6,(400-100*z)/2,432,z,o('divWait'));
+      showDiv('divWait');
     },null);
     getText(null,box,130,25,18,'Arial','url(#grdIcon)','none',0,'','start');
     for(var j=0;j<5;j++){
