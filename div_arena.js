@@ -17,7 +17,7 @@ function getArena(gRoot){
       num+=10;
   }
   // G TIME TOP
-  getText('txtTimeTop',div,200,36,18,'Arial','url(#grdIcon)','none',0,'','middle').style.fontStyle='normal';
+  getText('txtTimeTop',div,-222200,36,18,'Arial','url(#grdIcon)','none',0,'','middle').style.fontStyle='normal';
   // G TOP
   var w=60, h=60, s=10, g=getG('gTop',div,0,26,1,true,OBJ.w/2,h/2), x=g.rx-(w*5+s*4)/2;
   getButton('btnVar',g,x,30,w,h,true,'AAAX',picListA(),0.11,function(){showBox('boxVar');},null);
@@ -42,6 +42,65 @@ function getArena(gRoot){
   },null);
   var btn=getButton('btnTime',g,x+(w+s)*3,30,w,h,true,'AAAX',picClock(),0.135,function(){showBox('boxTime');},null);
   var btn=getButton('btnSetUp',g,x+(w+s)*4,30,w,h,true,'AAAX',picGear(),0.125,function(){},null);
+  // G WAIT
+  var w=80, h=80, p=picUser(), z=0.225, g=getG(null,div,5,27,1,false,w/2,h/2);
+  getRect(null,g,0,0,w,h,5,'transparent','url(#grdButton)',0);
+  getPath(null,g,(w-p[0]*z)/2,(h-p[1]*z)/2,z,'url(#grdButton)','none',0,p[2]);
+  //
+  var w=80, h=80, p=picUser(), z=0.225, g=getG(null,div,315,27,1,false,w/2,h/2);
+  getRect(null,g,0,0,w,h,5,'transparent','url(#grdButton)',0);
+  getPath(null,g,(w-p[0]*z)/2,(h-p[1]*z)/2,z,'url(#grdButton)','none',0,p[2]);
+  // G TIME
+  var W=400, H=90, G=getG('gTime',div,130,30,1,false,W/2,H/2);
+  var w=70, h=70, btn=getButton('btnTimeHost',G,0,0,w,h,true,'CXDX',picNone(),0,function(){},null);
+  getLine(null,btn,35,6,35,12,'#eee8aa',3).setAttribute('stroke-linecap','butt');
+  getLine(null,btn,32,6,38,6,'#eee8aa',5);
+  getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(35,35,25,0,359)+describeArc(35,35,5,0,359));
+  var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',12,describeArc(35,35,15,90,359)+'M 35 50');
+  pth.setAttribute('stroke-linecap','butt');
+  btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
+  //
+  var btn=getButton('btnTimeUser',G,80,0,w,h,true,'CXDX',picNone(),0,function(){showBox('boxGameEnd');},null);
+  getLine(null,btn,35,6,35,12,'#eee8aa',3).setAttribute('stroke-linecap','butt');
+  getLine(null,btn,32,8.5,38,8.5,'#eee8aa',5);
+  getLine(null,btn,32,8.5,38,8.5,'#eee8aa',5);
+  getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(35,35,25,0,359)+describeArc(35,35,5,0,359));
+  var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',12,describeArc(35,35,15,90,359)+'M 35 50');
+  pth.setAttribute('stroke-linecap','butt');
+  btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
+  // BOX MATCH
+  var box=getBox('boxMatch',div,300,160,false,'#fff');
+  var w=60, h=60, p=picClock(), z=0.14, g=getG(null,box,1,1,1,true,w/2,h/2);
+  getRect(null,g,0,0,w,h,5,'transparent','url(#grdButton)',0);
+  getPath(null,g,(w-p[0]*z)/2,(h-p[1]*z)/2,z,'url(#grdButton)','none',0,p[2]);
+  getText(null,box,55,38,18,'Arial','#bdb76d','none',0,'+ 15','start');
+
+  /*var txt=getText(null,box,120,25,18,'Arial','url(#grdIcon)','none',0,'','start');
+  var spn=getSVG('tspan',null,txt);
+  spn.innerHTML='80 : 00';
+  spn.setAttribute('fill','url(#grdIcon)');
+  var spn=getSVG('tspan',null,txt);
+  spn.innerHTML=' (40)';
+  spn.setAttribute('fill','#bdb76d');
+
+  var txt=getText(null,box,120,45,18,'Arial','url(#grdIcon)','none',0,'','start');
+  var spn=getSVG('tspan',null,txt);
+  spn.innerHTML='60 : 00';
+  spn.setAttribute('fill','url(#grdIcon)');
+  var spn=getSVG('tspan',null,txt);
+  spn.innerHTML=' (20)';
+  spn.setAttribute('fill','#bdb76d');*/
+
+  var txt=getText(null,box,120,38,18,'Arial','url(#grdIcon)','none',0,'','start');
+  var spn=getSVG('tspan',null,txt);
+  spn.innerHTML='20 : 00';
+  spn.setAttribute('fill','url(#grdIcon)');
+
+
+  getText(null,box,box.rx,95,18,'Arial','url(#grdIcon)','none',0,'grekkazzilla','middle');
+  for(var j=0;j<2;j++){
+    getPath(null,box,117+35*j,105,0.1,'url(#grdGold)','none',0,picStar()[2]);
+  }
   // G BOTTOM
   var w=60, h=60, s=10, g=getG('gBottom',div,0,530,1,true,OBJ.w/2,h/2), x=g.rx-(w*5+s*4)/2;
   getButton('btnMenu',g,x+(w+s)*1,0,w,h,true,'AAAX',picMenu(),0.11,function(){showBox('boxMenu');},null);
@@ -49,6 +108,10 @@ function getArena(gRoot){
     showBox('boxHost');
   },null);
   getButton('btnBook',g,x+(w+s)*3,0,w,h,true,'AAAX',picBook(),0.135,function(){showDiv('divBook');},null);
+  // G YES OR NO
+  var g=getG('gYesOrNo',div,0,530,1,false,0,0);
+  getButton(null,g,135,0,60,60,true,'DXEX',picYes(),0.16,function(){},null);
+  getButton(null,g,205,0,60,60,true,'DXEX',picNo(),0.16,function(){},null);
   // BOX VAR
   var w=150, h=60, m=10, s=10, x=m, y=60, qtyHor=2, qtyVer=5;
   var box=getMenu('boxVar',div,w,h,m,s,qtyHor,qtyVer,false);
@@ -84,23 +147,6 @@ function getArena(gRoot){
   getCircle(null,gEye,13,15,5,'#ffaaaa','none',0);
   getCircle(null,gEye,37,15,5,'#ffaaaa','none',0);
   getText(null,G,W/2,90,18,'Arial','url(#grdButton)','none',0,'','middle');
-  // G TIME
-  var W=400, H=90, G=getG('gTime',div,0,6,1,false,W/2,H/2);
-  var w=70, h=70, btn=getButton('btnTimeHost',G,30,10,w,h,true,'CXDX',picNone(),0,function(){},null);
-  getLine(null,btn,35,6,35,12,'#eee8aa',3).setAttribute('stroke-linecap','butt');
-  getLine(null,btn,32,6,38,6,'#eee8aa',5);
-  getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(35,35,25,0,359)+describeArc(35,35,5,0,359));
-  var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',12,describeArc(35,35,15,90,359)+'M 35 50');
-  pth.setAttribute('stroke-linecap','butt');
-  btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
-  var btn=getButton('btnTimeUser',G,300,10,w,h,true,'CXDX',picNone(),0,function(){},null);
-  getLine(null,btn,35,6,35,12,'#eee8aa',3).setAttribute('stroke-linecap','butt');
-  getLine(null,btn,32,8.5,38,8.5,'#eee8aa',5);
-  getLine(null,btn,32,8.5,38,8.5,'#eee8aa',5);
-  getPath(null,btn,0,3,1,'transparent','url(#grdButton)',3,describeArc(35,35,25,0,359)+describeArc(35,35,5,0,359));
-  var pth=getPath(null,btn,0,3,1,'transparent','url(#grdButton)',12,describeArc(35,35,15,90,359)+'M 35 50');
-  pth.setAttribute('stroke-linecap','butt');
-  btn.arrOn.push(['path',1,'stroke','url(#grdButton)','#eee8aa'],['path',2,'stroke','url(#grdButton)','#eee8aa']);
   // G GO
   var w=60, h=60, s=6.4, g=getG('gGo',div,4,504,1,false,w*6+s*4,90);
   getButton(null,g,0,0,w,h,true,'AAEX',picMenu(),0.11,function(){showBox('boxGo')},null);
@@ -217,8 +263,8 @@ function getArena(gRoot){
   // BOX TIME
   var w=372, h=260, y=60, m=10, s=5, x=m, y=120, qtyHor=1, qtyVer=1;
   var box=getMenu('boxTime',div,w,h,m,s,qtyHor,qtyVer,false);
-  getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Time Control','start');
-  //getButton(null,box,box.rx*2-95,10,40,40,true,'BXBX',picArrowC(),0.09,function(){},null);
+  getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Time Control : increment','start');
+  getButton(null,box,box.rx*2-95,10,40,40,true,'BXBX',picArrowC(),0.09,function(){},null);
   //
   var gSlide=getG('gSlideBaseTime',box,1,90,1,true,194,25);
   getText(null,gSlide,15,-10,18,'Arial','url(#grdIcon)','none',0,'Base time : ','start');
@@ -288,11 +334,13 @@ function getArena(gRoot){
   rct.onmousedown=function(){putAddTime(o('rctSlideAddTime'+(this.parentNode.len-1)));}
   rct.onmouseup=function(){o('btnSlideAddTime').blnHold=false;}
   //
-  var btn=getButton('btnClock',box,m,box.ry*2-60-m,box.rx*2-m*2-65,60,true,'AAAC',picNone(),0,function(){showBox('boxClock');},'Clock : ');
-  var txt=btn.getElementsByTagName('text')[0];
-  txt.setAttribute('y','37');
-  btn.arrOn.push(['text',0,'fill','url(#grdIcon)','#eee8aa']);
-  getButton(null,box,box.rx*2-70,box.ry*2-70,60,60,true,'DXEX',picYes(),0.16,function(){hideBox('boxTime');},null);
+  getButton('btnSimpleDelay',box,m,box.ry*2-60-m,60,60,true,'AAAC',picClock(),0.13,function(){},null);
+  getButton('btnAccumulation',box,m+60+s,box.ry*2-60-m,60,60,true,'AAAC',picHeap(),0.12,function(){},null);
+  getButton('btnCompensation',box,m+(60+s)*2,box.ry*2-60-m,60,60,true,'AAAC',picUp(),0.12,function(){},null);
+  var btn=getButton('btnAddTimeAfterMoveA',box,m+(60+s)*3,box.ry*2-60-m,60*1.45,60,true,'AAAC',picNone(),0.12,function(){},'stage~');
+  btn.getElementsByTagName('text')[0].setAttribute('y','27');btn.getElementsByTagName('text')[1].setAttribute('y','47');
+  //var btn=getButton('btnAddTimeAfterMoveB',box,m+(60+s)*3+60*1.45+s,box.ry*2-60-m,60*1.45,60,true,'AAAC',picNone(),0.12,function(){},'+ 10 m~/ 20');
+  btn.getElementsByTagName('text')[0].setAttribute('y','27');btn.getElementsByTagName('text')[1].setAttribute('y','47');
   // BOX CLOCK
   var w=300, h=60, m=10, s=10, x=m, y=60, qtyHor=1, qtyVer=4, arr=new Array(
     'Sudden Death','Simple Delay','Increment','Bronstein');

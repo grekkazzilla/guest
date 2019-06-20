@@ -98,8 +98,8 @@ OBJ_arena.putTimeTop=function(){
   else if(intBase<60) var str=intBase+' sec';
   else var str=intBase/60+' min';
   if(intAdd>0) str+=' + '+intAdd+' sec';
-  if(strClock=='Increment') str+=' increment';
-  else if(strClock=='Bronstein') str+=' Bronstein';
+  if(strClock=='Increment') str+=' inc';
+  else if(strClock=='Bronstein') str+=' Bron';
   o('txtTimeTop').firstChild.nodeValue=str;
 
 }
@@ -148,7 +148,7 @@ function putAddTime(rct){
 }
 function putClock(str){
   OBJ_arena.strClock=str
-  o('btnClock').getElementsByTagName('text')[0].firstChild.nodeValue='Clock : '+str;
+  //o('btnClock').getElementsByTagName('text')[0].firstChild.nodeValue='Clock : '+str;
   if(str=='Sudden Death' && OBJ_arena.intAdd>0) putAddTime(o('rctSlideAddTime0'));
   else if(OBJ_arena.intAdd==0) putAddTime(o('rctSlideAddTime10'));
 }
