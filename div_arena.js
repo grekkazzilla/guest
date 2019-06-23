@@ -261,13 +261,35 @@ function getArena(gRoot){
   var z=0.12, p=picEnvelope(); getPath(null,btn,70,btn.ry-p[1]*z/2,z,'url(#grdIcon)','none',0,p[2]);
   btn.arrOn.push(['path',1,'fill','url(#grdIcon)','#eee8aa']);
   // BOX TIME
-  var w=372, h=260, y=60, m=10, s=5, x=m, y=120, qtyHor=1, qtyVer=1;
+  var w=372, h=322, y=60, m=10, s=5, x=m, y=120, qtyHor=1, qtyVer=1;
   var box=getMenu('boxTime',div,w,h,m,s,qtyHor,qtyVer,false);
-  getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Time Control : increment','start');
+  getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Time control : increment','start');
   getButton(null,box,box.rx*2-95,10,40,40,true,'BXBX',picArrowC(),0.09,function(){},null);
   //
-  var gSlide=getG('gSlideBaseTime',box,1,90,1,true,194,25);
-  getText(null,gSlide,15,-10,18,'Arial','url(#grdIcon)','none',0,'Base time : ','start');
+  var gSlide=getG('gSlideBaseTime',box,1,160,1,true,194,25);
+  //
+  var s=18;
+  var btn=getButton(null,box,m,87,60,60,true,'AAAC',picNone(),0.12,function(){},'60~min');
+  btn.getElementsByTagName('text')[0].setAttribute('y','27');btn.getElementsByTagName('text')[1].setAttribute('y','47');
+  btn.getElementsByTagName('text')[0].setAttribute('fill','#eee8aa');
+  btn.getElementsByTagName('text')[1].setAttribute('fill','#eee8aa');
+  btn.getElementsByTagName('rect')[0].setAttribute('fill','#bdb76d');
+  btn.getElementsByTagName('rect')[1].setAttribute('stroke','#eee8aa');
+  getText(null,box,79,125,18,'Arial','#808080','none',0,'/','middle');
+  var btn=getButton(null,box,m+(60+s)*1,87,60,60,true,'AAAC',picNone(),0.12,function(){},'40~');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');btn.getElementsByTagName('text')[1].setAttribute('y','47');
+  getText(null,box,158,125,18,'Arial','#bdb76d','none',0,'+','middle');
+  var btn=getButton(null,box,m+(60+s)*2,87,60,60,true,'AAAC',picNone(),0.12,function(){},'40~min');
+  btn.getElementsByTagName('text')[0].setAttribute('y','27');btn.getElementsByTagName('text')[1].setAttribute('y','47');
+  getText(null,box,235,125,18,'Arial','#808080','none',0,'/','middle');
+  var btn=getButton(null,box,m+(60+s)*3,87,60,60,true,'AAAC',picNone(),0.12,function(){},'20~');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');btn.getElementsByTagName('text')[1].setAttribute('y','47');
+  getText(null,box,313,125,18,'Arial','#bdb76d','none',0,'+','middle');
+  var btn=getButton(null,box,m+(60+s)*4,87,60,60,true,'AAAC',picNone(),0.12,function(){},'20~min');
+  btn.getElementsByTagName('text')[0].setAttribute('y','27');btn.getElementsByTagName('text')[1].setAttribute('y','47');
+  //
+  getText(null,gSlide,15,-93,18,'Arial','transparent','none',0,'Base time : ','start');
+  getText(null,gSlide,15,-90,18,'Arial','url(#grdIcon)','none',0,'Base time :','start');
   var pth=getPath(null,gSlide,0,0,1,'transparent','#808080',3,'M 25.21875 5.71875 C 15.17045 6.235763 7.125 14.689729 7.125 25 C 7.125 35.64286 15.6875 44.28125 26.1875 44.28125 L 360.78125 44.28125 C 371.56696 44.28125 380.28125 35.64286 380.28125 25 C 380.28125 14.35714 371.56696 5.71875 360.78125 5.71875 L 26.1875 5.71875 C 25.85937 5.71875 25.54289 5.70207 25.21875 5.71875 z');
   pth.setAttribute('filter','url(#blr2)');
   getPath(null,gSlide,0,0,1,'#fff','none',0,'M 8.90625 0 C 3.97601 0 0 4.84975 0 10.875 L 0 39.125 C 0 45.15024 3.97601 50 8.90625 50 L 378.53125 50 C 383.46149 50 387.4375 45.15024 387.4375 39.125 L 387.4375 10.875 C 387.4375 4.84975 383.46149 0 378.53125 0 L 8.90625 0 z M 25.21875 5.71875 C 25.54289 5.70207 25.85937 5.71875 26.1875 5.71875 L 360.78125 5.71875 C 371.56696 5.71875 380.28125 14.35714 380.28125 25 C 380.28125 35.64286 371.56696 44.28125 360.78125 44.28125 L 26.1875 44.28125 C 15.6875 44.28125 7.125 35.64286 7.125 25 C 7.125 14.689729 15.17045 6.235763 25.21875 5.71875 z');
@@ -300,7 +322,7 @@ function getArena(gRoot){
   rct.onmousedown=function(){putBaseTime(o('rctSlideBaseTime'+(this.parentNode.len-1)));}
   rct.onmouseup=function(){o('btnSlideBaseTime').blnHold=false;}
   //
-  var gSlide=getG('gSlideAddTime',box,1,190,1,true,194,25);
+  var gSlide=getG('gSlideAddTime',box,1,255,1,true,194,25);
   getText(null,gSlide,15,-10,18,'Arial','url(#grdIcon)','none',0,'Per move : ','start');
   var pth=getPath(null,gSlide,0,0,1,'transparent','#808080',3,'M 25.21875 5.71875 C 15.17045 6.235763 7.125 14.689729 7.125 25 C 7.125 35.64286 15.6875 44.28125 26.1875 44.28125 L 360.78125 44.28125 C 371.56696 44.28125 380.28125 35.64286 380.28125 25 C 380.28125 14.35714 371.56696 5.71875 360.78125 5.71875 L 26.1875 5.71875 C 25.85937 5.71875 25.54289 5.70207 25.21875 5.71875 z');
   pth.setAttribute('filter','url(#blr2)');
@@ -334,13 +356,38 @@ function getArena(gRoot){
   rct.onmousedown=function(){putAddTime(o('rctSlideAddTime'+(this.parentNode.len-1)));}
   rct.onmouseup=function(){o('btnSlideAddTime').blnHold=false;}
   //
-  getButton('btnSimpleDelay',box,m,box.ry*2-60-m,60,60,true,'AAAC',picClock(),0.13,function(){},null);
-  getButton('btnAccumulation',box,m+60+s,box.ry*2-60-m,60,60,true,'AAAC',picHeap(),0.12,function(){},null);
-  getButton('btnCompensation',box,m+(60+s)*2,box.ry*2-60-m,60,60,true,'AAAC',picUp(),0.12,function(){},null);
-  var btn=getButton('btnAddTimeAfterMoveA',box,m+(60+s)*3,box.ry*2-60-m,60*1.45,60,true,'AAAC',picNone(),0.12,function(){},'stage~');
-  btn.getElementsByTagName('text')[0].setAttribute('y','27');btn.getElementsByTagName('text')[1].setAttribute('y','47');
-  //var btn=getButton('btnAddTimeAfterMoveB',box,m+(60+s)*3+60*1.45+s,box.ry*2-60-m,60*1.45,60,true,'AAAC',picNone(),0.12,function(){},'+ 10 m~/ 20');
-  btn.getElementsByTagName('text')[0].setAttribute('y','27');btn.getElementsByTagName('text')[1].setAttribute('y','47');
+  var s=5;
+  var btn=getButton('btnSimpleDelay',box,m,box.ry*2-60-m,60,60,true,'AAAX',picClock(),0.13,function(){},null);
+  btn.getElementsByTagName('rect')[0].setAttribute('fill','#bdb76d');
+  btn.getElementsByTagName('rect')[1].setAttribute('stroke','#eee8aa');
+  btn.getElementsByTagName('path')[0].setAttribute('fill','#eee8aa');
+  var btn=getButton('btnAccumulation',box,m+60+s,box.ry*2-60-m,60,60,true,'AAAX',picHeap(),0.12,function(){},null);
+
+  getButton('btnCompensation',box,m+(60+s)*2,box.ry*2-60-m,60,60,true,'AAAX',picUp(),0.12,function(){},null);
+  var btn=getButton('btnAddTimeAfterMoveA',box,m+(60+s)*3,box.ry*2-60-m,(60*1.45)*2+s,60,true,'AAAC',picNone(),0.12,function(){},'remove stages~');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');btn.getElementsByTagName('text')[1].setAttribute('y','47');
+  //var btn=getButton('btnAddTimeAfterMoveB',box,m+(60+s)*3+60*1.45+s,box.ry*2-60-m,60*1.45,60,true,'AAAC',picNone(),0.12,function(){},'ADD~TIME');
+  //btn.getElementsByTagName('text')[0].setAttribute('y','27');btn.getElementsByTagName('text')[1].setAttribute('y','47');
+  /*var g=getG('gAfterMoveButton',box,60,170,1,true,0,0);
+  getText(null,g,-40,0,18,'Arial','url(#grdIcon)','none',0,'After moves :','start');
+  var btn=getButton(null,g,0,20,60,60,true,'AAAC',picNone(),0.12,function(){},'5');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');
+  var btn=getButton(null,g,70,20,60,60,true,'AAAC',picNone(),0.12,function(){},'10');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');
+  var btn=getButton(null,g,140,20,60,60,true,'AAAC',picNone(),0.12,function(){},'15');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');
+  var btn=getButton(null,g,210,20,60,60,true,'AAAC',picNone(),0.12,function(){},'20');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');
+
+  var btn=getButton(null,g,0,90,60,60,true,'AAAC',picNone(),0.12,function(){},'25');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');
+  var btn=getButton(null,g,70,90,60,60,true,'AAAC',picNone(),0.12,function(){},'30');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');
+  var btn=getButton(null,g,140,90,60,60,true,'AAAC',picNone(),0.12,function(){},'35');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');
+  var btn=getButton(null,g,210,90,60,60,true,'AAAC',picNone(),0.12,function(){},'40');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');*/
+
   // BOX CLOCK
   var w=300, h=60, m=10, s=10, x=m, y=60, qtyHor=1, qtyVer=4, arr=new Array(
     'Sudden Death','Simple Delay','Increment','Bronstein');
