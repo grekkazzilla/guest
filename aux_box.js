@@ -4,7 +4,6 @@ function getBox(strID,gRoot,wBox,hBox,blnShow,strFill){
     var xBox=gBoard.x+gBoard.rx*gBoard.z-wBox/2;
     var yBox=gBoard.y+gBoard.ry*gBoard.z-hBox/2;
     var box=getG(strID,gRoot,xBox,yBox,1,blnShow,wBox/2,hBox/2);
-    getRect(null,box,0,0,wBox,hBox,0,'#808080','transparent',0).setAttribute('filter','url(#blr2)');
     getRect(null,box,0,0,wBox,hBox,0,strFill,'transparent',0);
     return box;
 }
@@ -80,11 +79,18 @@ function showBox(box){
         else if(box.id=='boxTime' || box.id=='boxClock'){
           o('txtTimeTop').firstChild.nodeValue='...';
         }
+        // close button and blur rect
+        var rctBkg=box.getElementsByTagName('rect')[0];
+        var rctBlur=o('rctBlur');
+        rctBlur.setAttribute('width',box.rx*2);
+        rctBlur.setAttribute('height',box.ry*2);
+        box.insertBefore(rctBlur,rctBkg);
         if(box.id!='boxPromoteWhite' && box.id!='boxPromoteBlack'){
             var btnClose=document.getElementById('btnClose');
             jumpG(btnClose,box.rx*2-50,10);
             box.appendChild(btnClose);
         }
+        //
         OBJ.boxOn=box;
         OBJ.divOn.appendChild(box);
         showG(box);
@@ -105,4 +111,5 @@ function hideBox(box){
       setLocal('clock',OBJ_arena.strClock);
       OBJ_arena.putTimeTop();
     }
+    box.appendChild(o('rctBlur'));
 }

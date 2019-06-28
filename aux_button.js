@@ -74,7 +74,12 @@ function getButton(strID,oRoot,intX,intY,intW,intH,blnShown,ctgStyle,fncPic,zPic
     }
     //
     if(strTxt!==null){
-        var row=strTxt.split('~');
+      var row=strTxt.split('~');
+      if(ctgStyle.substr(3,1)=='D'){
+        getText(null,gIn,intW/2,27,18,'Arial','url(#grdIcon)','none',0,row[0],'middle');
+        getText(null,gIn,intW/2,47,18,'Arial','#000','none',0,row[1],'middle');
+      }
+
         for(var i=0;i<row.length;i++){
             if(ctgStyle.substr(3,1)=='A') getText(null,gIn,intW/2,30,20,'Arial','#fff','none',0,row[i],'middle');
             else if(ctgStyle.substr(3,1)=='B'){

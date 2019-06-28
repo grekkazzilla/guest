@@ -44,6 +44,8 @@ $strHost=trim(file_get_contents('../config/host.txt'));
 <script type='text/javascript' src='div_form.js?v=<?php echo rand(0,1000);?>'></script>
 <script type='text/javascript' src='div_watch.js?v=<?php echo rand(0,1000);?>'></script>
 <!-- -->
+<script type='text/javascript' src='box_time.js?v=<?php echo rand(0,1000);?>'></script>
+<!-- -->
 <script type='text/javascript'>
   var OBJ=new Object();
   OBJ.w=400;
@@ -62,6 +64,8 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     var sctRoot=document.getElementById('sctRoot');
     var svgRoot=document.getElementsByTagName('svg')[0];
     var gWrap=svgRoot.getElementsByTagName('g')[0];
+    getButton('btnClose',gWrap,-9999,-9999,40,40,false,'BXBX',picCross(),0.09,function(){hideBox(OBJ.boxOn)},null);
+    getRect('rctBlur',gWrap,0,0,0,0,0,'#808080','transparent',0).setAttribute('filter','url(#blr2)');
     var dfs=svgRoot.getElementsByTagName('defs')[0];
     // GRADIENTS & EFFECTS
     getLinGrd('grdButton','#eee8aa','#bdb76d',1,1,false,'down',dfs);
@@ -90,7 +94,10 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     getLoad('gLoad',gWrap,-9999,-9999,1,'none',0);
     getSay(gWrap,OBJ.w,OBJ.h,'url(#blr3)');
     //
+
     var divArena=getArena(gWrap);
+
+    getBoxTime(divArena);
     OBJ.divOn=divArena;
     getPic(gWrap);
     getImage(gWrap);
