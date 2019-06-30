@@ -1,47 +1,38 @@
 function getBoxTime(gRoot){
   var box=getBox('boxTime',gRoot,392,392,false,'#fff');
-  getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Time control :','start');
-  var m=10, w=70, s=5, y=20;
+  getText(null,box,10,35,18,'Arial','url(#grdButton)','none',0,'Time control :','start');
+  getToggle(null,box,137,8,300/5,210/5,function(){},'increment',68,27,'start');
+  var m=10, w=89, s=5, y=20;
   // head
   var g=getG('gStageHead',box,0,60,1,true,box.rx,30);
-  getRect(null,g,m,0,w,60,5,'transparent','url(#grdButton)',1);
-  getRect(null,g,m+(w+s)*1,0,w,60,5,'transparent','url(#grdButton)',1);
-  getRect(null,g,m+(w+s)*2,0,w,60,5,'transparent','url(#grdButton)',1);
-  getRect(null,g,m+(w+s)*3,0,w,60,5,'transparent','url(#grdButton)',1);
-  getRect(null,g,m+(w+s)*4,0,w,60,5,'transparent','url(#grdButton)',1);
-  getText(null,g,45,35,18,'Arial','url(#grdIcon)','none',0,'Stage','middle');
-  getText(null,g,45+(w+s)*1,27,18,'Arial','url(#grdIcon)','none',0,'Base','middle');
-  getText(null,g,45+(w+s)*1,47,18,'Arial','url(#grdIcon)','none',0,'Time','middle');
-  getText(null,g,45+(w+s)*2,35,18,'Arial','url(#grdIcon)','none',0,'For','middle');
-  getText(null,g,45+(w+s)*3,27,18,'Arial','url(#grdIcon)','none',0,'Per','middle');
-  getText(null,g,45+(w+s)*3,47,18,'Arial','url(#grdIcon)','none',0,'Move','middle');
-  getText(null,g,45+(w+s)*4,27,18,'Arial','url(#grdIcon)','none',0,'Clock','middle');
-  getText(null,g,45+(w+s)*4,47,18,'Arial','url(#grdIcon)','none',0,'Type','middle');
+  getRect(null,g,m,0,w,60*2+s,5,'transparent','#d0d0d0',1);
+  getRect(null,g,m+(w+s)*1,0,w,60,5,'transparent','#d0d0d0',1);
+  getRect(null,g,m+(w+s)*2,0,w,60,5,'transparent','#d0d0d0',1);
+  getRect(null,g,m+(w+s)*3,0,w,60,5,'transparent','#d0d0d0',1);
+  getText(null,g,54,35,18,'Arial','url(#grdIcon)','none',0,'Stage','middle');
+  getText(null,g,54+(w+s)*1,27,18,'Arial','url(#grdIcon)','none',0,'Base','middle');
+  getText(null,g,54+(w+s)*1,47,18,'Arial','url(#grdIcon)','none',0,'Time','middle');
+  getText(null,g,54+(w+s)*2,35,18,'Arial','url(#grdIcon)','none',0,'Delay','middle');
+  getText(null,g,54+(w+s)*3,35,18,'Arial','url(#grdIcon)','none',0,'Moves','middle');
   //  stage A
   var g=getG('gStageA',box,0,125,1,true,box.rx,30);
-  getRect(null,g,m,0,w,60,5,'transparent','url(#grdButton)',1);
-  getText(null,g,45,35,18,'Arial','url(#grdIcon)','none',0,'A','middle');
-  getButton(null,g,m+(w+s)*1,0,w,60,true,'AAAD',picNone(),0.12,function(){},'60~min');
-  getButton(null,g,m+(w+s)*2,0,w,60,true,'AAAD',picNone(),0,function(){},'40~moves');
-  getButton(null,g,m+(w+s)*3,0,w,60,true,'AAAD',picNone(),0,function(){},'15~sec');
-  getButton(null,g,m+(w+s)*4,0,w,60,true,'AAAX',picClock(),0.13,function(){},null);
+  getButton(null,g,m+(w+s)*1,0,w,60,true,'AAAD',picNone(),0.12,function(){},'120~min');
+  getButton(null,g,m+(w+s)*2,0,w,60,true,'AAAD',picNone(),0,function(){},'15~sec');
+  getButton(null,g,m+(w+s)*3,0,w,60,true,'AAAE',picNone(),0,function(){},'60');
   //  stage B
   var g=getG('gStageB',box,0,190,1,true,box.rx,30);
-  getRect(null,g,m,0,w,60,5,'transparent','url(#grdButton)',1);
-  getText(null,g,45,35,18,'Arial','url(#grdIcon)','none',0,'B','middle');
-  getButton(null,g,m+(w+s)*1,0,w,60,true,'AAAD',picNone(),0.12,function(){},'30~min');
-  getButton(null,g,m+(w+s)*2,0,w,60,true,'AAAD',picNone(),0,function(){},'20~moves');
-  getButton(null,g,m+(w+s)*3,0,w,60,true,'AAAD',picNone(),0,function(){},'15~sec');
-  getButton(null,g,m+(w+s)*4,0,w,60,true,'AAAX',picClock(),0.13,function(){},null);
+  getRect(null,g,m,0,w,60,5,'transparent','#d0d0d0',1);
+  getToggle(null,g,23,8,300/5,210/5,function(){},'',0,0,'start');
+  getButton(null,g,m+(w+s)*1,0,w,60,true,'AAAD',picNone(),0.12,function(){},'60~min');
+  getButton(null,g,m+(w+s)*2,0,w,60,true,'AAAD',picNone(),0,function(){},'15~sec');
+  getButton(null,g,m+(w+s)*3,0,w,60,true,'AAAE',picNone(),0,function(){},'40');
   //  stage C
   var g=getG('gStageB',box,0,255,1,true,box.rx,30);
-  getRect(null,g,m,0,w,60,5,'transparent','url(#grdButton)',1);
-  getText(null,g,45,35,18,'Arial','url(#grdIcon)','none',0,'C','middle');
-  getButton(null,g,m+(w+s)*1,0,w,60,true,'AAAD',picNone(),0.12,function(){},'60~min');
-  getButton(null,g,m+(w+s)*2,0,w,60,true,'AAAD',picNone(),0,function(){},'until~end');
-  getButton(null,g,m+(w+s)*3,0,w,60,true,'AAAD',picNone(),0,function(){},'15~sec');
-  getButton(null,g,m+(w+s)*4,0,w,60,true,'AAAX',picClock(),0.13,function(){},null);
-
+  getRect(null,g,m,0,w,60,5,'transparent','#d0d0d0',1);
+  getToggle(null,g,23,8,300/5,210/5,function(){},'',0,0,'start');
+  getButton(null,g,m+(w+s)*1,0,w,60,true,'AAAD',picNone(),0.12,function(){},'30~min');
+  getButton(null,g,m+(w+s)*2,0,w,60,true,'AAAD',picNone(),0,function(){},'15~sec');
+  getButton(null,g,m+(w+s)*3,0,w,60,true,'AAAD',picNone(),0,function(){},'Until~End');
 
   var m=10;
 
