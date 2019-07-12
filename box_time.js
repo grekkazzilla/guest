@@ -41,17 +41,19 @@ function drawTimeBox(gRoot){
   //  stage B
   var g=getG('gStageB',box,0,190,1,true,box.rx,30);
   getRect(null,g,m,0,w,60,5,'transparent','#d0d0d0',1);
-  getToggle(null,g,23,8,300/5,210/5,function(){},'',0,0,'start');
-  getButton(null,g,m+(w+s)*1,0,w,h,true,'AAAD',picNone(),0,function(){},'x~x').arrSlide=box.arrBase;
-  getButton(null,g,m+(w+s)*2,0,w,h,true,'AAAD',picNone(),0,function(){},'x~x').arrSlide=box.arrDelay;
-  getButton(null,g,m+(w+s)*3,0,w,h,true,'AAAD',picNone(),0,function(){},'x~x').arrSlide=box.arrMove;
+  getToggle('tglStageB',g,23,8,300/5,210/5,function(){},'',0,0,'start');
+  getButton('btnBaseB',g,m+(w+s)*1,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrBase;
+  getButton('btnDelayB',g,m+(w+s)*2,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrDelay;
+  getButton('btnMoveB',g,m+(w+s)*3,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrMove;
   //  stage C
   var g=getG('gStageC',box,0,255,1,true,box.rx,30);
   getRect(null,g,m,0,w,60,5,'transparent','#d0d0d0',1);
-  getToggle(null,g,23,8,300/5,210/5,function(){},'',0,0,'start');
-  getButton(null,g,m+(w+s)*1,0,w,h,true,'AAAD',picNone(),0,function(){},'x~x').arrSlide=box.arrBase;
-  getButton(null,g,m+(w+s)*2,0,w,h,true,'AAAD',picNone(),0,function(){},'x~x').arrSlide=box.arrDelay;
-  getButton(null,g,m+(w+s)*3,0,w,h,true,'AAAD',picNone(),0,function(){},'x~x').arrSlide=box.arrMove;
+  getToggle('tglStageC',g,23,8,300/5,210/5,function(){},'',0,0,'start');
+  getButton('btnBaseC',g,m+(w+s)*1,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrBase;
+  getButton('btnDelayC',g,m+(w+s)*2,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrDelay;
+  getButton('btnMoveC',g,m+(w+s)*3,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrMove;
+  //
+  box.btnOn=o('btnBaseA');
   //
   var gSlide=getG('gTimeSlide',box,1,330,1,true,194,25);
   var pth=getPath(null,gSlide,0,0,1,'transparent','#808080',3,'M 25.21875 5.71875 C 15.17045 6.235763 7.125 14.689729 7.125 25 C 7.125 35.64286 15.6875 44.28125 26.1875 44.28125 L 360.78125 44.28125 C 371.56696 44.28125 380.28125 35.64286 380.28125 25 C 380.28125 14.35714 371.56696 5.71875 360.78125 5.71875 L 26.1875 5.71875 C 25.85937 5.71875 25.54289 5.70207 25.21875 5.71875 z');
@@ -88,6 +90,7 @@ function drawTimeBox(gRoot){
 }
 function putTimeBox(){
   var objArena=OBJ_arena.arr[OBJ_arena.numOn];
+  //
   var ggg=o('gStageA').getElementsByTagName('g');
   var btnBaseA=ggg[0], btnDelayA=ggg[2], btnMoveA=ggg[4];
   btnBaseA.val=objArena.intBaseA;
@@ -96,7 +99,32 @@ function putTimeBox(){
   putTimeButton(btnBaseA,objArena.intBaseA);
   putTimeButton(btnDelayA,objArena.intDelayA);
   putTimeButton(btnMoveA,objArena.intMoveA);
-  //onTimeButton(btnBaseA);
+  //
+  var ggg=o('gStageB').getElementsByTagName('g');
+  var btnBaseB=ggg[2], btnDelayB=ggg[4], btnMoveB=ggg[6];
+  if(objArena.intBaseB==0){
+    offTimeButton(btnBaseB);offTimeButton(btnDelayB);offTimeButton(btnMoveB);
+    objArena.intBaseC=0;
+  }
+  btnBaseB.val=objArena.intBaseB;
+  btnDelayB.val=objArena.intDelayB;
+  btnMoveB.val=objArena.intMoveB;
+  putTimeButton(btnBaseB,objArena.intBaseB);
+  putTimeButton(btnDelayB,objArena.intDelayB);
+  putTimeButton(btnMoveB,objArena.intMoveB);
+  //
+  var ggg=o('gStageC').getElementsByTagName('g');
+  var btnBaseB=ggg[2], btnDelayB=ggg[4], btnMoveB=ggg[6];
+  if(objArena.intBaseC==0){
+    offTimeButton(btnBaseC);offTimeButton(btnDelayC);offTimeButton(btnMoveC);
+  }
+  btnBaseC.val=objArena.intBaseC;
+  btnDelayC.val=objArena.intDelayC;
+  btnMoveC.val=objArena.intMoveC;
+  putTimeButton(btnBaseC,objArena.intBaseC);
+  putTimeButton(btnDelayC,objArena.intDelayC);
+  putTimeButton(btnMoveC,objArena.intMoveC);
+  onTimeButton(btnBaseA);
 }
 function setTimeSlide(btnOn){
   var box=o('boxTime');
@@ -181,4 +209,11 @@ function outTimeButton(btn){
   btn.arrOn[3]=['text',0,'fill','url(#grdIcon)','#eee8aa'];
   btn.arrOn[4]=['text',1,'fill','#000','#eee8aa'];
  }
+}
+function offTimeButton(btn){
+  btn.getElementsByTagName('rect')[0].setAttribute('fill','url(#grdSilver)');
+  btn.getElementsByTagName('rect')[1].setAttribute('stroke','url(#grdSilverRvs)');
+  btn.getElementsByTagName('text')[0].setAttribute('fill','#a0a0a0');
+  btn.getElementsByTagName('text')[1].setAttribute('fill','#808080');
+  btn.blnLock=true;
 }

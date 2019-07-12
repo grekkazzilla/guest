@@ -137,7 +137,7 @@ function getToggle(id,root,x,y,w,h,fncDo,strLabel,xText,yText,strAnchor){
     getRect(null,tgl,0,0,w,h,0,'transparent','#c0c0c0',0);
     var z=h/210;
     var g=getG(null,tgl,0,0,z,true,0,0);
-    var pth=getPath(null,g,0,0,1,'transparent','#000000',5,'M 110.0625 24 C 65.9625 24 30 60.3 30 105 C 30 149.7 65.9625 186 110.0625 186 L 188.0625 186 C 233.3625 186 270 149.7 270 105 C 270 60.3 233.3625 24 188.0625 24 L 110.0625 24 z');
+    var pth=getPath(null,g,0,0,1,'transparent','#000',5,'M 110.0625 24 C 65.9625 24 30 60.3 30 105 C 30 149.7 65.9625 186 110.0625 186 L 188.0625 186 C 233.3625 186 270 149.7 270 105 C 270 60.3 233.3625 24 188.0625 24 L 110.0625 24 z');
     pth.setAttribute('filter','url(#blr8)');
     getPath(null,g,0,0,1,'#fff','none',0,'M 37.40625 0 C 16.69923 0 0 20.35021 0 45.65625 L 0 164.34375 C 0 189.64979 16.69923 210 37.40625 210 L 262.59375 210 C 283.30077 210 300 189.64979 300 164.34375 L 300 45.65625 C 300 20.35021 283.30077 0 262.59375 0 L 37.40625 0 z M 110.0625 24 L 188.0625 24 C 233.3625 24 270 60.3 270 105 C 270 149.7 233.3625 186 188.0625 186 L 110.0625 186 C 65.9625 186 30 149.7 30 105 C 30 60.3 65.9625 24 110.0625 24 z');
     getCircle(null,g,115,105,65,'url(#grdSilver)','none',0);
@@ -166,7 +166,7 @@ function pushToggle(tgl,bln){
             var x=185;
         }
         else{
-            var strSdw='#808080';
+            var strSdw='#000';
             var strBtn='url(#grdSilver)';
             var strRvs='url(#grdSilverRvs)';
             var strTxt='#c0c0c0';

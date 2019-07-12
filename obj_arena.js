@@ -14,9 +14,9 @@ class arena{
   this.blnSide=blnSide;
   this.objMatch=null;
   var intBaseA=getLocal('baseA'+num,900)*1; if((typeof intBaseA)!='number' || intBaseA<0 || intBaseA>172800) intBaseA=900;
-  var intBaseB=getLocal('baseB'+num,900)*1; if((typeof intBaseB)!='number' || intBaseB<0 || intBaseB>172800) intBaseB=900;
-  var intBaseC=getLocal('baseC'+num,900)*1; if((typeof intBaseC)!='number' || intBaseC<0 || intBaseC>172800) intBaseC=900;
-  var intBaseD=getLocal('baseD'+num,900)*1; if((typeof intBaseD)!='number' || intBaseD<0 || intBaseD>172800) intBaseD=900;
+  var intBaseB=getLocal('baseB'+num,0)*1; if((typeof intBaseB)!='number' || intBaseB<0 || intBaseB>172800) intBaseB=0;
+  var intBaseC=getLocal('baseC'+num,0)*1; if((typeof intBaseC)!='number' || intBaseC<0 || intBaseC>172800) intBaseC=0;
+  var intBaseD=getLocal('baseD'+num,0)*1; if((typeof intBaseD)!='number' || intBaseD<0 || intBaseD>172800) intBaseD=0;
   var intDelayA=getLocal('delayA'+num,15)*1; if((typeof intDelayA)!='number' || intDelayA<0 || intDelayA>172800) intDelayA=15;
   var intDelayB=getLocal('delayB'+num,15)*1; if((typeof intDelayB)!='number' || intDelayB<0 || intDelayB>172800) intDelayB=15;
   var intDelayC=getLocal('delayC'+num,15)*1; if((typeof intDelayC)!='number' || intDelayC<0 || intDelayC>172800) intDelayC=15;
