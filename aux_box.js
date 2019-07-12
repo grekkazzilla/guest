@@ -76,9 +76,6 @@ function showBox(box){
             setLatestHistory();
             setHistoryButtons();
         }
-        else if(box.id=='boxTime' || box.id=='boxClock'){
-          o('txtTimeTop').firstChild.nodeValue='...';
-        }
         // close button and blur rect
         var rctBkg=box.getElementsByTagName('rect')[0];
         var rctBlur=o('rctBlur');
@@ -105,11 +102,25 @@ function hideBox(box){
       OBJ.blnLock=false;
       o('btnClose').blnUnlock=false;
     }
-    else if(box.id=='boxTime' || box.id=='boxClock'){
-      setLocal('base',OBJ_arena.intBase);
-      setLocal('add',OBJ_arena.intAdd);
-      setLocal('clock',OBJ_arena.strClock);
-      OBJ_arena.putTimeTop();
+    else if(box.id=='boxTime'){
+      var num=OBJ_arena.numOn;
+      var objArena=OBJ_arena.arr[numOn];
+      setLocal('baseA'+num,objArena.intBaseA);
+      setLocal('baseB'+num,objArena.intBaseB);
+      setLocal('baseC'+num,objArena.intBaseC);
+      setLocal('baseD'+num,objArena.intBaseD);
+      setLocal('delayA'+num,objArena.intDelayA);
+      setLocal('delayB'+num,objArena.intDelayB);
+      setLocal('delayC'+num,objArena.intDelayC);
+      setLocal('delayD'+num,objArena.intDelayD);
+      setLocal('moveA'+num,objArena.intMoveA);
+      setLocal('moveB'+num,objArena.intMoveB);
+      setLocal('moveC'+num,objArena.intMoveC);
+      setLocal('moveD'+num,objArena.intMoveD);
+      setLocal('incrementA'+num,objArena.blnIncrementA);
+      setLocal('incrementB'+num,objArena.blnIncrementB);
+      setLocal('incrementC'+num,objArena.blnIncrementC);
+      setLocal('incrementD'+num,objArena.blnIncrementD);
     }
     box.appendChild(o('rctBlur'));
 }

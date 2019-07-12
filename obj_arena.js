@@ -1,28 +1,55 @@
-var OBJ_arena=new Object({
-  intVar:1,
-  arrName:new Array('Shuffle','Classic','End Game','Three Queens','Revolt','Pawn Attack','Random','Horde','Wedge'),
-  blnSide:true,
-  strSide:'any',
-  strVS:'human',
-  objMatch:null,
-  arrHist:new Array(),
-  objDrive:null,
-  numShowMove:0
-});
-// get < index.php
-OBJ_arena.get=function(){
-  var intVar=getLocal('var',1)*1; if((typeof intVar)!='number' || intVar<0 || intVar>8) intVar=1;
-  var strSide=getLocal('side','any'); if((typeof strSide)!='string' || (strSide!='white' && strSide!='black' && strSide!='any')) strSide='any';
-  var strVS=getLocal('vs','human'); if((typeof strVS)!='string' || (strVS!='human' && strVS!='robo' && strVS!='friend')) strVS='human';
-  OBJ_arena.intVar=intVar;
-  OBJ_arena.strSide=strSide;
-  OBJ_arena.strVS=strVS;
-  var intBase=getLocal('base',900)*1; if((typeof intBase)!='number' || intBase<60 || intBase>86400) intVar=900;
-  var intAdd=getLocal('add',0)*1; if((typeof intAdd)!='number' || intAdd<0 || intAdd>86400) intAdd=0;
-  var strClock=getLocal('clock','Simple Delay'); if((typeof strClock)!='string' || (strClock!='Sudden Death' && strClock!='Simple Delay' && strClock!='Increment' && strClock!='Bronstein')) strClock='Simple Delay';
-  OBJ_arena.intBase=intBase;
-  OBJ_arena.intAdd=intAdd;
-  OBJ_arena.strClock=strClock;
+var OBJ_arena=new Object();
+OBJ_arena.arrName=new Array('Shuffle','Classic','End Game','Three Queens','Revolt','Pawn Attack','Random','Horde','Wedge'),
+OBJ_arena.arr=new Array();
+var numOn=getLocal('arena_num_on',0)*1; if((typeof numOn)!='number' || numOn<0 || numOn>4) numOn=0;
+OBJ_arena.numOn=numOn;
+class arena{
+ constructor(num){
+  this.num=num;
+  var intVar=getLocal('var'+num,1)*1; if((typeof intVar)!='number' || intVar<0 || intVar>8) intVar=1;
+  var strSide=getLocal('str_side'+num,'any'); if((typeof strSide)!='string' || (strSide!='white' && strSide!='black' && strSide!='any')) strSide='any';
+  var blnSide=getLocal('bln_side'+num,true); if((typeof blnSide)!='boolean' || (blnSide!==true && blnSide!==false)) blnSide=true;
+  this.intVar=intVar;
+  this.strSide=strSide;
+  this.blnSide=blnSide;
+  this.objMatch=null;
+  var intBaseA=getLocal('baseA'+num,900)*1; if((typeof intBaseA)!='number' || intBaseA<0 || intBaseA>172800) intBaseA=900;
+  var intBaseB=getLocal('baseB'+num,900)*1; if((typeof intBaseB)!='number' || intBaseB<0 || intBaseB>172800) intBaseB=900;
+  var intBaseC=getLocal('baseC'+num,900)*1; if((typeof intBaseC)!='number' || intBaseC<0 || intBaseC>172800) intBaseC=900;
+  var intBaseD=getLocal('baseD'+num,900)*1; if((typeof intBaseD)!='number' || intBaseD<0 || intBaseD>172800) intBaseD=900;
+  var intDelayA=getLocal('delayA'+num,15)*1; if((typeof intDelayA)!='number' || intDelayA<0 || intDelayA>172800) intDelayA=15;
+  var intDelayB=getLocal('delayB'+num,15)*1; if((typeof intDelayB)!='number' || intDelayB<0 || intDelayB>172800) intDelayB=15;
+  var intDelayC=getLocal('delayC'+num,15)*1; if((typeof intDelayC)!='number' || intDelayC<0 || intDelayC>172800) intDelayC=15;
+  var intDelayD=getLocal('delayD'+num,15)*1; if((typeof intDelayD)!='number' || intDelayD<0 || intDelayD>172800) intDelayD=15;
+  var intMoveA=getLocal('moveA'+num,1000)*1; if((typeof intMoveA)!='number' || intMoveA<0 || intMoveA>1000) intMoveA=1000;
+  var intMoveB=getLocal('moveB'+num,20)*1; if((typeof intMoveB)!='number' || intMoveB<0 || intMoveB>1000) intMoveB=20;
+  var intMoveC=getLocal('moveC'+num,20)*1; if((typeof intMoveC)!='number' || intMoveC<0 || intMoveC>1000) intMoveC=20;
+  var intMoveD=getLocal('moveD'+num,1000)*1; if((typeof intMoveD)!='number' || intMoveD<0 || intMoveD>1000) intMoveD=1000;
+  var blnIncrementA=getLocal('incrementA'+num,false); if((typeof blnIncrementA)!='boolean' || (blnIncrementA!==true && blnIncrementA!==false)) blnIncrementA=false;
+  var blnIncrementB=getLocal('incrementB'+num,false); if((typeof blnIncrementB)!='boolean' || (blnIncrementB!==true && blnIncrementB!==false)) blnIncrementB=false;
+  var blnIncrementC=getLocal('incrementC'+num,false); if((typeof blnIncrementC)!='boolean' || (blnIncrementC!==true && blnIncrementC!==false)) blnIncrementC=false;
+  var blnIncrementD=getLocal('incrementD'+num,false); if((typeof blnIncrementD)!='boolean' || (blnIncrementD!==true && blnIncrementD!==false)) blnIncrementD=false;
+  this.intBaseA=intBaseA;
+  this.intBaseB=intBaseB;
+  this.intBaseC=intBaseC;
+  this.intBaseD=intBaseD;
+  this.intDelayA=intDelayA;
+  this.intDelayB=intDelayB;
+  this.intDelayC=intDelayC;
+  this.intDelayD=intDelayD;
+  this.intMoveA=intMoveA;
+  this.intMoveB=intMoveB;
+  this.intMoveC=intMoveC;
+  this.intMoveD=intMoveD;
+  this.blnIncrementA=blnIncrementA;
+  this.blnIncrementB=blnIncrementB;
+  this.blnIncrementC=blnIncrementC;
+  this.blnIncrementD=blnIncrementD;
+ }
+}
+for(var i=0;i<5;i++){
+ var objArena=new arena(i);
+ OBJ_arena.arr.push(objArena);
 }
 // < boxVar
 OBJ_arena.setVar=function(intVar){
@@ -78,79 +105,6 @@ OBJ_arena.putSide=function(){
       showG(gWhite);
       showG(gBlack);
   }
-}
-// < boxTime
-OBJ_arena.setTime=function(intBase,intAdd,strClock){
-  OBJ_arena.intBase=intBase;
-  OBJ_arena.intAdd=intAdd;
-  OBJ_arena.strClock=strClock;
-  setLocal('base',intBase);
-  setLocal('add',intAdd);
-  setLocal('clock',strClock);
-}
-// < index.php
-// < boxTime
-OBJ_arena.putTimeTop=function(){
-  var intBase=OBJ_arena.intBase;
-  var intAdd=OBJ_arena.intAdd;
-  var strClock=OBJ_arena.strClock
-  if(intBase==0) var str='0';
-  else if(intBase<60) var str=intBase+' sec';
-  else var str=intBase/60+' min';
-  if(intAdd>0) str+=' + '+intAdd+' sec';
-  if(strClock=='Increment') str+=' inc';
-  else if(strClock=='Bronstein') str+=' Bron';
-  o('txtTimeTop').firstChild.nodeValue=str;
-
-}
-OBJ_arena.putTimeBox=function(){
-  var intBase=OBJ_arena.intBase;
-  var intAdd=OBJ_arena.intAdd;
-  var strClock=OBJ_arena.strClock;
-  //
-  var arrRect=o('gSlideBaseTime').getElementsByTagName('rect');
-  for(var i in arrRect){
-    var rct=arrRect[i];
-    if(rct.ctg=='slide' && rct.val==intBase) putBaseTime(rct);
-  }
-  //
-  var arrRect=o('gSlideAddTime').getElementsByTagName('rect');
-  for(var i in arrRect){
-    var rct=arrRect[i];
-    if(rct.ctg=='slide' && rct.val==intAdd) putAddTime(rct);
-  }
-  putClock(strClock);
-}
-function putBaseTime(rct){
-  var g=o('gSlideBaseTime');
-  var btn=o('btnSlideBaseTime');
-  jumpG(btn,(rct.getAttribute('x')*1+rct.getAttribute('width')*1/2-btn.rx),0);
-  if(rct.val==0){
-    var str='0';
-    if(OBJ_arena.intAdd==0) putAddTime(o('rctSlideAddTime15'));
-  }
-  else if(rct.val<60) var str=rct.val+' sec';
-  else var str=rct.val/60+' min';
-  g.getElementsByTagName('text')[0].firstChild.nodeValue='Base time : '+str;
-  OBJ_arena.intBase=rct.val;
-}
-function putAddTime(rct){
-  var g=o('gSlideAddTime');
-  var btn=o('btnSlideAddTime');
-  jumpG(btn,(rct.getAttribute('x')*1+rct.getAttribute('width')*1/2-btn.rx),0);
-  if(rct.val==0){
-    if(OBJ_arena.intBase==0) putBaseTime(o('rctSlideBaseTime15'));
-    if(OBJ_arena.strClock!='Sudden Death') putClock('Sudden Death');
-  }
-  g.getElementsByTagName('text')[0].firstChild.nodeValue='Per move : '+rct.val+' sec';
-  OBJ_arena.intAdd=rct.val;
-  if(OBJ_arena.intAdd>0 && OBJ_arena.strClock=='Sudden Death') putClock('Simple Delay');
-}
-function putClock(str){
-  OBJ_arena.strClock=str
-  //o('btnClock').getElementsByTagName('text')[0].firstChild.nodeValue='Clock : '+str;
-  if(str=='Sudden Death' && OBJ_arena.intAdd>0) putAddTime(o('rctSlideAddTime0'));
-  else if(OBJ_arena.intAdd==0) putAddTime(o('rctSlideAddTime10'));
 }
 //
 function sendArena(objClub){

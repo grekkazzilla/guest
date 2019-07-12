@@ -1,6 +1,6 @@
 function getArena(gRoot){
   var div=getG('divArena',gRoot,0,0,1,true,OBJ.w/2,OBJ.h/2);
-  
+
   // OBJ CHESS
   OBJ_chess.getBoard(8,8,2,'standard');
   // G CHESSBOARD
@@ -16,8 +16,6 @@ function getArena(gRoot){
       pos-=12;
       num+=10;
   }
-  // G TIME TOP
-  getText('txtTimeTop',div,-222200,36,18,'Arial','url(#grdIcon)','none',0,'','middle').style.fontStyle='normal';
   // G TOP
   var w=60, h=60, s=10, g=getG('gTop',div,0,26,1,true,OBJ.w/2,h/2), x=g.rx-(w*5+s*4)/2;
   getButton('btnVar',g,x,30,w,h,true,'AAAX',picListA(),0.11,function(){showBox('boxVar');},null);

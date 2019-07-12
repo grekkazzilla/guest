@@ -78,6 +78,7 @@ function getButton(strID,oRoot,intX,intY,intW,intH,blnShown,ctgStyle,fncPic,zPic
       if(ctgStyle.substr(3,1)=='D'){
         getText(null,gIn,intW/2,27,18,'Arial','url(#grdIcon)','none',0,row[0],'middle');
         getText(null,gIn,intW/2,47,18,'Arial','#000','none',0,row[1],'middle');
+        btn.arrOn.push(['text',0,'fill','url(#grdIcon)','#eee8aa'],['text',1,'fill','#000','#eee8aa']);
       }
       else if(ctgStyle.substr(3,1)=='E'){
         getText(null,gIn,intW/2,37,18,'Arial','url(#grdIcon)','none',0,row[0],'middle');

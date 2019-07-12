@@ -96,8 +96,10 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     //
 
     var divArena=getArena(gWrap);
-
-    getBoxTime(divArena);
+    drawTimeHead(divArena);
+    putTimeHead();
+    drawTimeBox(divArena);
+    putTimeBox();
     OBJ.divOn=divArena;
     getPic(gWrap);
     getImage(gWrap);
@@ -105,11 +107,6 @@ $strHost=trim(file_get_contents('../config/host.txt'));
     drawWatch(gWrap);
     getBook(gWrap);
     //
-    OBJ_arena.get();
-    OBJ_arena.putVar();
-    OBJ_arena.putSide();
-    OBJ_arena.putTimeTop();
-    OBJ_arena.putTimeBox();
     // BOX GAME END
     var box=getBox('boxGameEnd',gWrap,250,230,false,'url(#grdPale)');
     getText(null,box,15,35,18,'Arial','url(#grdButton)','none',0,'Checkmate','start');
