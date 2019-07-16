@@ -76,6 +76,9 @@ function showBox(box){
             setLatestHistory();
             setHistoryButtons();
         }
+        else if(box.id=='boxTime'){
+          onTimeButton(o('btnBaseA'));
+        }
         // close button and blur rect
         var rctBkg=box.getElementsByTagName('rect')[0];
         var rctBlur=o('rctBlur');

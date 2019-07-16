@@ -3,21 +3,10 @@ function drawTimeHead(gRoot){
  getRect(null,g,0,0,g.rx*2,g.ry*2,0,'transparent','#000',0);
  getText(null,g,g.rx,g.ry*1.25,18,'Arial','url(#grdIcon)','none',0,'Time control','middle');
 }
-function putTimeHead(){
- var numOn=OBJ_arena.numOn;
- var objArena=OBJ_arena.arr[numOn];
- var strBaseA=objArena.intBaseA/60;
- var strDelayA=objArena.intDelayA;
- var strMoveA=objArena.intMoveA;
- if(strMoveA==1000) strMoveA='G';
- var strA=strMoveA+'/'+strBaseA+'+'+strDelayA;
- var txt=o('gTimeHead').getElementsByTagName('text')[0];
- txt.firstChild.nodeValue=strA;
-}
 function drawTimeBox(gRoot){
   var box=getBox('boxTime',gRoot,392,392,false,'#fff');
   box.arrBase=new Array(0,15,30,45,60,120,180,240,300,360,420,480,540,600,900,1200,1500,1800,45*60,60*60,90*60,100*60,120*60,180*60);
-  box.arrDelay=new Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,20,25,30,45,60,90,100,120,180);
+  box.arrDelay=new Array(0,1,2,3,4,5,6,7,8,9,10,15,20,25,30,45,60,90,100,120,180);
   box.arrMove=new Array(5,10,15,20,25,30,35,40,45,50,55,60,65,1000);
   getText(null,box,10,35,18,'Arial','url(#grdButton)','none',0,'Time control','start');
   getToggle(null,box,137,8,300/5,210/5,function(){},'increment',68,27,'start');
@@ -35,23 +24,51 @@ function drawTimeBox(gRoot){
   getText(null,g,54+(w+s)*3,35,18,'Arial','url(#grdIcon)','none',0,'Moves','middle');
   //  stage A
   var g=getG('gStageA',box,0,125,1,true,box.rx,30);
-  getButton('btnBaseA',g,m+(w+s)*1,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrBase;
-  getButton('btnDelayA',g,m+(w+s)*2,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrDelay;
-  getButton('btnMoveA',g,m+(w+s)*3,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrMove;
+  getButton('btnBaseA',g,m+(w+s)*1,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);},'x~x').arrSlide=box.arrBase;
+  getButton('btnDelayA',g,m+(w+s)*2,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);},'x~x').arrSlide=box.arrDelay;
+  getButton('btnMoveA',g,m+(w+s)*3,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);},'x~x').arrSlide=box.arrMove;
   //  stage B
   var g=getG('gStageB',box,0,190,1,true,box.rx,30);
   getRect(null,g,m,0,w,60,5,'transparent','#d0d0d0',1);
-  getToggle('tglStageB',g,23,8,300/5,210/5,function(){},'',0,0,'start');
-  getButton('btnBaseB',g,m+(w+s)*1,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrBase;
-  getButton('btnDelayB',g,m+(w+s)*2,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrDelay;
-  getButton('btnMoveB',g,m+(w+s)*3,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrMove;
+  getToggle('tglTimeStageB',g,23,8,300/5,210/5,function(){
+    var objArena=OBJ_arena.arr[OBJ_arena.numOn];
+    if(this.blnOn===true){
+      objArena.intMoveB=1000;
+      objArena.intBaseB=1800;
+      objArena.intDelayB=0;
+      if(objArena.intMoveA==1000) objArena.intMoveA=40;
+    }
+    else{
+      objArena.intMoveB=0;
+      if(objArena.intMoveA<1000) objArena.intMoveA=1000;
+      if(objArena.intMoveC>0) objArena.intMoveC=0;
+    }
+    putTime();
+  },'',0,0,'start');
+  getButton('btnBaseB',g,m+(w+s)*1,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);},'x~x').arrSlide=box.arrBase;
+  getButton('btnDelayB',g,m+(w+s)*2,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);},'x~x').arrSlide=box.arrDelay;
+  getButton('btnMoveB',g,m+(w+s)*3,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);},'x~x').arrSlide=box.arrMove;
   //  stage C
   var g=getG('gStageC',box,0,255,1,true,box.rx,30);
   getRect(null,g,m,0,w,60,5,'transparent','#d0d0d0',1);
-  getToggle('tglStageC',g,23,8,300/5,210/5,function(){},'',0,0,'start');
-  getButton('btnBaseC',g,m+(w+s)*1,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrBase;
-  getButton('btnDelayC',g,m+(w+s)*2,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrDelay;
-  getButton('btnMoveC',g,m+(w+s)*3,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);setTimeSlide(this);},'x~x').arrSlide=box.arrMove;
+  getToggle('tglTimeStageC',g,23,8,300/5,210/5,function(){
+    var objArena=OBJ_arena.arr[OBJ_arena.numOn];
+    if(this.blnOn===true){
+      objArena.intMoveC=1000;
+      objArena.intBaseC=900;
+      objArena.intDelayC=0;
+      if(objArena.intMoveA==1000) objArena.intMoveA=40;
+      if(objArena.intMoveB==1000 || objArena.intMoveB==0) objArena.intMoveB=20;
+    }
+    else{
+      objArena.intMoveC=0;
+      if(objArena.intMoveB<1000) objArena.intMoveB=1000;
+    }
+    putTime();
+  },'',0,0,'start');
+  getButton('btnBaseC',g,m+(w+s)*1,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);},'x~x').arrSlide=box.arrBase;
+  getButton('btnDelayC',g,m+(w+s)*2,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);},'x~x').arrSlide=box.arrDelay;
+  getButton('btnMoveC',g,m+(w+s)*3,0,w,h,true,'AAAD',picNone(),0,function(){onTimeButton(this);},'x~x').arrSlide=box.arrMove;
   //
   box.btnOn=o('btnBaseA');
   //
@@ -65,7 +82,7 @@ function drawTimeBox(gRoot){
   btnSlide.blnHold=false;
   var mRct=20;
   var rct=getRect(null,gSlide,0,0,mRct,50,0,'transparent','green',0);
-  rct.onmousedown=function(){putTimeSlide(o('rctTimeSlide0'));}
+  rct.onmousedown=function(){setTime(o('rctTimeSlide0'));}
   rct.onmouseup=function(){o('btnTimeSlide').blnHold=false;}
   gSlide.arr=new Array();
   for(var i=0;i<300;i++){
@@ -73,24 +90,61 @@ function drawTimeBox(gRoot){
     gSlide.arr.push(rct);
     rct.onmousedown=function(){
       o('btnTimeSlide').blnHold=true;
-      putTimeSlide(this);
+      setTime(this);
     }
     rct.onmouseover=function(){
       if(o('btnTimeSlide').blnHold===true){
-        putTimeSlide(this);
+        setTime(this);
       }
     }
     rct.onmouseup=function(){o('btnTimeSlide').blnHold=false;}
   }
   var rct=getRect(null,gSlide,gSlide.rx*2-mRct,0,mRct,50,0,'transparent','green',0);
   rct.onmousedown=function(){
-    putTimeSlide(o('rctTimeSlide'+(o('boxTime').btnOn.arrSlide.length-1)));
+    setTime(o('rctTimeSlide'+(o('boxTime').btnOn.arrSlide.length-1)));
   }
   rct.onmouseup=function(){o('btnTimeSlide').blnHold=false;}
 }
-function putTimeBox(){
-  var objArena=OBJ_arena.arr[OBJ_arena.numOn];
-  //
+function setTime(rct){
+  var box=o('boxTime');
+  var btn=box.btnOn;
+  var val=rct.val;
+  if(btn.id.substr(0,7)=='btnBase'){
+   if(btn.id.substr(7,1)=='A') OBJ_arena.arr[OBJ_arena.numOn].intBaseA=val;
+   else if(btn.id.substr(7,1)=='B') OBJ_arena.arr[OBJ_arena.numOn].intBaseB=val;
+   else if(btn.id.substr(7,1)=='C') OBJ_arena.arr[OBJ_arena.numOn].intBaseC=val;
+  }
+  else if(btn.id.substr(0,8)=='btnDelay'){
+   if(btn.id.substr(8,1)=='A') OBJ_arena.arr[OBJ_arena.numOn].intDelayA=val;
+   else if(btn.id.substr(8,1)=='B') OBJ_arena.arr[OBJ_arena.numOn].intDelayB=val;
+   else if(btn.id.substr(8,1)=='C') OBJ_arena.arr[OBJ_arena.numOn].intDelayC=val;
+  }
+  else if(btn.id.substr(0,7)=='btnMove'){
+   if(btn.id.substr(7,1)=='A'){
+     OBJ_arena.arr[OBJ_arena.numOn].intMoveA=val;
+     if(val==1000){
+       OBJ_arena.arr[OBJ_arena.numOn].intMoveB=0;
+       OBJ_arena.arr[OBJ_arena.numOn].intMoveC=0;
+       putTime();
+     }
+   }
+   else if(btn.id.substr(7,1)=='B') OBJ_arena.arr[OBJ_arena.numOn].intMoveB=val;
+   else if(btn.id.substr(7,1)=='C') OBJ_arena.arr[OBJ_arena.numOn].intMoveC=val;
+  }
+  putTimeSlide(rct);
+}
+function putTime(){
+  var numOn=OBJ_arena.numOn;
+  var objArena=OBJ_arena.arr[numOn];
+  // head
+  var strBaseA=objArena.intBaseA/60;
+  var strDelayA=objArena.intDelayA;
+  var strMoveA=objArena.intMoveA;
+  if(strMoveA==1000) strMoveA='G';
+  var strA=strMoveA+'/'+strBaseA+'+'+strDelayA;
+  var txt=o('gTimeHead').getElementsByTagName('text')[0];
+  txt.firstChild.nodeValue=strA;
+  // box
   var ggg=o('gStageA').getElementsByTagName('g');
   var btnBaseA=ggg[0], btnDelayA=ggg[2], btnMoveA=ggg[4];
   btnBaseA.val=objArena.intBaseA;
@@ -102,51 +156,36 @@ function putTimeBox(){
   //
   var ggg=o('gStageB').getElementsByTagName('g');
   var btnBaseB=ggg[2], btnDelayB=ggg[4], btnMoveB=ggg[6];
-  if(objArena.intBaseB==0){
-    offTimeButton(btnBaseB);offTimeButton(btnDelayB);offTimeButton(btnMoveB);
-    objArena.intBaseC=0;
+  if(objArena.intMoveB==0){
+    pushToggle('tglTimeStageB',false);
+    offTimeButton(['btnMoveB','btnBaseB','btnDelayB']);
   }
-  btnBaseB.val=objArena.intBaseB;
-  btnDelayB.val=objArena.intDelayB;
-  btnMoveB.val=objArena.intMoveB;
-  putTimeButton(btnBaseB,objArena.intBaseB);
-  putTimeButton(btnDelayB,objArena.intDelayB);
-  putTimeButton(btnMoveB,objArena.intMoveB);
+  else{
+   pushToggle('tglTimeStageB',true);
+   outTimeButton(['btnMoveB','btnBaseB','btnDelayB']);
+   btnBaseB.val=objArena.intBaseB;
+   btnDelayB.val=objArena.intDelayB;
+   btnMoveB.val=objArena.intMoveB;
+   putTimeButton(btnBaseB,objArena.intBaseB);
+   putTimeButton(btnDelayB,objArena.intDelayB);
+   putTimeButton(btnMoveB,objArena.intMoveB);
+  }
   //
   var ggg=o('gStageC').getElementsByTagName('g');
   var btnBaseB=ggg[2], btnDelayB=ggg[4], btnMoveB=ggg[6];
-  if(objArena.intBaseC==0){
-    offTimeButton(btnBaseC);offTimeButton(btnDelayC);offTimeButton(btnMoveC);
+  if(objArena.intMoveC==0){
+    pushToggle('tglTimeStageC',false);
+    offTimeButton(['btnMoveC','btnBaseC','btnDelayC']);
   }
-  btnBaseC.val=objArena.intBaseC;
-  btnDelayC.val=objArena.intDelayC;
-  btnMoveC.val=objArena.intMoveC;
-  putTimeButton(btnBaseC,objArena.intBaseC);
-  putTimeButton(btnDelayC,objArena.intDelayC);
-  putTimeButton(btnMoveC,objArena.intMoveC);
-  onTimeButton(btnBaseA);
-}
-function setTimeSlide(btnOn){
-  var box=o('boxTime');
-  box.btnOn=btnOn;
-  var gSlide=o('gTimeSlide');
-  var btnSlide=o('btnTimeSlide');
-  var arr=btnOn.arrSlide
-  var mRct=20, wRct=(gSlide.rx*2-mRct*2)/arr.length;
-  for(var i=0;i<gSlide.arr.length;i++){
-   var rct=o('rctTimeSlide'+i);
-   if(i<arr.length){
-     rct.setAttribute('width',wRct);
-     rct.setAttribute('x',(mRct+i*wRct));
-     rct.val=arr[i];
-     if(rct.val==btnOn.val){
-      putTimeSlide(rct);
-     }
-   }
-   else{
-     rct.setAttribute('width','0');
-     rct.setAttribute('x','-9999');
-   }
+  else{
+   pushToggle('tglTimeStageC',true);
+   outTimeButton(['btnMoveC','btnBaseC','btnDelayC']);
+   btnBaseC.val=objArena.intBaseC;
+   btnDelayC.val=objArena.intDelayC;
+   btnMoveC.val=objArena.intMoveC;
+   putTimeButton(btnBaseC,objArena.intBaseC);
+   putTimeButton(btnDelayC,objArena.intDelayC);
+   putTimeButton(btnMoveC,objArena.intMoveC);
   }
 }
 function putTimeSlide(rct){
@@ -160,28 +199,18 @@ function putTimeButton(btn,val){
  if(btn.id.substr(0,7)=='btnBase'){
   if(val<60) strA=val, strB='sec';
   else strA=val/60, strB='min';
-  if(btn.id.substr(7,1)=='A') OBJ_arena.arr[OBJ_arena.numOn].intBaseA=val;
-  else if(btn.id.substr(7,1)=='B') OBJ_arena.arr[OBJ_arena.numOn].intBaseB=val;
-  else if(btn.id.substr(7,1)=='C') OBJ_arena.arr[OBJ_arena.numOn].intBaseC=val;
  }
  else if(btn.id.substr(0,8)=='btnDelay'){
   strA=val, strB='sec';
-  if(btn.id.substr(8,1)=='A') OBJ_arena.arr[OBJ_arena.numOn].intDelayA=val;
-  else if(btn.id.substr(8,1)=='B') OBJ_arena.arr[OBJ_arena.numOn].intDelayB=val;
-  else if(btn.id.substr(8,1)=='C') OBJ_arena.arr[OBJ_arena.numOn].intDelayC=val;
  }
  else if(btn.id.substr(0,7)=='btnMove'){
   if(val<1000) strA=val, strB='', y=37;
   else strA='All', strB='Game';
-  if(btn.id.substr(7,1)=='A') OBJ_arena.arr[OBJ_arena.numOn].intMoveA=val;
-  else if(btn.id.substr(7,1)=='B') OBJ_arena.arr[OBJ_arena.numOn].intMoveB=val;
-  else if(btn.id.substr(7,1)=='C') OBJ_arena.arr[OBJ_arena.numOn].intMoveC=val;
  }
  btn.getElementsByTagName('text')[0].firstChild.nodeValue=strA;
  btn.getElementsByTagName('text')[1].firstChild.nodeValue=strB;
  btn.getElementsByTagName('text')[0].setAttribute('y',y);
  btn.val=val;
- putTimeHead();
 }
 function onTimeButton(btn){
   btn.getElementsByTagName('rect')[0].setAttribute('fill','url(#grdIcon)');
@@ -194,12 +223,34 @@ function onTimeButton(btn){
   btn.arrOn[4]=['text',1,'fill','#fff','#fff'];
   var box=o('boxTime');
   if(btn!=box.btnOn){
-   outTimeButton(box.btnOn)
+   outTimeButton([box.btnOn])
    box.btnOn=btn;
   }
+  //
+  var gSlide=o('gTimeSlide');
+  var btnSlide=o('btnTimeSlide');
+  var arr=btn.arrSlide
+  var mRct=20, wRct=(gSlide.rx*2-mRct*2)/arr.length;
+  for(var i=0;i<gSlide.arr.length;i++){
+   var rct=o('rctTimeSlide'+i);
+   if(i<arr.length){
+     rct.setAttribute('width',wRct);
+     rct.setAttribute('x',(mRct+i*wRct));
+     rct.val=arr[i];
+     if(rct.val==btn.val){
+      putTimeSlide(rct);
+     }
+   }
+   else{
+     rct.setAttribute('width','0');
+     rct.setAttribute('x','-9999');
+   }
+  }
 }
-function outTimeButton(btn){
- if(btn!==null){
+function outTimeButton(arr){
+ for(var i=0;i<arr.length;i++){
+  var btn=arr[i];
+  if(typeof(btn)=='string') btn=o(btn);
   btn.getElementsByTagName('rect')[0].setAttribute('fill','url(#grdButton)');
   btn.getElementsByTagName('rect')[1].setAttribute('stroke','url(#grdButtonRvs)');
   btn.getElementsByTagName('text')[0].setAttribute('fill','url(#grdIcon)');
@@ -208,12 +259,21 @@ function outTimeButton(btn){
   btn.arrOn[1]=['rect',1,'stroke','url(#grdButtonRvs)','#eee8aa'];
   btn.arrOn[3]=['text',0,'fill','url(#grdIcon)','#eee8aa'];
   btn.arrOn[4]=['text',1,'fill','#000','#eee8aa'];
+  if(btn.blnLock===true) btn.blnLock=false;
  }
 }
-function offTimeButton(btn){
+function offTimeButton(arr){
+ var box=o('boxTime');
+ for(var i=0;i<arr.length;i++){
+  var btn=o(arr[i]);
+  if(box.btnOn==btn) onTimeButton(o('btnBaseA'));
   btn.getElementsByTagName('rect')[0].setAttribute('fill','url(#grdSilver)');
   btn.getElementsByTagName('rect')[1].setAttribute('stroke','url(#grdSilverRvs)');
   btn.getElementsByTagName('text')[0].setAttribute('fill','#a0a0a0');
   btn.getElementsByTagName('text')[1].setAttribute('fill','#808080');
+  btn.getElementsByTagName('text')[0].setAttribute('y','37');
+  btn.getElementsByTagName('text')[0].firstChild.nodeValue='0';
+  btn.getElementsByTagName('text')[1].firstChild.nodeValue='';
   btn.blnLock=true;
+ }
 }

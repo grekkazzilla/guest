@@ -97,9 +97,8 @@ $strHost=trim(file_get_contents('../config/host.txt'));
 
     var divArena=getArena(gWrap);
     drawTimeHead(divArena);
-    putTimeHead();
     drawTimeBox(divArena);
-    putTimeBox();
+    putTime();
     OBJ.divOn=divArena;
     getPic(gWrap);
     getImage(gWrap);

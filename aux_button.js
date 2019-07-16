@@ -149,14 +149,16 @@ function getToggle(id,root,x,y,w,h,fncDo,strLabel,xText,yText,strAnchor){
     tgl.do=fncDo;
     tgl.onclick=function(){
         pushToggle(this,undefined);
-        tgl.do();
     }
     return tgl;
 }
 function pushToggle(tgl,bln){
     if(typeof(tgl)=='string') tgl=o(tgl);
     if(tgl.blnLock===false){
-        if(bln===undefined) tgl.blnOn=!tgl.blnOn;
+        if(bln===undefined){
+          tgl.blnOn=!tgl.blnOn;
+          tgl.do();
+        }
         else tgl.blnOn=bln;
         if(tgl.blnOn===true){
             var strSdw='olive';
